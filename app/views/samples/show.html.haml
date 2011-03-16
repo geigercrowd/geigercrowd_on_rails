@@ -1,0 +1,10 @@
+%h1= t '.title'
+%p
+  = link_to t('back'), samples_path
+  = link_to t('edit'), edit_sample_path(@sample)
+
+%dl
+  %dt= Sample.human_attribute_name :value
+  %dd= @sample.value
+  %dt= Sample.human_attribute_name :data_type_id
+  %dd= @sample.data_type_id

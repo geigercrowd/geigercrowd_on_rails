@@ -1,0 +1,4 @@
+%h1= @instrument.model
+= link_to t('back'), instruments_path
+= link_to t('edit'), edit_instrument_path(@instrument)
+= @instrument.notes

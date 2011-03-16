@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  value: 1.5
+  data_type_id: 1
+
+two:
+  value: 1.5
+  data_type_id: 1

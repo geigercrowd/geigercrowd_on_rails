@@ -1,0 +1,12 @@
+%h1= t '.title'
+%p
+  = link_to t('back'), data_types_path
+  = link_to t('edit'), edit_data_type_path(@data_type)
+
+%dl
+  %dt= DataType.human_attribute_name :name
+  %dd= @data_type.name
+  %dt= DataType.human_attribute_name :description
+  %dd= @data_type.description
+  %dt= DataType.human_attribute_name :si_unit
+  %dd= @data_type.si_unit

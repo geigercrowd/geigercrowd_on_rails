@@ -1,0 +1,10 @@
+%h1= t('.title')
+%p= link_to t('.new_instrument'), new_instrument_path
+
+#instruments
+  - for instrument in @instruments
+    .model= instrument.model
+    .notes= instrument.notes
+    .action= link_to t('show'), instrument_path(instrument)
+    .action= link_to t('edit'), edit_instrument_path(instrument)
+    .action= link_to t('destroy'), instrument, :confirm => t('confirm_delete'), :method => :delete

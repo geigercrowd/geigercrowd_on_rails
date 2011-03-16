@@ -1,0 +1,20 @@
+en:
+  back: back
+  show: show
+  edit: edit
+  destroy: delete
+  confirm_delete: Are you sure?
+  actions: actions
+  instruments:
+    index:
+      title: Instruments
+      new_instrument: New Instrument
+    new:
+      title: Add instrument
+    edit:
+      title: Edit instrument
+  samples:
+    index:
+      title: Samples
+      new_sample: New sample
+

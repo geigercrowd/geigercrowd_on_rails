@@ -1,0 +1,19 @@
+= form_for(@instrument) do |f|
+  - if @instrument.errors.any?
+    #errorExplanation
+      %h2= "#{pluralize(@instrument.errors.count, 'error')} prohibited this user from being saved:"
+      %ul
+      - @instrument.errors.full_messages.each do |msg|
+        %li= msg
+  
+  .field
+    = f.label :model
+    %br
+    = f.text_field :model
+  .field
+    = f.label :notes
+    %br
+    = f.text_area :notes
+
+  .actions
+    = f.submit
