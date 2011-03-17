@@ -11,9 +11,17 @@
     %br
     = f.text_field :value
   .field
-    = f.label :data_type_id
+    = f.label :data_type_id, "Data type"
     %br
-    = f.text_field :data_type_id
+    = f.select :data_type_id, data_type_options(@data_types)
+  .field
+    = f.label :latitude
+    %br
+    = f.text_field :latitude
+  .field
+    = f.label :longitude
+    %br
+    = f.text_field :longitude
 
   .actions
     = f.submit

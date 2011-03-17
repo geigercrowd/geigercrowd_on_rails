@@ -7,13 +7,21 @@
         %li= msg
   
   .field
-    = f.label :model
+    = f.label :model, t('.model')
     %br
-    = f.text_field :model
+    = f.text_field :model, size: 50;
   .field
-    = f.label :notes
+    = f.label :notes, t('.notes')
     %br
-    = f.text_area :notes
+    = f.text_area :notes, size: "70x30"
+  .field
+    = f.label :latitude
+    %br
+    = f.text_field :latitude
+  .field
+    = f.label :longitude
+    %br
+    = f.text_field :longitude
 
   .actions
     = f.submit

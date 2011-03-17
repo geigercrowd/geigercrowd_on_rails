@@ -24,14 +24,8 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
     t.string   "model"
     t.text     "notes"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "locations", :force => true do |t|
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -39,7 +33,8 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
   create_table "samples", :force => true do |t|
     t.float    "value"
     t.integer  "data_type_id"
-    t.integer  "location_id"
+    t.float    "latitude"
+    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

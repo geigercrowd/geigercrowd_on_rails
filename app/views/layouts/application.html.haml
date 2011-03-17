@@ -7,8 +7,16 @@
     = javascript_include_tag :defaults
     = csrf_meta_tag
   %body
-    - if alert
-      .alert= alert
-    - elsif notice
-      .notice= notice
-    = yield
+    #head
+      .container
+        #navigation
+          %ul
+            %li= link_to t('samples.index.title'), samples_path
+            %li= link_to t('instruments.index.title'), instruments_path
+    #message
+      - if alert
+        .alert= alert
+      - elsif notice
+        .notice= notice
+    #content
+      = yield
