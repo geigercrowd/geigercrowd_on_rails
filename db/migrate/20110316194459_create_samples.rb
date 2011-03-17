@@ -3,7 +3,8 @@ class CreateSamples < ActiveRecord::Migration
     create_table :samples do |t|
       t.float :value
       t.integer :data_type_id
-      t.integer :location_id
+      t.float :latitude
+      t.float :longitude
 
       t.timestamps
     end

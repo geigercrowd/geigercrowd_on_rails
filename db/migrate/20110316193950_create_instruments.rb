@@ -4,6 +4,8 @@ class CreateInstruments < ActiveRecord::Migration
       t.string :model
       t.text :notes
       t.integer :user_id
+      t.float :latitude
+      t.float :longitude
 
       t.timestamps
     end
