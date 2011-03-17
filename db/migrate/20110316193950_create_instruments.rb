@@ -1,9 +1,10 @@
 class CreateInstruments < ActiveRecord::Migration
   def self.up
     create_table :instruments do |t|
+      t.integer :data_type_id
+      t.integer :user_id
       t.string :model
       t.text :notes
-      t.integer :user_id
       t.float :latitude
       t.float :longitude
 

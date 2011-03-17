@@ -7,21 +7,23 @@
         %li= msg
   
   .field
+    = f.label :instrument_id, "Instrument"
+    %br
+    = f.select :instrument_id, instrument_options(@instruments)
+  .field
     = f.label :value
     %br
     = f.text_field :value
-  .field
-    = f.label :data_type_id, "Data type"
-    %br
-    = f.select :data_type_id, data_type_options(@data_types)
-  .field
-    = f.label :latitude
-    %br
-    = f.text_field :latitude
-  .field
-    = f.label :longitude
-    %br
-    = f.text_field :longitude
+  %fieldset
+    %legend= t('location')
+    .field
+      = f.label :latitude
+      %br
+      = f.text_field :latitude
+    .field
+      = f.label :longitude
+      %br
+      = f.text_field :longitude
 
   .actions
     = f.submit

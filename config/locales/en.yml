@@ -5,10 +5,12 @@ en:
   destroy: delete
   confirm_delete: Are you sure?
   actions: actions
+  location: location
   instruments:
     form:
       model: model or type of device
       notes: description
+      si_unit: measured SI unit
     index:
       title: Instruments
       new_instrument: New Instrument
@@ -25,4 +27,8 @@ en:
       new_sample: New sample
     new:
       title: New sample
+  data_types:
+    index:
+      title: Data types
+      new_data_type: New data type
 

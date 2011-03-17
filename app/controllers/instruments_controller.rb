@@ -11,6 +11,7 @@ class InstrumentsController < ApplicationController
 
   # GET /instruments/new
   def new
+    @data_types = DataType.all
     @instrument = Instrument.new
     if current_user.instruments.empty?
       flash[:notice] = t 'instruments.new.add_instrument_notice'
