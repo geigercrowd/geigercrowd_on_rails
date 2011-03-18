@@ -11,12 +11,14 @@ class SamplesController < ApplicationController
 
   # GET /samples/new
   def new
+    @instruments = current_user.instruments
     @data_types = DataType.all
     @sample = Sample.new
   end
 
   # GET /samples/1/edit
   def edit
+    @instruments = current_user.instruments
     @data_types = DataType.all
     @sample = Sample.find(params[:id])
   end
@@ -26,7 +28,8 @@ class SamplesController < ApplicationController
     @sample = Sample.new(params[:sample])
 
     if @sample.save
-      redirect_to(@sample, :notice => 'Sample was successfully created.')
+      redirect_to samples_path,
+        :notice => 'Sample was successfully created.'
     else
       render :action => "new"
     end

@@ -1,8 +1,8 @@
 class CreateSamples < ActiveRecord::Migration
   def self.up
     create_table :samples do |t|
+      t.integer :instrument_id
       t.float :value
-      t.integer :data_type_id
       t.float :latitude
       t.float :longitude
 

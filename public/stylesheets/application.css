@@ -14,6 +14,10 @@ a {
   color: #00aa00;
 }
 
+fieldset {
+  border: 0;
+}
+
 #head {
   top: 0px;
   width: 100%;

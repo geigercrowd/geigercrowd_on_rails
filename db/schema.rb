@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110316194718) do
+ActiveRecord::Schema.define(:version => 20110317231006) do
 
   create_table "data_types", :force => true do |t|
     t.string   "name"
@@ -21,9 +21,10 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
   end
 
   create_table "instruments", :force => true do |t|
+    t.integer  "data_type_id"
+    t.integer  "user_id"
     t.string   "model"
     t.text     "notes"
-    t.integer  "user_id"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"
@@ -31,8 +32,8 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
   end
 
   create_table "samples", :force => true do |t|
+    t.integer  "instrument_id"
     t.float    "value"
-    t.integer  "data_type_id"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"
@@ -40,9 +41,9 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.string   "email",                               :default => "",    :null => false
+    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
+    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
     t.string   "real_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "admin",                               :default => false, :null => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
