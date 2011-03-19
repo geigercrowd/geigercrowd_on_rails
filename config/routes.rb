@@ -3,5 +3,5 @@ Geigercrowd::Application.routes.draw do
   resources :samples
   resources :instruments
   devise_for :users
-  root :to => "data#index"
+  root :to => "samples#index"
 end

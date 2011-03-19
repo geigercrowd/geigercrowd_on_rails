@@ -7,23 +7,30 @@
         %li= msg
   
   .field
-    = f.label :instrument_id, "Instrument"
+    = f.label :instrument_id, t('samples.instrument')
     %br
     = f.select :instrument_id, instrument_options(@instruments)
   .field
-    = f.label :value
+    = f.label :value, t('samples.value')
     %br
     = f.text_field :value
-  %fieldset
-    %legend= t('location')
-    .field
-      = f.label :latitude
-      %br
-      = f.text_field :latitude
-    .field
-      = f.label :longitude
-      %br
-      = f.text_field :longitude
+  .field
+    = f.label t('samples.timestamp')
+    %br
+    = f.datetime_select :timestamp, default: DateTime.now
+  .field
+    = f.label :timezone, t('time.zone')
+    %br
+    = f.time_zone_select :timezone, nil, default: "UTC"
+  .field
+    = f.label :latitude, t('samples.latitude')
+    %br
+    = f.text_field :latitude
+  .field
+    = f.label :longitude, t('samples.longitude')
+    %br
+    = f.text_field :longitude
 
   .actions
     = f.submit
+

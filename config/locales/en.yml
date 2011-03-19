@@ -1,12 +1,17 @@
 en:
+  time:
+    zone: timezone
+    formats:
+      short_with_zone: "%d %m %H:%M %Z"
   back: back
   show: show
   edit: edit
   destroy: delete
   confirm_delete: Are you sure?
   actions: actions
-  location: location
   instruments:
+    title: Instruments
+    si_unit: SI unit
     form:
       model: model or type of device
       notes: description
@@ -22,13 +27,15 @@ en:
     create:
       successful: Instrument was successfully created.
   samples:
-    index:
-      title: Data
-      new_sample: New sample
-    new:
-      title: New sample
+    title: Data
+    new_sample: New sample
+    value: value
+    si_unit: SI unit
+    timestamp: time
+    instrument: instrument
+    latitude: latitude
+    longitude: longitude
   data_types:
-    index:
-      title: Data types
-      new_data_type: New data type
+    title: Data types
+
 

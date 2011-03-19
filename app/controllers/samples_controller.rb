@@ -28,8 +28,8 @@ class SamplesController < ApplicationController
     @sample = Sample.new(params[:sample])
 
     if @sample.save
-      redirect_to samples_path,
-        :notice => 'Sample was successfully created.'
+      redirect_to new_sample_path,
+        :notice => 'Sample was successfully created'
     else
       render :action => "new"
     end
