@@ -15,10 +15,10 @@
     - for sample in @samples
       %tr{ :class => cycle(:odd, :even) }
         %td= sample.value
-        %td= sample.instrument.data_type.si_unit
+        %td= sample.instrument.data_type.si_unit 
         %td= l sample.timestamp.localtime, format: :short_with_zone
         %td= link_to sample.instrument.model, sample.instrument
-        %td= sample.location.name 
+        %td= link_to sample.location.name, sample.location
         %td
           = link_to t('show'), sample
           = link_to t('edit'), edit_sample_path(sample)
