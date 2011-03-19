@@ -10,4 +10,11 @@ module SamplesHelper
       [ i.model, i.id ]
     end
   end
+
+  def location_options locations
+    locations.collect do |i|
+      [ i.name, i.id ]
+    end
+  end
+
 end

@@ -35,8 +35,7 @@ en:
     si_unit: SI unit
     timestamp: time
     instrument: instrument
-    latitude: latitude
-    longitude: longitude
+    location: geographical origin of the sample
   data_types:
     title: Data types
 

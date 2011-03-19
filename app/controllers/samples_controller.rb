@@ -13,6 +13,7 @@ class SamplesController < ApplicationController
   def new
     @instruments = current_user.instruments
     @data_types = DataType.all
+    @locations = current_user.locations
     @sample = Sample.new
   end
 
