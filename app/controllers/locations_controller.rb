@@ -33,7 +33,7 @@ class LocationsController < ApplicationController
 
   # PUT /locations/1
   def update
-    @location = location.find(params[:id])
+    @location = Location.find(params[:id])
     if @location.update_attributes(params[:location])
       redirect_to(@location, :notice => 'location was successfully updated.')
     else
