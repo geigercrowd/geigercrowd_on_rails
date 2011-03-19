@@ -16,9 +16,13 @@
     = f.select :data_type_id, data_type_options(@data_types)
     %br
   .field
-    = f.label :error
+    = f.label :deadtime, t('.deadtime')
     %br
-    = f.text_field :error, size: 3;
+    = f.text_field :deadtime, size: 7;
+  .field
+    = f.label :error, t('.error')
+    %br
+    = f.text_field :error, size: 7;
   .field
     = f.label :notes, t('.notes')
     %br

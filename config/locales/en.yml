@@ -15,6 +15,8 @@ en:
     form:
       model: model or type of device
       notes: description
+      deadtime: the deadtime of the device in microseconds. see manual and http://en.wikipedia.org/wiki/Dead_time
+      error: the average error-rate of the dead-time in microseconds
       si_unit: measured SI unit
     index:
       title: Instruments
@@ -22,7 +24,6 @@ en:
     new:
       title: New instrument
       add_instrument_notice: Before you can input any data you have to create at least one instrument, representing your measurement device.
-      error: Most devices have a certain error-rate. Please consult your manual.
     edit:
       title: Edit instrument
     create:
