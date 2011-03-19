@@ -11,9 +11,7 @@ class LocationsController < ApplicationController
 
   # GET /locations/new
   def new
-    if current_user.locations.empty?
-      flash[:notice] = t 'locations.new.add_location_notice'
-    end
+	@location = Location.new
   end
 
   # GET /locations/1/edit
