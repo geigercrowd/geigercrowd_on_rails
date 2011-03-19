@@ -8,6 +8,7 @@
       %th= t('instruments.si_unit')
       %th= t('samples.timestamp')
       %th= t('samples.instrument')
+      %th= t('samples.location')
       %th
   
   %tbody
@@ -17,6 +18,7 @@
         %td= sample.instrument.data_type.si_unit
         %td= l sample.timestamp.localtime, format: :short_with_zone
         %td= link_to sample.instrument.model, sample.instrument
+        %td= sample.location.name 
         %td
           = link_to t('show'), sample
           = link_to t('edit'), edit_sample_path(sample)
