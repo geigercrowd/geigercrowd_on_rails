@@ -28,13 +28,9 @@
     %br
     = f.text_area :notes, size: "70x30"
   .field
-    = f.label :latitude
+    = f.label :location_id, t('.location')
     %br
-    = f.text_field :latitude
-  .field
-    = f.label :longitude
-    %br
-    = f.text_field :longitude
+    = f.select :location_id, location_options(@locations)
 
   .actions
     = f.submit

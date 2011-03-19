@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110319143929) do
+ActiveRecord::Schema.define(:version => 20110319171755) do
 
   create_table "data_types", :force => true do |t|
     t.string   "name"
@@ -25,23 +25,30 @@ ActiveRecord::Schema.define(:version => 20110319143929) do
     t.integer  "user_id"
     t.string   "model"
     t.text     "notes"
-    t.float    "latitude"
-    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "deadtime"
     t.float    "error"
     t.float    "deathtime"
+    t.integer  "location_id"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "samples", :force => true do |t|
     t.integer  "instrument_id"
     t.float    "value"
-    t.float    "latitude"
-    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "timestamp"
+    t.integer  "location_id"
   end
 
   create_table "users", :force => true do |t|

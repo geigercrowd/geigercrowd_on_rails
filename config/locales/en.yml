@@ -18,6 +18,7 @@ en:
       deadtime: the deadtime of the device in microseconds. see manual and http://en.wikipedia.org/wiki/Dead_time
       error: the average error-rate of the dead-time in microseconds
       si_unit: measured SI unit
+      location: the default-location of your instrument
     index:
       title: Instruments
       new_instrument: New Instrument
@@ -35,8 +36,7 @@ en:
     si_unit: SI unit
     timestamp: time
     instrument: instrument
-    latitude: latitude
-    longitude: longitude
+    location: geographical origin of the sample
   data_types:
     title: Data types
 

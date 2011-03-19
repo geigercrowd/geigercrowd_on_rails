@@ -23,14 +23,9 @@
     %br
     = f.time_zone_select :timezone, nil, default: "UTC"
   .field
-    = f.label :latitude, t('samples.latitude')
+    = f.label :location_id, t('samples.location')
     %br
-    = f.text_field :latitude
-  .field
-    = f.label :longitude, t('samples.longitude')
-    %br
-    = f.text_field :longitude
-
+    = f.select :location_id, location_options(@locations)
   .actions
     = f.submit
 
