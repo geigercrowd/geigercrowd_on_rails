@@ -3,3 +3,6 @@
   = link_to t('back'), instruments_path
   = link_to t('edit'), edit_instrument_path(@instrument)
 %p= simple_format @instrument.notes
+%p= @instrument.deadtime
+%p= @instrument.error
+%p= @instrument.data_type.si_unit

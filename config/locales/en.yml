@@ -22,6 +22,7 @@ en:
     new:
       title: New instrument
       add_instrument_notice: Before you can input any data you have to create at least one instrument, representing your measurement device.
+      error: Most devices have a certain error-rate. Please consult your manual.
     edit:
       title: Edit instrument
     create:

@@ -14,6 +14,11 @@
     = f.label :data_type_id, t('.si_unit')
     %br
     = f.select :data_type_id, data_type_options(@data_types)
+    %br
+  .field
+    = f.label :error
+    %br
+    = f.text_field :error, size: 3;
   .field
     = f.label :notes, t('.notes')
     %br
