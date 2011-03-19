@@ -1,18 +1,23 @@
-%h1= t('.title')
-%p= link_to t('.new_sample'), new_sample_path
+%h1= t('samples.title')
+%p= link_to t('samples.new_sample'), new_sample_path
 
 %table
   %thead
     %tr
-      %th= Sample.human_attribute_name :value
-      %th= Sample.human_attribute_name :data_type_id
-      %th{:colspan => 3}= t 'actions'
+      %th= t('samples.value')
+      %th= t('instruments.si_unit')
+      %th= t('samples.timestamp')
+      %th= t('samples.instrument')
+      %th
   
   %tbody
     - for sample in @samples
       %tr{ :class => cycle(:odd, :even) }
         %td= sample.value
-        %td= sample.data_type_id
-        %td.action= link_to t('show'), sample
-        %td.action= link_to t('edit'), edit_sample_path(sample)
-        %td.action= link_to t('destroy'), sample, :confirm => t('are_you_sure'), :method => :delete
+        %td= sample.instrument.data_type.si_unit
+        %td= l sample.timestamp.localtime, format: :short_with_zone
+        %td= link_to sample.instrument.model, sample.instrument
+        %td
+          = link_to t('show'), sample
+          = link_to t('edit'), edit_sample_path(sample)
+          = link_to t('destroy'), sample, :confirm => t('confirm_delete'), :method => :delete

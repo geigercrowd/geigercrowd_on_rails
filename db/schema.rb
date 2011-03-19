@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110316194718) do
+ActiveRecord::Schema.define(:version => 20110319095620) do
 
   create_table "data_types", :force => true do |t|
     t.string   "name"
@@ -21,9 +21,10 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
   end
 
   create_table "instruments", :force => true do |t|
+    t.integer  "data_type_id"
+    t.integer  "user_id"
     t.string   "model"
     t.text     "notes"
-    t.integer  "user_id"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"
@@ -31,12 +32,13 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
   end
 
   create_table "samples", :force => true do |t|
+    t.integer  "instrument_id"
     t.float    "value"
-    t.integer  "data_type_id"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "timestamp"
   end
 
   create_table "users", :force => true do |t|
@@ -58,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20110316194718) do
     t.string   "real_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "admin"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

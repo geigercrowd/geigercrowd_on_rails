@@ -7,19 +7,27 @@
         %li= msg
   
   .field
-    = f.label :value
+    = f.label :instrument_id, t('samples.instrument')
+    %br
+    = f.select :instrument_id, instrument_options(@instruments)
+  .field
+    = f.label :value, t('samples.value')
     %br
     = f.text_field :value
   .field
-    = f.label :data_type_id, "Data type"
+    = f.label t('samples.timestamp')
     %br
-    = f.select :data_type_id, data_type_options(@data_types)
+    = f.datetime_select :timestamp, default: DateTime.now
   .field
-    = f.label :latitude
+    = f.label :timezone, t('time.zone')
+    %br
+    = f.time_zone_select :timezone, nil, default: "UTC"
+  .field
+    = f.label :latitude, t('samples.latitude')
     %br
     = f.text_field :latitude
   .field
-    = f.label :longitude
+    = f.label :longitude, t('samples.longitude')
     %br
     = f.text_field :longitude
 
