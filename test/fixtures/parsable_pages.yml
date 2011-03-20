@@ -1,0 +1,54 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+hokkaido:
+  id: 1
+  name: Hokkaido
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=01
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Hokkaido",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+tottori:
+  id: 2
+  name: Tottori
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=33
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => [{:location_admin_1 => "Tottori",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"},
+                                                   {:location_admin_1 => "Okayama",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"}]}
+                                                    
+hokkaido_plant:
+  id: 1
+  name: Hokkaido Plant
+  url: http://www.genshi.pref.hokkaido.jp/NewHatuden_H.html
+  type: MapParser
+  update_interval: 600
+  options: {:parse_item => "//table", :parse_options => [{:location_name => "Third left"}, nil, {:location_name => "Fifth right"}, nil,
+                                                         {:location_name => "Sixth right"}, nil, {:location_name => "Sixth left"},
+                                                         nil, {:location_name => "First left"}, nil, {:location_name => "Fourth left"},
+                                                         {:location_name => "First right"}, nil, {:location_name => "Fifth left"},
+                                                         {:location_name => "Third right"}, nil, {:location_name => "Second right"},
+                                                         {:location_name => "Second left"}, {:location_name => "Fourth right"}, {:location_name => "Seventh right"}], 
+                                      :static_options => {:value_type => "nGy/h"}, 
+                                      :time_options => {:regexp => "([0-9]{4})\u0094N([0-9]{2})\u008C\u008E([0-9]{2})\u0093ú\u0081@([0-9]{2})\u008E\u009E([0-9]{2})\u0095",
+                                                        :mapping => {:year => 1, :month => 2, :day => 3, :hour => 4, :minute => 5, :second => nil, :offset => "-06:00"}}}
