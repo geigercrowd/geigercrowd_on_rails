@@ -4,4 +4,11 @@ module InstrumentsHelper
       [ d.si_unit, d.id ]
     end
   end
+
+  def location_options locations
+    locations.collect do |i|
+      [ i.name, i.id ]
+    end
+  end
+
 end

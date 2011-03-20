@@ -13,6 +13,7 @@ class InstrumentsController < ApplicationController
   def new
     @data_types = DataType.all
     @instrument = Instrument.new
+    @locations = current_user.locations
     if current_user.instruments.empty?
       flash[:notice] = t 'instruments.new.add_instrument_notice'
     end

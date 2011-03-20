@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110319095620) do
+ActiveRecord::Schema.define(:version => 20110320064853) do
 
   create_table "data_types", :force => true do |t|
     t.string   "name"
@@ -25,8 +25,19 @@ ActiveRecord::Schema.define(:version => 20110319095620) do
     t.integer  "user_id"
     t.string   "model"
     t.text     "notes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "deadtime"
+    t.float    "error"
+    t.float    "deathtime"
+    t.integer  "location_id"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
     t.float    "latitude"
     t.float    "longitude"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,17 +45,16 @@ ActiveRecord::Schema.define(:version => 20110319095620) do
   create_table "samples", :force => true do |t|
     t.integer  "instrument_id"
     t.float    "value"
-    t.float    "latitude"
-    t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "timestamp"
+    t.integer  "location_id"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.string   "email",                               :default => "",    :null => false
+    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
+    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -60,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20110319095620) do
     t.string   "real_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "admin"
+    t.boolean  "admin",                               :default => false, :null => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
@@ -68,4 +78,3 @@ ActiveRecord::Schema.define(:version => 20110319095620) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
-

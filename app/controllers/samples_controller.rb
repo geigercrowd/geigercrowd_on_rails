@@ -1,7 +1,7 @@
 class SamplesController < ApplicationController
   # GET /samples
   def index
-    @samples = Sample.all
+    @samples = current_user.samples
   end
 
   # GET /samples/1
@@ -13,7 +13,12 @@ class SamplesController < ApplicationController
   def new
     @instruments = current_user.instruments
     @data_types = DataType.all
+    @locations = current_user.locations
     @sample = Sample.new
+    if current_user.instruments.empty?
+      flash[:error] = t 'sample.new.add_instrument_notice'
+    end
+
   end
 
   # GET /samples/1/edit
@@ -21,11 +26,13 @@ class SamplesController < ApplicationController
     @instruments = current_user.instruments
     @data_types = DataType.all
     @sample = Sample.find(params[:id])
+    @locations = current_user.locations
   end
 
   # POST /samples
   def create
     @sample = Sample.new(params[:sample])
+    @sample.user_id = current_user.id
 
     if @sample.save
       redirect_to new_sample_path,

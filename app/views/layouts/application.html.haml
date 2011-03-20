@@ -13,7 +13,7 @@
           %ul
             %li= link_to t('samples.title'), samples_path
             %li= link_to t('instruments.title'), instruments_path
-            - if current_user.admin?
+            - if current_user.try(:admin?)
               %li= link_to "Data types", data_types_path
 
     #message
