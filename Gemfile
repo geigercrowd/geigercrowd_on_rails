@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'pg',            '0.10.1'
 gem 'rails',         '3.0.5'
 gem 'sqlite3',       '1.3.3'
 gem 'devise',        '1.1.8'
