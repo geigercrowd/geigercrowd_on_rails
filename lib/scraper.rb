@@ -276,20 +276,5 @@ module Scraper
       end
       return data
     end
-    
-    def test
-      require 'scraper'
-      map = Scraper::MapParser.new("http://www.genshi.pref.hokkaido.jp/NewHatuden_H.html", "//table", 
-              [{:location_name => "Third left"}, nil, {:location_name => "Fifth right"}, nil,
-                {:location_name => "Sixth right"}, nil, {:location_name => "Sixth left"},
-                nil, {:location_name => "First left"}, nil, {:location_name => "Fourth left"},
-                {:location_name => "First right"}, nil, {:location_name => "Fifth left"},
-                {:location_name => "Third right"}, nil, {:location_name => "Second right"},
-                {:location_name => "Second left"}, {:location_name => "Fourth right"}, {:location_name => "Seventh right"}], 
-                {:value_type => "nGy/h"}, 
-                {:regexp => "([0-9]{4})\u0094N([0-9]{2})\u008C\u008E([0-9]{2})\u0093ú\u0081@([0-9]{2})\u008E\u009E([0-9]{2})\u0095",
-                :mapping => {:year => 1, :month => 2, :day => 3, :hour => 4, :minute => 5, :second => nil, :offset => "-06:00"}})
-      data = map.parse
-    end
   end
 end
