@@ -17,4 +17,4 @@
         %td= data_type.description
         %td.action= link_to t('show'), data_type
         %td.action= link_to t('edit'), edit_data_type_path(data_type)
-        %td.action= link_to t('destroy'), data_type, :confirm => t('are_you_sure'), :method => :delete
+        %td.action= link_to t('destroy'), data_type, :confirm => t('confirm_delete'), :method => :delete

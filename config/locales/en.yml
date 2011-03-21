@@ -43,7 +43,7 @@ en:
   data_types:
     index:
       title: Data types
-      new_data_type: New data type
+      new_data_type: Add data type
     new:
       title: Add data type
     edit:
