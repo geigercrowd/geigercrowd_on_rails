@@ -47,6 +47,7 @@ hope you enjoy it and find it usefull :)
           <ul>
             <li><%= link_to t('samples.index.title'), samples_path %></li>
             <li><%= link_to t('instruments.index.title'), instruments_path %></li>
+            <li><%= link_to t('locations.index.title'), locations_path %></li>
             <% if current_user.try :admin? %>
               <li><%= link_to t('data_types.index.title'), data_types_path %></li>
             <% end %>

@@ -9,6 +9,13 @@ en:
   destroy: delete
   confirm_delete: Are you sure?
   actions: actions
+  locations:
+    index:
+      title: Your Locations
+      new_location: create new Location
+    new:
+      title: Create a new Location
+      name: Name of Location (can be a personal Name, only Coordinates will be exported)
   instruments:
     title: Instruments
     si_unit: SI unit
@@ -20,7 +27,7 @@ en:
       si_unit: measured SI unit
       location: the default-location of your instrument
     index:
-      title: Instruments
+      title: Your Instruments
       new_instrument: Add Instrument
     new:
       title: New instrument
@@ -31,7 +38,7 @@ en:
       successful: Instrument was successfully created.
   samples:
     index:
-      title: Data
+      title: Your Data submissions
       new_sample: New sample
     value: value
     si_unit: SI unit
