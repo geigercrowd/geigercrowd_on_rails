@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+Smooth and Sleek by christopher robinson
+http://www.edg3.co.uk/
+hope you enjoy it and find it usefull :)
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head profile="http://gmpg.org/xfn/11">
+    <title>geigercrowd.net - crowd-sourcing radiation sensor data</title>	
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" media="screen" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-language" content="en-gb" />
+    <meta http-equiv="imagetoolbar" content="false" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta name="author" content="Christopher Robinson" />
+    <meta name="copyright" content="Copyright (c) Christopher Robinson 2005 - 2007" />
+    <meta name="description" content=""/>
+    <meta name="keywords" content="" />	
+    <meta name="last-modified" content="Thursday, 01 February 2007 12:00:00 GMT" />
+    <meta name="mssmarttagspreventparsing" content="true" />	
+    <meta name="robots" content="index, follow, noarchive" />
+    <meta name="revisit-after" content="7 days" />
+  </head>
+
+  <body>
+    <div id="header">
+      <div id="header_inside">
+        <h1>geiger<span>crowd</span>.net</h1>
+        <ul>
+          <li><a class="active" href="#">Data entry</a></li>
+          <li><a href="http://geigercrowd.net">Main</a></li>
+        </ul>		
+      </div>
+    </div>
+    <div id="content">
+      <div id="content_inside">
+        <div id="content_inside_sidebar">
+          <ul>
+            <li><%= link_to t('samples.index.title'), samples_path %></li>
+            <li><%= link_to t('instruments.index.title'), instruments_path %></li>
+            <% if current_user.try :admin? %>
+              <li><%= link_to t('data_types.index.title'), data_types_path %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div id="content_inside_main">
+          <%= yield %>
+        </div>	
+      </div>
+      <div id="footer">
+        <div id="footer_inside">
+          <p>Copyright &copy; <a href="#">Smooth and Sleek</a> 2007 | Designed by <a href="http://www.edg3.co.uk/" title="Freelance Web Site Design">edg3.co.uk</a> | Proudly Supporting <a href="http://www.opendesigns.org/" title="Community. Driven.">Open Designs</a> | Valid <a href="http://jigsaw.w3.org/css-validator/">CSS</a> &amp; <a href="http://validator.w3.org/">XHTML</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

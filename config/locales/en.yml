@@ -21,7 +21,7 @@ en:
       location: the default-location of your instrument
     index:
       title: Instruments
-      new_instrument: New Instrument
+      new_instrument: Add Instrument
     new:
       title: New instrument
       add_instrument_notice: Before you can input any data you have to create at least one instrument, representing your measurement device.
@@ -30,8 +30,9 @@ en:
     create:
       successful: Instrument was successfully created.
   samples:
-    title: Data
-    new_sample: New sample
+    index:
+      title: Data
+      new_sample: New sample
     value: value
     si_unit: SI unit
     timestamp: time
@@ -40,6 +41,14 @@ en:
     new:
       add_instrument_notice: There are no Instruments/Devices configured yet. You might want to create one first.
   data_types:
-    title: Data types
+    index:
+      title: Data types
+      new_data_type: New data type
+    new:
+      title: Add data type
+    edit:
+      title: Edit data type
+    show:
+      title: Show data type
 
 
