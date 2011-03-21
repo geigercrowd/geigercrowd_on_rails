@@ -32,7 +32,6 @@ class SamplesController < ApplicationController
   # POST /samples
   def create
     @sample = Sample.new(params[:sample])
-    @sample.user_id = current_user.id
 
     if @sample.save
       redirect_to new_sample_path,
