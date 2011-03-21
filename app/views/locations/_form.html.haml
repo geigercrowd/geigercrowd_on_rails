@@ -5,7 +5,11 @@
       %ul
       - @location.errors.full_messages.each do |msg|
         %li= msg
-  
+
+  .field
+    = f.label :name
+    %br
+    = f.text_field :name
   .field
     = f.label :latitude
     %br
@@ -14,10 +18,7 @@
     = f.label :longitude
     %br
     = f.text_field :longitude
-  .field
-    = f.label :name
-    %br
-    = f.text_field :name
+
 
   .actions
     = f.submit
