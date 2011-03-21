@@ -1,4 +1,27 @@
-form input, form textarea {
-  border: 1px dotted #99cc00;
+* {
+  outline: none;
+}
+
+form input, form textarea, form select {
+  outline: 1px dotted #99cc00;
   background-color: #f4f4f4;
+}
+
+.flash {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  padding: 5px;
+}
+
+.notice {
+  outline: 2px dashed #ffdd00;
+}
+
+.error {
+  outline: 2px dashed #ff0000;
+}
+
+.clear {
+  clear: both;
 }

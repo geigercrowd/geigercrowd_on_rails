@@ -16,7 +16,7 @@ class SamplesController < ApplicationController
     @locations = current_user.locations
     @sample = Sample.new
     if current_user.instruments.empty?
-      flash[:error] = t 'sample.new.add_instrument_notice'
+      flash[:error] = t('samples.new.add_instrument_notice', link: new_instrument_path)
     end
 
   end

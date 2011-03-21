@@ -31,7 +31,6 @@ en:
       new_instrument: Add Instrument
     new:
       title: New instrument
-      add_instrument_notice: Before you can input any data you have to create at least one instrument, representing your measurement device.
     edit:
       title: Edit instrument
     create:
@@ -47,8 +46,6 @@ en:
     timestamp: time
     instrument: instrument
     location: geographical origin of the sample
-    new:
-      add_instrument_notice: There are no Instruments/Devices configured yet. You might want to create one first.
   data_types:
     index:
       title: Data types
