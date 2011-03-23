@@ -17,4 +17,4 @@
         %td= location.name
         %td.action= link_to t('show'), location
         %td.action= link_to t('edit'), edit_location_path(location)
-        %td.action= link_to t('destroy'), location, :confirm => t('are_you_sure'), :method => :delete
+        %td.action= link_to t('destroy'), location, :confirm => t('confirm_delete'), :method => :delete

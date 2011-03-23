@@ -13,6 +13,7 @@ class InstrumentsController < ApplicationController
   def new
     @data_types = DataType.all
     @instrument = Instrument.new
+    @instrument.location = Location.new
     @locations = current_user.locations
   end
 

@@ -1,0 +1,12 @@
+#geolocation
+  %fieldset
+    %legend= t('locations.location')
+    = fields_for object.location do |l|
+      = l.label :name
+      %br
+      = l.text_field :name
+      %br
+      latitude:
+      = l.text_field :latitude, size: 16
+      longitude:
+      = l.text_field :longitude, size: 16
