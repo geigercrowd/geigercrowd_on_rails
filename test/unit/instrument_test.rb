@@ -1,8 +1,7 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class InstrumentTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  context "instrument" do
+    should_validate_presence_of :location
   end
 end

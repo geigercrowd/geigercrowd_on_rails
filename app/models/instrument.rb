@@ -5,4 +5,6 @@ class Instrument < ActiveRecord::Base
   has_many :samples
 
   accepts_nested_attributes_for :location
+
+  validates_presence_of :location
 end
