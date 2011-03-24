@@ -1,4 +1,5 @@
 class InstrumentsController < ApplicationController
+
   # GET /instruments
   def index
     @instruments = current_user.instruments
