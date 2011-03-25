@@ -14,6 +14,8 @@ end
 Factory.define :sample do |s|
   s.value 1.2345
   s.association :instrument
+  s.association :location
+  s.association :user
 end
 
 Factory.define :data_type do |d|

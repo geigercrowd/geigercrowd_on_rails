@@ -6,26 +6,23 @@
       - @sample.errors.full_messages.each do |msg|
         %li= msg
   
-  .field
+  %fieldset
     = f.label :instrument_id, t('samples.instrument')
     %br
     = f.select :instrument_id, instrument_options(@instruments)
-  .field
+  %fieldset
     = f.label :value, t('samples.value')
     %br
     = f.text_field :value
-  .field
+  = render partial: "locations/form_locator", locals: { object: @sample }
+  %fieldset
     = f.label t('samples.timestamp')
     %br
     = f.datetime_select :timestamp, default: DateTime.now
-  .field
+  %fieldset
     = f.label :timezone, t('time.zone')
     %br
     = f.time_zone_select :timezone, nil, default: "UTC"
-  .field
-    = f.label :location_id, t('samples.location')
-    %br
-    = f.select :location_id, location_options(@locations)
   .actions
     = f.submit
 
