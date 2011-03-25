@@ -4,6 +4,7 @@ class InstrumentsControllerTest < ActionController::TestCase
   context "instrument" do
     setup do
       @user = Factory :user
+      @user.confirm!
       @instrument = Factory :instrument
       @user.instruments << @instrument
       sign_in @user
@@ -20,9 +21,9 @@ class InstrumentsControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    should "create instrument" do
+    should "be created" do
       assert_difference('Instrument.count') do
-        post :create, :instrument => @instrument.attributes
+        post :create, :instrument => Factory.build(:instrument).attributes
       end
 
       assert_redirected_to instrument_path(assigns(:instrument))

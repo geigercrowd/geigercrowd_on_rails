@@ -28,8 +28,7 @@ class InstrumentsController < ApplicationController
     @instrument = Instrument.create(params[:instrument])
     current_user.instruments << @instrument
     if @instrument.valid?
-      redirect_to instruments_path,
-        :notice => t('instruments.create.successful')
+      redirect_to @instrument, :notice => t('instruments.create.successful')
     else
       render :action => "new"
     end
