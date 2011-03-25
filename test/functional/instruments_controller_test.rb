@@ -25,7 +25,6 @@ class InstrumentsControllerTest < ActionController::TestCase
       assert_difference('Instrument.count') do
         post :create, :instrument => Factory.build(:instrument).attributes
       end
-
       assert_redirected_to instrument_path(assigns(:instrument))
     end
 
@@ -48,7 +47,6 @@ class InstrumentsControllerTest < ActionController::TestCase
       assert_difference('Instrument.count', -1) do
         delete :destroy, :id => @instrument.to_param
       end
-
       assert_redirected_to instruments_path
     end
   end
