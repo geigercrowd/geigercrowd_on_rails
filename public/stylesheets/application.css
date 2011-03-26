@@ -40,5 +40,10 @@ fieldset legend {
 
 form .field_description {
   margin-left: 15px;
+  margin-bottom: 5px;
+  color: #aaaaaa;
+}
+
+span.label {
   color: #aaaaaa;
 }

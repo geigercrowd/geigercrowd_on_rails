@@ -1,8 +1,9 @@
 Geigercrowd::Application.routes.draw do
   resources :data_types
-  resources :samples
-  resources :instruments
+  resources :instruments do
+    resources :samples
+  end
   resources :locations
   devise_for :users
-  root :to => "samples#index"
+  root :to => "instruments#index"
 end

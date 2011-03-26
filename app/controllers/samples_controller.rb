@@ -9,16 +9,19 @@ class SamplesController < ApplicationController
     @sample = Sample.find(params[:id])
   end
 
-  # GET /samples/new
+  # GET /instrument/1/samples/new
   def new
-    @instruments = current_user.instruments
-    @data_types = DataType.all
-    @locations = current_user.locations
-    @sample = Sample.new location: Location.new
-    if current_user.instruments.empty?
-      flash[:error] = t('samples.new.add_instrument_notice', link: new_instrument_path)
-    end
+    @instrument = current_user.instruments.select do |i|
+      i.id == params["instrument_id"].to_i
+    end.first
 
+    if @instrument.nil?
+      flash[:error] = t('samples.new.add_instrument_notice', link: new_instrument_path)
+      redirect_to new_instrument_path
+    else
+      @sample = Sample.new instrument_id: @instrument.id,
+        location: @instrument.location || Location.new
+    end
   end
 
   # GET /samples/1/edit

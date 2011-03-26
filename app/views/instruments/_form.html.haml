@@ -11,22 +11,22 @@
     %br
     = f.text_field :model, size: 50;
   %fieldset
-    = f.label :data_type_id, t('.si_unit')
+    = f.label :data_type_id, t('instruments.si_unit')
     %br
     = f.select :data_type_id, data_type_options(@data_types)
     %br
   %fieldset
     %legend= t('.model_parameters')
-    = f.label :deadtime, t('.deadtime')
+    = f.label :deadtime, t('instruments.deadtime')
     .field_description= t('.deadtime_description').html_safe
     = f.text_field :deadtime, size: 7;
     %br
-    = f.label :error, t('.error')
+    = f.label :error, t('instruments.error')
     .field_description= t('.deadtime_error_description')
     = f.text_field :error, size: 7;
-  = render partial: "locations/form_locator", locals: { object: @instrument }
+  = render partial: "locations/form_locator", locals: { form: f }
   %fieldset
-    %legend= t('.notes')
+    %legend= t('instruments.notes')
     .field_description= t('.notes_description')
     = f.text_area :notes, size: "70x20"
   .actions

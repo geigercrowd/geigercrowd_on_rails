@@ -10,8 +10,10 @@ en:
   confirm_delete: Are you sure?
   actions: actions
   locations:
-    location: Location
+    title: Location
     geolocate_me: try to locate me
+    latitude: latitude
+    longitude: longitude
     index:
       title: Locations
       new_location: create new Location
@@ -21,37 +23,44 @@ en:
   instruments:
     title: Instruments
     si_unit: SI unit
+    deadtime: dead time
+    model: model
+    notes: description
+    error: dead time error
     form:
       model: model or type of device
       model_parameters: model parameters
-      notes: description
       notes_description: Add a description or any further details of your device.
-      deadtime: dead time
       deadtime_description: "The deadtime of your device in microseconds. See your device's manual and read <a href=\"http://en.wikipedia.org/wiki/Dead_time\">this</a>."
-      error: dead time error
-      deadtime_error_description: The average error-rate of your device's dead-time in microseconds
-      si_unit: measured SI unit
+      deadtime_error_description: "The average error-rate of your device's dead-time in microseconds"
       location: the default-location of your instrument
     index:
       title: Instruments
       new_instrument: Add Instrument
+      add_samples: add samples
     new:
       title: New instrument
     edit:
       title: Edit instrument
     create:
       successful: Instrument was successfully created.
+    show:
+      title: Data sheet
   samples:
-    index:
-      title: Data submissions
-      new_sample: submit new Sample
-   
     title: Submit Data
     value: value
     si_unit: SI unit
     timestamp: time
     instrument: instrument
     location: geographical origin of the sample
+    index:
+      title: Data submissions
+      new_sample: submit new Sample
+    new:
+      title: Add sample
+      new_sample_for: New sample for
+    form:
+      location_from_instrument: The location is determined by the location of your instrument. If you intend to specify a location for each sample seperately (e.g. for mobile equipment), clear the location of your instrument.
   data_types:
     index:
       title: Data types

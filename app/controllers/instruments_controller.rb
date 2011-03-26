@@ -20,6 +20,7 @@ class InstrumentsController < ApplicationController
 
   # GET /instruments/1/edit
   def edit
+    @data_types = DataType.all
     @instrument = Instrument.find(params[:id])
   end
 

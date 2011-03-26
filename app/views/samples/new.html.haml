@@ -1,3 +1,5 @@
 %h2= t '.title'
-%p= link_to t('back'), samples_path
+%p
+  %h3= "#{t('.new_sample_for')} #{@instrument.model}"
+%p= link_to t('back'), instruments_path
 = render 'form'

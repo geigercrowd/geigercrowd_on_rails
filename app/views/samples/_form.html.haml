@@ -1,4 +1,4 @@
-= form_for(@sample) do |f|
+= form_for([@instrument, @sample]) do |f|
   - if @sample.errors.any?
     #errorExplanation
       %h2= "#{pluralize(@sample.errors.count, 'error')} prohibited this user from being saved:"
@@ -7,14 +7,10 @@
         %li= msg
   
   %fieldset
-    = f.label :instrument_id, t('samples.instrument')
-    %br
-    = f.select :instrument_id, instrument_options(@instruments)
-  %fieldset
     = f.label :value, t('samples.value')
     %br
-    = f.text_field :value
-  = render partial: "locations/form_locator", locals: { object: @sample }
+    = f.text_field :value, size: 8 
+    = @instrument.data_type.si_unit
   %fieldset
     = f.label t('samples.timestamp')
     %br
@@ -23,6 +19,12 @@
     = f.label :timezone, t('time.zone')
     %br
     = f.time_zone_select :timezone, nil, default: "UTC"
+  %fieldset
+    %legend= t('locations.title')
+  - if @sample.location.id.nil?
+    = render partial: "locations/form_locator", locals: { form: f }
+  - else
+    = t('.location_from_instrument')
   .actions
     = f.submit
 

@@ -2,7 +2,33 @@
 %p
   = link_to t('back'), instruments_path
   = link_to t('edit'), edit_instrument_path(@instrument)
-%p= simple_format @instrument.notes
-%p= @instrument.deadtime
-%p= @instrument.error
-%p= @instrument.data_type.si_unit
+%p
+  %span.label= t('instruments.model')
+  %br
+  = @instrument.model
+%p
+  %span.label= t('instruments.si_unit')
+  %br
+  = @instrument.data_type.si_unit
+%p
+  %span.label= t('instruments.deadtime')
+  %br
+  = @instrument.deadtime
+%p
+  %span.label= t('instruments.error')
+  %br
+  = @instrument.error
+%p
+  %span.label= t('locations.title')
+  %br
+  = t('locations.latitude')
+  \:
+  = @instrument.location.latitude
+  &nbsp;
+  = t('locations.longitude')
+  \:
+  = @instrument.location.longitude
+%p
+  %span.label= t('instruments.notes')
+  %br
+  = simple_format @instrument.notes
