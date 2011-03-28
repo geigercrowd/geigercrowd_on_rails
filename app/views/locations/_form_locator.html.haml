@@ -1,11 +1,9 @@
-#geolocation
-  %fieldset
-    = form.fields_for :location do |l|
-      = l.label :name
-      %br
-      = l.text_field :name, id: "location_name"
-      %br
-      latitude:
-      = l.text_field :latitude, size: 16, id: "location_latitude"
-      longitude:
-      = l.text_field :longitude, size: 16, id: "location_longitude"
+= form.fields_for :location do |l|
+  = l.label :name
+  %br
+  = l.text_field :name, id: "location_name"
+  %br
+  latitude:
+  = l.text_field :latitude, size: 16, id: "location_latitude"
+  longitude:
+  = l.text_field :longitude, size: 16, id: "location_longitude"

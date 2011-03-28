@@ -20,14 +20,17 @@
   = @instrument.error
 %p
   %span.label= t('locations.title')
-  %br
-  = t('locations.latitude')
-  \:
-  = @instrument.location.latitude
-  &nbsp;
-  = t('locations.longitude')
-  \:
-  = @instrument.location.longitude
+  - if @instrument.location.present?
+    %br
+    = t('locations.latitude')
+    \:
+    = @instrument.location.latitude
+    &nbsp;
+    = t('locations.longitude')
+    \:
+    = @instrument.location.longitude
+  - else
+    = t('.no_location')
 %p
   %span.label= t('instruments.notes')
   %br

@@ -34,10 +34,11 @@ class SamplesController < ApplicationController
 
   # POST /samples
   def create
+    @instrument = Instrument.find params["instrument_id"]
     @sample = Sample.new(params[:sample])
-
     if @sample.save
-      redirect_to new_sample_path,
+      @instrument.samples << @sample
+      redirect_to new_instrument_sample_path,
         :notice => 'Sample was successfully created'
     else
       render :action => "new"

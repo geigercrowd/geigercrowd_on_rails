@@ -1,4 +1,11 @@
 en:
+  activerecord:
+    errors:
+      models:
+        instrument:
+          attributes:
+            new_location:
+              blank: has to be specified as moved or corrected
   time:
     zone: timezone
     formats:
@@ -34,6 +41,9 @@ en:
       deadtime_description: "The deadtime of your device in microseconds. See your device's manual and read <a href=\"http://en.wikipedia.org/wiki/Dead_time\">this</a>."
       deadtime_error_description: "The average error-rate of your device's dead-time in microseconds"
       location: the default-location of your instrument
+      on_location_change: "On location change:"
+      instrument_has_been_moved: The instrument has been moved to another location.
+      instrument_location_correction: The instrument has <b>not</b> been moved, the coordinates are only corrected. Please note, that this also changes the location for all Samples associated with this instrument and location.
     index:
       title: Instruments
       new_instrument: Add Instrument
@@ -46,6 +56,7 @@ en:
       successful: Instrument was successfully created.
     show:
       title: Data sheet
+      no_location: No location
   samples:
     title: Submit Data
     value: value

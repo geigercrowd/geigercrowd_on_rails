@@ -7,7 +7,6 @@ end
 
 Factory.define :instrument do |i|
   i.model "Kaleidoscope"
-  i.association :location
   i.association :data_type
 end
 

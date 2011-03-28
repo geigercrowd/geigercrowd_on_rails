@@ -22,10 +22,9 @@ class SamplesControllerTest < ActionController::TestCase
 
     should "create sample" do
       assert_difference('Sample.count') do
-        post :create, :sample => @sample.attributes
+        post :create, :sample => { value: 1.234 }
       end
-
-      assert_redirected_to sample_path(assigns(:sample))
+      assert_redirected_to new_instrument_sample_path
     end
 
     should "show sample" do

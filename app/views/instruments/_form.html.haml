@@ -1,7 +1,7 @@
 = form_for(@instrument) do |f|
   - if @instrument.errors.any?
     #errorExplanation
-      %h2= "#{pluralize(@instrument.errors.count, 'error')} prohibited this user from being saved:"
+      %h2= "#{pluralize(@instrument.errors.count, 'error')} prohibited this instrument from being saved:"
       %ul
       - @instrument.errors.full_messages.each do |msg|
         %li= msg
@@ -24,7 +24,18 @@
     = f.label :error, t('instruments.error')
     .field_description= t('.deadtime_error_description')
     = f.text_field :error, size: 7;
-  = render partial: "locations/form_locator", locals: { form: f }
+  %fieldset
+    %legend= t('locations.title')
+    = render partial: "locations/form_locator", locals: { form: f }
+    - unless @instrument.location.nil?
+      %br
+      = t('.on_location_change')
+      %br
+      = radio_button_tag :new_location, "true"
+      %div= t('.instrument_has_been_moved').html_safe
+      %br
+      = radio_button_tag :new_location, "false"
+      %div= t('.instrument_location_correction').html_safe
   %fieldset
     %legend= t('instruments.notes')
     .field_description= t('.notes_description')

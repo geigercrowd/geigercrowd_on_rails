@@ -47,3 +47,10 @@ form .field_description {
 span.label {
   color: #aaaaaa;
 }
+
+input[type="radio"] {
+  vertical-align: middle;
+  float: left;
+  margin-right: 10px;
+  outline: none;
+}
