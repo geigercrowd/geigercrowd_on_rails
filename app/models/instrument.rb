@@ -9,6 +9,11 @@ class Instrument < ActiveRecord::Base
 
   private
 
+  # When the associated location's coordinates are changed:
+  # * creates a new location, when new_location is true,
+  # * changes the existing location's coordinates when new_location is false,
+  # * renders the instrument invalid when new_location is neither true nor false,
+  # * sets location_id nil if the location's coordinates are both blank
   def on_location_change
     if location.present?
       if location.latitude.blank? && location.longitude.blank?
