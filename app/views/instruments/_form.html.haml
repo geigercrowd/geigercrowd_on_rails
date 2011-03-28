@@ -27,7 +27,7 @@
   %fieldset
     %legend= t('locations.title')
     = render partial: "locations/form_locator", locals: { form: f }
-    - unless @instrument.location.nil?
+    - unless @instrument.location.try(:id).nil?
       %br
       = t('.on_location_change')
       %br

@@ -22,6 +22,7 @@ class InstrumentsController < ApplicationController
   def edit
     @data_types = DataType.all
     @instrument = Instrument.find(params[:id])
+    @instrument.location ||= Location.new
   end
 
   # POST /instruments
