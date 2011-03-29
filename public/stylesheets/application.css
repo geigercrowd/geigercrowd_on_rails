@@ -54,3 +54,9 @@ input[type="radio"] {
   margin-right: 10px;
   outline: none;
 }
+
+#breadcrumbs {
+  color: #aaaaaa;
+  font-weight: normal;
+  font-weight: bold;
+}

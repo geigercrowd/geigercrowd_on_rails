@@ -55,6 +55,9 @@ hope you enjoy it and find it usefull :)
           </ul>
         </div>
         <div id="content_inside_main">
+          <div id="breadcrumbs">
+            <%= render_breadcrumbs.html_safe %>
+          </div>
           <%= yield %>
         </div>	
       </div>

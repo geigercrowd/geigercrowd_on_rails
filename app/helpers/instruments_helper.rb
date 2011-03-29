@@ -4,4 +4,8 @@ module InstrumentsHelper
       [ i.model, i.id ]
     end
   end
+
+  def instrument_model
+    @instrument.model
+  end
 end

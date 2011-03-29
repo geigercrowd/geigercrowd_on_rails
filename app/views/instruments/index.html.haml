@@ -5,6 +5,5 @@
     = instrument.model
     = link_to t('show'), instrument_path(instrument)
     = link_to t('edit'), edit_instrument_path(instrument)
-    = link_to t('destroy'), instrument, :confirm => t('confirm_delete'), :method => :delete
     &nbsp;
     = link_to t('.add_samples'), new_instrument_sample_path(instrument_id: instrument.id)

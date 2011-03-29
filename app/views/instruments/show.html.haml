@@ -2,6 +2,7 @@
 %p
   = link_to t('back'), instruments_path
   = link_to t('edit'), edit_instrument_path(@instrument)
+  = link_to t('destroy'), @instrument, :confirm => t('confirm_delete'), :method => :delete
 %p
   %span.label= t('instruments.model')
   %br

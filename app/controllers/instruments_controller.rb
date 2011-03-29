@@ -1,4 +1,5 @@
 class InstrumentsController < ApplicationController
+  add_breadcrumb I18n.t('breadcrumbs.instruments'), :instruments_path
 
   # GET /instruments
   def index
@@ -8,6 +9,7 @@ class InstrumentsController < ApplicationController
   # GET /instruments/1
   def show
     @instrument = Instrument.find(params[:id])
+    add_breadcrumb @instrument.model, :instrument_path
   end
 
   # GET /instruments/new
@@ -16,6 +18,7 @@ class InstrumentsController < ApplicationController
     @instrument = Instrument.new
     @instrument.location = Location.new
     @locations = current_user.locations
+    add_breadcrumb I18n.t('new'), :new_instrument_path
   end
 
   # GET /instruments/1/edit
@@ -23,6 +26,8 @@ class InstrumentsController < ApplicationController
     @data_types = DataType.all
     @instrument = Instrument.find(params[:id])
     @instrument.location ||= Location.new
+    add_breadcrumb @instrument.model, :instrument_path
+    add_breadcrumb I18n.t('edit'), :edit_instrument_path
   end
 
   # POST /instruments

@@ -31,6 +31,7 @@ GEM
     archive-tar-minitar (0.5.2)
     arel (2.0.9)
     bcrypt-ruby (2.1.4)
+    breadcrumbs_on_rails (1.0.1)
     builder (2.1.2)
     columnize (0.3.2)
     devise (1.1.8)
@@ -104,6 +105,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  breadcrumbs_on_rails (= 1.0.1)
   devise (= 1.1.8)
   factory_girl_rails (~> 1.0.1)
   haml (= 3.0.25)

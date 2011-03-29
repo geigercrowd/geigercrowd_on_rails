@@ -13,6 +13,7 @@ en:
   back: back
   show: show
   edit: edit
+  new: new
   destroy: delete
   confirm_delete: Are you sure?
   actions: actions
@@ -82,5 +83,8 @@ en:
       title: Edit data type
     show:
       title: Show data type
+  breadcrumbs:
+    instruments: instruments
+    samples: samples
 
 
