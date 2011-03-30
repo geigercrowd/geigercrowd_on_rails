@@ -15,4 +15,5 @@ group :test do
   gem 'shoulda',            '~> 2.11.3'
   gem 'mocha',              '~> 0.9.12'
   gem 'factory_girl_rails', '~> 1.0.1'
+  gem 'simplecov', '>= 0.4.1', :require => false
 end
