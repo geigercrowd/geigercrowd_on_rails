@@ -3,16 +3,19 @@ require_relative '../test_helper'
 class SamplesControllerTest < ActionController::TestCase
   context "samples" do
     setup do
-      @user = Factory :user
-      @user.confirm!
-      sign_in @user
-      @sample = Factory :sample
+      @us = Factory :user
+      @us.confirm!
+      sign_in @us
+
+      @our_sample = Factory :sample, user: @us
+      @other_user = Factory :user
+      @other_sample = Factory :sample, user: @other_user
     end
 
-    should "get index" do
+    should "show all samples associated with a given instrument" do
       get :index
       assert_response :success
-      assert_not_nil assigns(:samples)
+      assert_equal [ @our_sample ], assigns(:samples)
     end
 
     should "get new" do

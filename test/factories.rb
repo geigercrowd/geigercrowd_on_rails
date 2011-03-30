@@ -1,7 +1,7 @@
 Factory.define :user do |u|
   u.real_name "John Doe"
   u.screen_name "john_doe"
-  u.email "john@doe.xyz"
+  u.sequence(:email) { |i| "johnny#{i}@example.com" }
   u.password "secret"
 end
 
@@ -14,12 +14,11 @@ Factory.define :sample do |s|
   s.value 1.2345
   s.association :instrument
   s.association :location
-  s.association :user
 end
 
 Factory.define :data_type do |d|
-  d.name "foos per second"
-  d.si_unit "foos/s"
+  d.name "foo per second"
+  d.si_unit "foo/s"
 end
 
 Factory.define :location do |l|

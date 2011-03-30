@@ -3,7 +3,9 @@ require_relative '../test_helper'
 class SampleTest < ActiveSupport::TestCase
   context "sample" do
     setup do
+      @user = Factory :user
       @sample = Factory :sample
+      @user.instruments << @sample.instrument
     end
 
     should_validate_presence_of :location
