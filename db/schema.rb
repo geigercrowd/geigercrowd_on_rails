@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20110322083213) do
     t.datetime "updated_at"
     t.integer  "deadtime"
     t.float    "error"
-    t.float    "deathtime"
+    t.float    "deadtime"
     t.integer  "location_id"
   end
 
