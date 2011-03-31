@@ -3,11 +3,9 @@ require_relative '../test_helper'
 class InstrumentsControllerTest < ActionController::TestCase
   context "instruments" do
     setup do
-      @user = Factory :user
-      @user.confirm!
       @instrument = Factory :instrument
-      @location = Factory :location
-      @user.instruments << @instrument
+      @user = @instrument.user
+      @user.confirm!
       sign_in @user
     end
 
@@ -23,7 +21,7 @@ class InstrumentsControllerTest < ActionController::TestCase
     end
 
     should "be created with location" do
-      instrument = Factory.build :instrument, user: @user
+      instrument = Factory.build :instrument, user: @user, location: nil
       assert_nil instrument.location
       location = Factory.build :location, user: @user
       assert_difference('Instrument.count') do
@@ -36,7 +34,7 @@ class InstrumentsControllerTest < ActionController::TestCase
     end
 
     should "be created without location" do
-      instrument = Factory.build :instrument
+      instrument = Factory.build :instrument, location: nil
       assert_nil instrument.location
       location = Factory.build :location, longitude: nil, latitude: nil, user: @user
       assert_difference('Instrument.count') do

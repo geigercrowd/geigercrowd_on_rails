@@ -4,23 +4,29 @@ class SampleTest < ActiveSupport::TestCase
   context "sample" do
     setup do
       @sample = Factory :sample
+      @instrument = @sample.instrument
     end
 
-    should_validate_presence_of :location
-
-    should "belong to a user through an instrument" do
-      assert_equal @sample.instrument.user, @sample.user
-      assert_equal @sample, @sample.instrument.user.samples.first
-    end
-
-    should "accept nested attributes for location" do
-      sample = Factory.build(:sample, location: nil)
-      location = Factory.build(:location)
-      assert_difference('Sample.count') do
-        Sample.create sample.attributes.merge(location_attributes: location.attributes)
+    context "relationships" do
+      should "belong to instrument" do
+        instrument = @sample.instrument
+        assert_equal [ @sample ], instrument.samples
       end
-      assert_equal Location.first, Sample.first.location
+
+      should "have a user" do
+        user = @sample.user
+        assert_equal [ @sample ], user.samples
+      end
+
+      should "have a data type" do
+        assert_equal @instrument.data_type, @sample.data_type
+      end
     end
 
+    should "take its instrument's location if not specified" do
+      new_sample = @instrument.samples.create value: 12.34, timestamp: DateTime.now
+      assert_valid new_sample
+      assert_equal @instrument.location, @instrument.samples.last.location
+    end
   end
 end
