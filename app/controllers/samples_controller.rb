@@ -48,24 +48,25 @@ class SamplesController < ApplicationController
 
   # POST /instruments/1/samples
   def create
-    @instrument = Instrument.find params["instrument_id"]
-    @sample = @instrument.samples.new params[:sample]
-    if @sample.save
+    @sample = current_user.instruments.find(params[:instrument_id]).
+      samples.new(params[:sample]) rescue nil
+    if @sample && @sample.save
       redirect_to new_instrument_sample_path,
         :notice => 'Sample was successfully created'
     else
-      render :action => "new"
+      redirect_to :root
     end
   end
 
   # PUT /instruments/1/samples/1
   def update
-    @sample = Sample.find(params[:id])
-    if @sample.update_attributes(params[:sample])
+    @sample = current_user.instruments.find(params[:instrument_id]).
+      samples.find(params[:id]) rescue nil
+    if @sample && @sample.update_attributes(params[:sample])
       redirect_to [ @sample.instrument, @sample ],
         notice: 'Sample was successfully updated.'
     else
-      render action: "edit"
+      redirect_to :root
     end
   end
 

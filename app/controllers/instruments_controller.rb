@@ -43,11 +43,15 @@ class InstrumentsController < ApplicationController
 
   # PUT /instruments/1
   def update
-    @instrument = Instrument.find(params[:id])
-    if @instrument.update_attributes(params[:instrument])
-      redirect_to(@instrument, :notice => 'Instrument was successfully updated.')
+    @instrument = Instrument.find params[:id]
+    if @instrument.user == current_user
+      if @instrument.update_attributes params[:instrument]
+        redirect_to @instrument, :notice => t('.success_message')
+      else
+        render :action => "edit"
+      end
     else
-      render :action => "edit"
+      render action: "show"
     end
   end
 

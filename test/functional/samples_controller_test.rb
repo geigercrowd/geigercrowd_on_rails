@@ -26,7 +26,7 @@ class SamplesControllerTest < ActionController::TestCase
     should "be creatable" do
       assert_difference('@our_sample.instrument.samples.count') do
         post :create, instrument_id: @our_sample.instrument,
-                      sample: { value: 1.234, timestamp: DateTime.now }
+          sample: { value: 1.234, timestamp: DateTime.now }
       end
       assert_redirected_to new_instrument_sample_path
     end
@@ -61,6 +61,29 @@ class SamplesControllerTest < ActionController::TestCase
           instrument_id: @our_sample.instrument.id
       end
       assert_redirected_to instrument_samples_path @our_sample.instrument
+    end
+
+    context "of other users" do
+      should "not be updated" do
+        old_times = @other_sample.timestamp
+        old_values = @other_sample.value
+        put :update, id: @other_sample.to_param,
+          instrument_id: @other_sample.instrument.id,
+          sample: { value:     old_values + 5.0,
+                    timestamp: old_times - 1.day }
+        assert_redirected_to :root
+        @other_sample.reload
+        assert_equal old_times.to_s, @other_sample.timestamp.to_s
+        assert_equal old_values, @other_sample.value
+      end
+
+      should "not be created" do
+        assert_no_difference("Sample.count") do
+          post :create, instrument_id: @other_sample.instrument.id,
+            sample: { value: 1.4, timestamp: DateTime.now }
+        end
+        assert_redirected_to :root
+      end
     end
   end
 end
