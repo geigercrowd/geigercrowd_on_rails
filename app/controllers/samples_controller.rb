@@ -3,26 +3,26 @@ class SamplesController < ApplicationController
   add_breadcrumb :instrument_model, :instruments_path
   add_breadcrumb I18n.t('breadcrumbs.samples'), :instrument_samples_path
 
-  # GET /samples
+  # GET /instruments/1/samples
   def index
     @instrument = Instrument.first conditions:
-      { user: current_user, id: params[:instrument_id] }
+      { user_id: current_user.id, id: params[:instrument_id] }
     @samples = @instrument.samples
   end
 
-  # GET /samples/1
+  # GET /instruments/1/samples/1
   def show
     @instrument = Instrument.first conditions:
-      { user: current_user, id: params[:instrument_id] }
-    @sample = @instrument.samples.select { |s| s.id = params[:id] }
+      { user_id: current_user.id, id: params[:instrument_id] }
+    @sample = Sample.first conditions: {
+      id: params[:id], instrument_id: params[:instrument_id], }
     add_breadcrumb @sample.id, :instrument_sample_path
   end
 
-  # GET /instrument/1/samples/new
+  # GET /instruments/1/samples/new
   def new
-    @instrument = current_user.instruments.select do |i|
-      i.id == params["instrument_id"].to_i
-    end.first
+    @instrument = Instrument.first conditions:
+      { user_id: current_user.id, id: params[:instrument_id] }
     add_breadcrumb I18n.t('new'), :new_instrument_sample_path
 
     if @instrument.nil?
@@ -34,8 +34,10 @@ class SamplesController < ApplicationController
     end
   end
 
-  # GET /samples/1/edit
+  # GET /instruments/1/samples/1/edit
   def edit
+    @instrument = Instrument.first conditions:
+      { user_id: current_user.id, id: params[:instrument_id] }
     @instruments = current_user.instruments
     @data_types = DataType.all
     @sample = Sample.find(params[:id])
@@ -44,12 +46,11 @@ class SamplesController < ApplicationController
     add_breadcrumb I18n.t('edit'), :edit_instrument_sample_path
   end
 
-  # POST /samples
+  # POST /instruments/1/samples
   def create
     @instrument = Instrument.find params["instrument_id"]
-    @sample = Sample.new(params[:sample])
+    @sample = @instrument.samples.new params[:sample]
     if @sample.save
-      @instrument.samples << @sample
       redirect_to new_instrument_sample_path,
         :notice => 'Sample was successfully created'
     else
@@ -57,20 +58,21 @@ class SamplesController < ApplicationController
     end
   end
 
-  # PUT /samples/1
+  # PUT /instruments/1/samples/1
   def update
     @sample = Sample.find(params[:id])
     if @sample.update_attributes(params[:sample])
-      redirect_to(@sample, :notice => 'Sample was successfully updated.')
+      redirect_to [ @sample.instrument, @sample ],
+        notice: 'Sample was successfully updated.'
     else
-      render :action => "edit"
+      render action: "edit"
     end
   end
 
-  # DELETE /samples/1
+  # DELETE /instruments/1/samples/1
   def destroy
     @sample = Sample.find(params[:id])
     @sample.destroy
-    redirect_to(samples_url)
+    redirect_to instrument_samples_path @sample.instrument
   end
 end

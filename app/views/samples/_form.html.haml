@@ -1,4 +1,4 @@
-= form_for([@instrument, @sample]) do |f|
+= form_for [ @sample.instrument, @sample ] do |f|
   - if @sample.errors.any?
     #errorExplanation
       %h2= "#{pluralize(@sample.errors.count, 'error')} prohibited this user from being saved:"
@@ -10,7 +10,7 @@
     = f.label :value, t('samples.value')
     %br
     = f.text_field :value, size: 8 
-    = @instrument.data_type.si_unit
+    = @sample.instrument.data_type.si_unit
   %fieldset
     = f.label t('samples.timestamp')
     %br

@@ -1,5 +1,5 @@
 %h2= t '.title'
 %p
-  = link_to t('back'), samples_path
-  = link_to t('show'), @sample
+  = link_to t('back'), instrument_samples_path(@sample.instrument, @sample)
+  = link_to t('show'), [ @sample.instrument, @sample ]
 = render 'form'

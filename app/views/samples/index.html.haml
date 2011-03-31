@@ -8,7 +8,6 @@
       %th= t('instruments.si_unit')
       %th= t('samples.timestamp')
       %th= t('samples.instrument')
-      %th= t('samples.location')
       %th
   
   %tbody
@@ -18,9 +17,8 @@
         %td= sample.instrument.data_type.si_unit 
         %td= l sample.timestamp.localtime, format: :short_with_zone
         %td= link_to sample.instrument.model, sample.instrument
-        %td= link_to sample.location.name, sample.location
         %td
-          = link_to t('show'), sample
-          = link_to t('edit'), edit_instrument_sample_path(sample)
-          = link_to t('destroy'), sample, :confirm => t('confirm_delete'), :method => :delete
+          = link_to t('show'), [ sample.instrument, sample ]
+          = link_to t('edit'), edit_instrument_sample_path(sample.instrument, sample)
+          = link_to t('destroy'), [ sample.instrument, sample ], :confirm => t('confirm_delete'), :method => :delete
 

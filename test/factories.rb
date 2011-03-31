@@ -8,10 +8,13 @@ end
 Factory.define :instrument do |i|
   i.model "Kaleidoscope"
   i.association :data_type
+  i.association :location
+  i.association :user
 end
 
 Factory.define :sample do |s|
   s.value 1.2345
+  s.sequence(:timestamp) { DateTime.now }
   s.association :instrument
   s.association :location
 end

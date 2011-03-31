@@ -1,7 +1,7 @@
 %h2= t '.title'
 %p
-  = link_to t('back'), samples_path
-  = link_to t('edit'), edit_sample_path(@sample)
+  = link_to t('back'), [ @sample.instrument, @sample ]
+  = link_to t('edit'), edit_instrument_sample_path(@sample.instrument, @sample)
 
 %dl
   %dt= Sample.human_attribute_name :value
