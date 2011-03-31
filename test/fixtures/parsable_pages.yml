@@ -1,0 +1,378 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+hokkaido:
+  id: 1
+  name: Hokkaido
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=01
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Hokkaido",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+aomori:
+  id: 2
+  name: Aomori
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=02
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Aomori",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+miyagi:
+  id: 3
+  name: Miyagi
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=04
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Miyagi",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+fukushima:
+  id: 4
+  name: Fukushima
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=07
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Fukushima",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+ibaraki:
+  id: 5
+  name: Ibaraki
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=08
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Ibaraki",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+kanagawa:
+  id: 6
+  name: Kanagawa
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=14
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Kanagawa",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+niigata:
+  id: 7
+  name: Niigata
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=15
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Niigata",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+ishikawa:
+  id: 8
+  name: Ishikawa
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=17
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Ishikawa",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+fukui_kyoto:
+  id: 9
+  name: Fukui and Kyoto
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=18
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => [{:location_admin_1 => "Fukui",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"},
+                                                   {:location_admin_1 => "Kyoto",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"}]}
+
+shizuoka:
+  id: 10
+  name: Shizuoka
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=22
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Shizuoka",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+fukui_kyoto_2:
+  id: 11
+  name: Fukui and Kyoto 2
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=26
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => [{:location_admin_1 => "Fukui",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"},
+                                                   {:location_admin_1 => "Kyoto",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"}]}
+
+osaka:
+  id: 12
+  name: Osaka
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=27
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Osaka",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}
+
+
+tottori_okayama:
+  id: 13
+  name: Tottori and Okayama
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=31
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => [{:location_admin_1 => "Tottori",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"},
+                                                   {:location_admin_1 => "Okayama",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"}]}
+      
+shimane:
+  id: 14
+  name: Shimane
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=32
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Shimane",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}      
+                         
+tottori_okayama_2:
+  id: 15
+  name: Tottori and Okayama 2
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=33
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => [{:location_admin_1 => "Tottori",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"},
+                                                   {:location_admin_1 => "Okayama",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"}]}                         
+ehime:
+  id: 16
+  name: Ehime
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=38
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Ehime",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}      
+
+saga_nagasaki:
+  id: 17
+  name: Saga and Nagasaki
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=41
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => [{:location_admin_1 => "Saga",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"},
+                                                   {:location_admin_1 => "Nagasaki",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"}]} 
+
+saga_nagasaki_2:
+  id: 18
+  name: Saga and Nagasaki 2
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=42
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => [{:location_admin_1 => "Saga",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"},
+                                                   {:location_admin_1 => "Nagasaki",
+                                                    :value_type => "nGy/h",
+                                                    :wind_velocity_unit => "m/s",
+                                                    :precipitation_unit => "mm"}]} 
+
+kagoshima:
+  id: 19
+  name: Kagoshima
+  url: http://www.bousai.ne.jp/eng/speedi/pref.php?id=46
+  type: TableParser
+  update_interval: 600
+  options: {:column_count => 6, :parse_options => {:id => "No",
+                                                   :value => "Rate of space dose", 
+                                                   :wind_direction => "Wind Direction",
+                                                   :location_name => "Observation office", 
+                                                   :wind_velocity => "Wind Velocity",
+                                                   :precipitation => "Precipitation"},
+                               :static_options => {:location_admin_1 => "Kagoshima",
+                                                   :value_type => "nGy/h",
+                                                   :wind_velocity_unit => "m/s",
+                                                   :precipitation_unit => "mm"}}   
+
+                                                                             
+hokkaido_plant:
+  id: 20
+  name: Hokkaido Plant
+  url: http://www.genshi.pref.hokkaido.jp/NewHatuden_H.html
+  type: MapParser
+  update_interval: 600
+  options: {:parse_item => "//table", :parse_options => [{:location_name => "Third left"}, nil, {:location_name => "Fifth right"}, nil,
+                                                         {:location_name => "Sixth right"}, nil, {:location_name => "Sixth left"},
+                                                         nil, {:location_name => "First left"}, nil, {:location_name => "Fourth left"},
+                                                         {:location_name => "First right"}, nil, {:location_name => "Fifth left"},
+                                                         {:location_name => "Third right"}, nil, {:location_name => "Second right"},
+                                                         {:location_name => "Second left"}, {:location_name => "Fourth right"}, {:location_name => "Seventh right"}], 
+                                      :static_options => {:value_type => "nGy/h"}, 
+                                      :time_options => {:regexp => "([0-9]{4})\u0094N([0-9]{2})\u008C\u008E([0-9]{2})\u0093ú\u0081@([0-9]{2})\u008E\u009E([0-9]{2})\u0095",
+                                                        :mapping => {:year => 1, :month => 2, :day => 3, :hour => 4, :minute => 5, :second => nil, :offset => "-06:00"}}}
+                                                        
+tomari_plant:
+  id: 20
+  name: Tomari Plant
+  url: http://www.genshi.pref.hokkaido.jp/NewTomari_H.html
+  type: MapParser
+  update_interval: 600
+  options: {:parse_item => "//table", :parse_options => [{:location_name => "Third right"}, {:location_name => "Second left"}, {:location_name => "First left"},
+                                                         {:location_name => "First right"}, {:location_name => "Second right"}, {:location_name => "Fourth right"},
+                                                         {:location_name => "Fifth right"}, {:location_name => "Sixth right"}, {:location_name => "Seventh right"}], 
+                                      :static_options => {:value_type => "nGy/h"}, 
+                                      :time_options => {:regexp => "([0-9]{4})\u0094N([0-9]{2})\u008C\u008E([0-9]{2})\u0093ú\u0081@([0-9]{2})\u008E\u009E([0-9]{2})\u0095",
+                                                        :mapping => {:year => 1, :month => 2, :day => 3, :hour => 4, :minute => 5, :second => nil, :offset => "-06:00"}}}
+                                                        
