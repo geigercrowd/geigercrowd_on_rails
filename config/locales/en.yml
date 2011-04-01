@@ -86,5 +86,6 @@ en:
   breadcrumbs:
     instruments: instruments
     samples: samples
-
-
+  errors:
+    402:
+      message: You are not allowed to access this page.

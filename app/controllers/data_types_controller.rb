@@ -26,7 +26,7 @@ class DataTypesController < ApplicationController
     @data_type = DataType.new(params[:data_type])
 
     if @data_type.save
-      redirect_to data_types_path, :notice => 'Data type was successfully created.'
+      redirect_to @data_type, :notice => 'Data type was successfully created.'
     else
       render :action => "new"
     end
