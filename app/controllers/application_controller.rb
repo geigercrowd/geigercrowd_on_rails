@@ -6,6 +6,6 @@ class ApplicationController < ActionController::Base
   private
 
   def admin_only
-    current_user.admin
+    redirect_to "errors/401" unless current_user.admin?
   end
 end

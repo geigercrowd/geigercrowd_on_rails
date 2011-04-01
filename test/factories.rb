@@ -3,6 +3,11 @@ Factory.define :user do |u|
   u.screen_name "john_doe"
   u.sequence(:email) { |i| "johnny#{i}@example.com" }
   u.password "secret"
+  u.confirmed_at { DateTime.now }
+end
+
+Factory.define :admin, parent: :user do |u|
+  u.admin true
 end
 
 Factory.define :instrument do |i|
