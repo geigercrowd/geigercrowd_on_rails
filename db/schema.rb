@@ -10,7 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110320064853) do
+ActiveRecord::Schema.define(:version => 20110331143901) do
+
+  create_table "data_sources", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "parser_class"
+    t.integer  "update_interval"
+    t.integer  "instrument_id"
+    t.text     "options"
+    t.datetime "fetched_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "data_types", :force => true do |t|
     t.string   "name"
@@ -39,7 +51,10 @@ ActiveRecord::Schema.define(:version => 20110320064853) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "data_source_id"
   end
+
+  add_index "locations", ["data_source_id"], :name => "index_locations_on_data_source_id"
 
   create_table "samples", :force => true do |t|
     t.integer  "instrument_id"

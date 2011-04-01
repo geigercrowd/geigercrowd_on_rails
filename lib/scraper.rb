@@ -2,37 +2,6 @@
 #
 # Scraper (nullisnil@gmail.com)
 #
-# Examples:
-# Single Table on a page
-#
-#  Scraper::TableParser.new("http://www.bousai.ne.jp/eng/speedi/pref.php?id=01", 6, {:id => "No",
-#                                                                                    :value => "Rate of space dose", 
-#                                                                                    :wind_direction => "Wind Direction",
-#                                                                                    :location_name => "Observation office", 
-#                                                                                    :wind_velocity => "Wind Velocity",
-#                                                                                    :precipitation => "Precipitation"},
-#                                                                                   {:location_admin_1 => "Hokkaido",
-#                                                                                    :value_type => "nGy/h",
-#                                                                                    :wind_velocity_unit => "m/s",
-#                                                                                    :precipitation_unit => "mm"}).parse
-#
-# Multiple Tables on a page
-#
-# Scraper::TableParser.new("http://www.bousai.ne.jp/eng/speedi/pref.php?id=33", 6, {:id => "No",
-#                                                                                   :value => "Rate of space dose", 
-#                                                                                   :wind_direction => "Wind Direction",
-#                                                                                   :location_name => "Observation office", 
-#                                                                                   :wind_velocity => "Wind Velocity",
-#                                                                                   :precipitation => "Precipitation"},
-#                                                                                  [{:location_admin_1 => "Tottori",
-#                                                                                    :value_type => "nGy/h",
-#                                                                                    :wind_velocity_unit => "m/s",
-#                                                                                    :precipitation_unit => "mm"},
-#                                                                                   {:location_admin_1 => "Okayama",
-#                                                                                    :value_type => "nGy/h",
-#                                                                                    :wind_velocity_unit => "m/s",
-#                                                                                    :precipitation_unit => "mm"}]).parse
-#
 
 module Scraper
   # To hold the generated data
@@ -53,153 +22,83 @@ module Scraper
         respond_to?("#{k}=") ? send("#{k}=", v) : raise("unknown attribute: #{k}")
       end
     end
-    
-    # Returns Time data as Time.
-    # If your time regexp returns an array e.g. by using
-    #   :regexp => "([0-9]{4})\u0094N([0-9]{2})\u008C\u008E([0-9]{2})\u0093ú\u0081@([0-9]{2})\u008E\u009E([0-9]{2})\u0095"
-    # in the parser, use 
-    #   :mapping => {:year => 1, :month => 2, :day => 3, :hour => 4, :minute => 5, :second => nil, :offset => "-06:00"}
-    # To map the Array to the parsed time.
-    # This is not required if time is parsable by Time.parse.
-    def time
-      if self.date_time.length == 1 
-        Time.parse(self.date_time[:value].to_s)
-      else
-        time = {}
-        for key in self.date_time[:mapping].keys
-          if key == :offset
-            time[:offset] = self.date_time[:mapping][:offset]
-          elsif !self.date_time[:mapping][key].nil?
-            time[key] = self.date_time[:value][self.date_time[:mapping][key]]
-          end
-        end
-        Time.new(time[:year], time[:month], time[:day], time[:hour], time[:minute], time[:second], time[:offset])
-      end
-    end
   end
   
-  class TableParser
-    require 'open-uri'
-    require 'iconv'
+  # Generic parser 
+  #
+  class GenericParser
+    attr_accessor :doc, :data, :doc_date
+    
+    def initialize(url)
+      self.data = []
+      @value_type = nil
+      @wind_velocity_unit = nil
+      @precipitation_unit = nil
+      @rows_xpath = nil
+      @column_xpath = nil
+      @time = nil
 
-    attr_accessor :doc, :column_count, :mapping, :column_mapping, :datas, :static_data, :doc_date
-    
-    # Params:
-    #   * URL
-    #   * Data Column amount
-    #   * Mapping Hash
-    #   * Static data Hash (Use an Array with a hash inside if there are multiple tables on this page)
-    #   * REgexp to match date/time
-    # 
-    # First row needs to be table header with descriptions
-    #
-    # Name all mapping fields even if they are not used
-    # E.g.:
-    # Scraper::TableParser.new("http://www.bousai.ne.jp/eng/speedi/pref.php?id=01", 6, {:id => "No",
-    #                                                                                   :value => "Rate of space dose", 
-    #                                                                                   :wind_direction => "Wind Direction",
-    #                                                                                   :location_name => "Observation office", 
-    #                                                                                   :wind_velocity => "Wind Velocity",
-    #                                                                                   :precipitation => "Precipitation"},
-    #                                                                                   "[0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}")
-    #
-    # Time Options:
-    # Use a regexp to parse the time. If you create a MatchData Array use the mapping key to describe the returned Array.
-    # {
-    #  :regexp => "[0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}",
-    #  :mapping => "yyyy mm dd hh mm ss"
-    # }
-    
-    def initialize(url, column_count=nil, mapping={}, static_data={}, time={ :regexp => "[0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}" })
       f = open(url)
       f.rewind
-      self.doc = Hpricot(Iconv.conv('UTF-8//IGNORE', f.charset, f.readlines.join("\n")))
-      self.column_count = column_count
-      self.mapping = mapping
-      self.column_mapping = {}
-      self.datas = []
-      self.static_data = static_data
-      time[:value] = self.doc.inner_text.match(time[:regexp])
-      self.doc_date = time
+      self.doc = Hpricot(Iconv.conv('UTF-8//IGNORE', (f.charset rescue 'UTF-8'), f.readlines.join("\n")))
     end
     
-    # Parses the remote Website
-    # Returns an Array with Scraper::Data items
-    def parse
-      data = []
-      if self.static_data.class.name == "Hash"
-        table = find_table_by_column_size if !self.column_count.nil?
-        map_columns(table)
-        data = process_rows(table, self.static_data)
-      elsif self.static_data.class.name == "Array"
-        for item in self.static_data
-          table = find_table_by_column_size if !self.column_count.nil?
-          map_columns(table)
-          data << process_rows(table, item)
-        end
+    def parse_time
+      # did not find a better way to set any none matched time part to zero
+      time = Hash.new(0)
+      match = self.doc.inner_text.match(@time[:regexp])
+      match.names.each do |name|
+        time[name.to_sym] = match[name]
       end
-      return data.flatten
+      self.doc_date = Time.new(time[:year], time[:month], time[:day], time[:hour], time[:minute], time[:second], @time[:offset])
     end
     
-    # Find Tables by column size
-    def find_table_by_column_size(doc=nil)
-      doc = self.doc if doc.nil?
-      doc.search("//table").each {|t|
-        if t.search("//table").size > 0
-          puts "Found table with #{t.search("//table").size} tables" if $debug
-          table = find_table_by_column_size(t)
-          return table if !table.nil?
-        else
-          if t.search("//tr").first.search("//td").size == self.column_count
-            puts "Found tr with #{t.search("//tr").first.search("//td").size} tds" if $debug
-            self.doc.search(t.xpath).remove
-            return t
-          end
-        end
-      }
-      return nil
+    def parse
+      self.parse_time
+      
+      self.doc.search(@rows_xpath).each do |row|
+        columns = row.search(@column_xpath)
+        self.data << Scraper::Data.new(:location_name => columns[1].inner_text.strip, :value => self.handle_undefined(columns[2].inner_text), 
+                                       :precipitation => self.handle_undefined(columns[5].inner_text), :wind_direction => self.handle_wind_direction(columns[3].inner_text), 
+                                       :wind_velocity => self.handle_undefined(columns[4].inner_text), :value_type => @value_type, :wind_velocity_unit => @wind_velocity_unit,
+                                       :precipitation_unit => @precipitation_unit, :date_time => self.doc_date)
+      end
+      self.data
     end
-    
-    # Map table columns of the table to the mapping
-    def map_columns(table)
-      counter = 0
-      table.search("//tr").first.search("//td").each {|td|
-        for key in self.mapping.keys
-          puts "Processing #{key} with value #{self.mapping[key]}" if $debug
-          if td.inner_text.include?(self.mapping[key])
-            puts "Found column #{key}" if $debug
-            self.column_mapping[counter] = key
-            counter += 1
-            self.mapping.delete(key)
-            break
-          end
-        end
-      }
-    end
-    
-    def process_rows(table, static_data)
-      rows = table.search("//tr")
-      rows[1..(rows.size-1)].each {|tr|
-        data = Data.new
-        tds = tr.search("//td")
-        
-        attributes = {:date_time => self.doc_date}
-        for key in self.column_mapping.keys
-          if data.method_exists?(self.column_mapping[key].to_s)
-            attributes[self.column_mapping[key]] = tds[key.to_i].inner_text
-          end
-        end
-        data.attributes=attributes
-        static_data.stringify_keys.each do |k, v|
-          data.respond_to?("#{k}=") ? data.send("#{k}=", v) : raise("unknown attribute: #{k}")
-        end
-        self.datas << data
-      }
-      return self.datas
-    end
-    
   end
   
+  # Specific parser for the reports on bousai.ne.jp
+  #
+  # Arguments
+  # * URL
+  # Returns
+  # * Array of Scraper::Data
+  class BousaiParser < GenericParser
+    require 'open-uri'
+    require 'iconv'
+    
+    # Params:
+    # * URL
+    # * Options ( :time_xpath => <XPath to the html element holding the time of the messurement>, :)
+    def initialize(url)
+      super(url)
+      @value_type = "nGy/h"
+      @wind_velocity_unit = "m/s"
+      @precipitation_unit = "mm"
+      @rows_xpath = '//tr[@bgcolor=#DAEDE9]'
+      @column_xpath = '/td'
+      @time = { :regexp => "(?<year>[0-9]{4})/(?<month>[0-9]{2})/(?<day>[0-9]{2}) (?<hour>[0-9]{2}):(?<minute>[0-9]{2})", :offset => '-06:00' }
+    end
+    
+    def handle_undefined(value)
+      value == '---' ? nil : value.to_f
+    end
+    
+    def handle_wind_direction(value)
+      value.strip
+    end
+  end
+=begin
   class MapParser
     
     require 'open-uri'
@@ -277,4 +176,5 @@ module Scraper
       return data
     end
   end
+=end
 end

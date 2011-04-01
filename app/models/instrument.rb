@@ -2,6 +2,7 @@ class Instrument < ActiveRecord::Base
   belongs_to :user
   belongs_to :data_type
   belongs_to :location
+  belongs_to :data_source
   has_many :samples
   accepts_nested_attributes_for :location
   before_validation :on_location_change
