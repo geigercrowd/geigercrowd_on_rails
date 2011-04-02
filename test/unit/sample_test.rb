@@ -41,7 +41,7 @@ class SampleTest < ActiveSupport::TestCase
         timezone = ActiveSupport::TimeZone.new("Berlin")
         assert_equal timezone, Time.zone
         @instrument.user.reload
-        assert_equal timezone, @instrument.user.timezone
+        assert_equal timezone.name, @instrument.user.timezone
       end
 
       should "be set on creation" do

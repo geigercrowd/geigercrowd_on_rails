@@ -74,7 +74,7 @@ class SamplesControllerTest < ActionController::TestCase
 
       should "be set to the user's timezone, if he has one set" do
         Time.zone = "UTC"
-        @us.update_attribute :timezone, ActiveSupport::TimeZone.new("Berlin")
+        @us.update_attribute :timezone, ActiveSupport::TimeZone.new("Berlin").name
         get :new, instrument_id: @our_sample.instrument.id
         assert_equal "Berlin", Hpricot(@response.body).
           search('select#sample_timezone option[@selected]').first[:value]
