@@ -92,4 +92,22 @@ class InstrumentsControllerTest < ActionController::TestCase
       end
     end
   end
+  
+  context "using the api" do
+    setup do
+      @our_instrument = Factory :instrument
+      @user = @our_instrument.user
+      @user.confirm!
+      sign_in @user
+
+      @other_instrument = Factory :instrument
+    end
+    
+    should "be listed using the api_key" do
+      get :index
+      assert_response :success
+      assert_equal [ @our_instrument ], assigns(:instruments)
+    end
+    
+  end
 end

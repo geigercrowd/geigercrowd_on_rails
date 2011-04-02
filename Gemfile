@@ -10,6 +10,10 @@ gem 'ruby_parser',          '2.0.6'
 gem 'jquery-rails',         '0.2.7'
 gem 'breadcrumbs_on_rails', '1.0.1'
 
+group :development do
+  gem 'silent-postgres', '~> 0.0.7'
+end
+ 
 group :test do
   gem 'ruby-debug19',       '~> 0.11.6', require: 'ruby-debug'
   gem 'shoulda',            '~> 2.11.3'
