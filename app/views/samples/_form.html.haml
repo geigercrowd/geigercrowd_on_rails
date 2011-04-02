@@ -18,7 +18,7 @@
   %fieldset
     = f.label :timezone, t('time.zone')
     %br
-    = f.time_zone_select :timezone, nil, default: "UTC"
+    = f.time_zone_select :timezone, nil, default: timezone
   %fieldset
     %legend= t('locations.title')
   - if @sample.location.id.nil?

@@ -63,6 +63,32 @@ class SamplesControllerTest < ActionController::TestCase
       assert_redirected_to instrument_samples_path @our_sample.instrument
     end
 
+    context "timezone in form" do
+      should "be set to UTC if we don't know better" do
+        Time.zone = "UTC"
+        @us.update_attribute :timezone, nil
+        get :new, instrument_id: @our_sample.instrument.id
+        assert_equal "UTC", Hpricot(@response.body).
+          search('select#sample_timezone option[@selected]').first[:value]
+      end
+
+      should "be set to the user's timezone, if he has one set" do
+        Time.zone = "UTC"
+        @us.update_attribute :timezone, ActiveSupport::TimeZone.new("Berlin")
+        get :new, instrument_id: @our_sample.instrument.id
+        assert_equal "Berlin", Hpricot(@response.body).
+          search('select#sample_timezone option[@selected]').first[:value]
+      end
+
+      should "be set if otherwise determined" do
+        Time.zone = "Berlin"
+        @us.update_attribute :timezone, nil
+        get :new, instrument_id: @our_sample.instrument.id
+        assert_equal "Berlin", Hpricot(@response.body).
+          search('select#sample_timezone option[@selected]').first[:value]
+      end
+    end
+
     context "of other users" do
       should "not be updated" do
         old_times = @other_sample.timestamp
