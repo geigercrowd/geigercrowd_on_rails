@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110331143901) do
+ActiveRecord::Schema.define(:version => 20110402062839) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "name"
@@ -39,8 +39,9 @@ ActiveRecord::Schema.define(:version => 20110331143901) do
     t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "deadtime"
     t.float    "error"
-    t.float    "deadtime"
+    t.float    "deathtime"
     t.integer  "location_id"
   end
 
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20110331143901) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin",                               :default => false, :null => false
+    t.string   "timezone"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

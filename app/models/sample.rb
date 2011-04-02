@@ -9,6 +9,7 @@ class Sample < ActiveRecord::Base
   validates_presence_of :location
   validates_presence_of :value
   before_validation :location_from_instrument 
+  before_validation :set_timezone
 
   private
 
@@ -17,5 +18,12 @@ class Sample < ActiveRecord::Base
       location = nil
     end
     self.location ||= instrument.location
+  end
+
+  def set_timezone
+    if timezone.present?
+      Time.zone = timezone
+      self.instrument.user.update_attribute :timezone, Time.zone
+    end
   end
 end

@@ -4,6 +4,7 @@ Factory.define :user do |u|
   u.sequence(:email) { |i| "johnny#{i}@example.com" }
   u.password "secret"
   u.confirmed_at { DateTime.now }
+  u.timezone ActiveSupport::TimeZone.new("Berlin")
 end
 
 Factory.define :admin, parent: :user do |u|
@@ -19,9 +20,8 @@ end
 
 Factory.define :sample do |s|
   s.value 1.2345
-  s.sequence(:timestamp) { DateTime.now }
+  s.timestamp { DateTime.now }
   s.association :instrument
-  s.association :location
 end
 
 Factory.define :data_type do |d|
