@@ -23,7 +23,7 @@ class Sample < ActiveRecord::Base
   def set_timezone
     if timezone.present?
       Time.zone = timezone
-      self.instrument.user.update_attribute :timezone, Time.zone.name
+      self.instrument.user.update_attribute :timezone, Time.zone
     end
   end
 end
