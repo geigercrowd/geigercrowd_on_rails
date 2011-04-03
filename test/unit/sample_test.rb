@@ -5,6 +5,7 @@ class SampleTest < ActiveSupport::TestCase
     setup do
       @sample = Factory :sample
       @instrument = @sample.instrument
+      @user = @sample.user
     end
 
     context "relationships" do
@@ -41,7 +42,7 @@ class SampleTest < ActiveSupport::TestCase
         timezone = ActiveSupport::TimeZone.new("Berlin")
         assert_equal timezone, Time.zone
         @instrument.user.reload
-        assert_equal timezone.name, @instrument.user.timezone
+        assert_equal timezone, @instrument.user.timezone
       end
 
       should "be set on creation" do

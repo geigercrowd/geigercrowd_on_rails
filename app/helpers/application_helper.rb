@@ -1,5 +1,5 @@
 module ApplicationHelper
   def timezone
-    (current_user.try(:timezone) || Time.zone).to_s.sub(/\(.*\) /, '')
+    current_user.timezone || Time.zone
   end
 end
