@@ -98,16 +98,79 @@ class InstrumentsControllerTest < ActionController::TestCase
       @our_instrument = Factory :instrument
       @user = @our_instrument.user
       @user.confirm!
-      sign_in @user
 
       @other_instrument = Factory :instrument
     end
     
     should "be listed using the api_key" do
-      get :index
+      get :index, :api_key => @user.authentication_token
       assert_response :success
       assert_equal [ @our_instrument ], assigns(:instruments)
     end
     
+    should "return a json formatted list" do
+      get :index, :api_key => @user.authentication_token, :format => 'json'
+      assert_response :success
+      data = JSON.parse(response.body)
+      assert_equal 1, data.length
+      assert_equal delete_dates(@our_instrument.attributes), delete_dates(data[0])
+    end
+    
+    should "be created with location" do
+      instrument = Factory.build :instrument, location: nil
+      assert_nil instrument.location
+      location = Factory.build :location, user: @user
+      assert_difference('Instrument.count') do
+        post :create, { :api_key => @user.authentication_token, :format => 'json', :instrument => instrument.attributes.
+          merge(location_attributes: location.attributes) }
+      end
+      assert_response :success
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class 
+      assert_equal "Kaleidoscope", data['model']
+    end
+
+    should "be created without location" do
+      instrument = Factory.build :instrument, location: nil
+      assert_nil instrument.location
+      assert_difference('Instrument.count') do
+        post :create, { :api_key => @user.authentication_token, :format => 'json', instrument: { model: "fubarator",
+          location_attributes: { latitude: "", longitude: "" }} }
+      end
+      assert_response :success
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class 
+      assert_equal "fubarator", data['model']
+      assert_nil Instrument.last.location
+      assert_equal @user, Instrument.last.user
+    end
+    
+    should "be edited" do
+      attributes = @our_instrument.attributes
+      attributes[:model] = 'edited'
+      put :update, {:id => @our_instrument.to_param, :instrument => attributes, :api_key => @user.authentication_token, :format => 'json'}
+      assert_response :success
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class 
+      assert_equal 'edited', data['model']
+    end
+    
+    should "be shown" do
+      get :show, :id => @our_instrument.to_param, :api_key => @user.authentication_token, :format => 'json'
+      assert_response :success
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class 
+      assert_equal delete_dates(@our_instrument.attributes), delete_dates(data)
+    end
+
+    should "destroy instrument" do
+      assert_difference('Instrument.count', -1) do
+        delete :destroy, :id => @our_instrument.to_param, :api_key => @user.authentication_token, :format => 'json'
+      end
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class 
+      assert_equal delete_dates(@our_instrument.attributes), delete_dates(data)
+    end
   end
+
 end

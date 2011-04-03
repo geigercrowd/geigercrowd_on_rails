@@ -14,3 +14,10 @@ class ActionController::TestCase
   include Devise::TestHelpers
 end
 
+# FIXME figure out a way to get the same date format
+def delete_dates(data) 
+  ['created_at', 'updated_at'].each do |key|
+    data.delete key if data[key]
+  end
+  data
+end

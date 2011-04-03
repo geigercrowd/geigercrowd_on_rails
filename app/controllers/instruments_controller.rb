@@ -4,12 +4,20 @@ class InstrumentsController < ApplicationController
   # GET /instruments
   def index
     @instruments = current_user.instruments
+    
+    respond_to do |format|
+      format.html
+      format.json { render :json =>@instruments }
+    end
   end
 
   # GET /instruments/1
   def show
     @instrument = Instrument.find(params[:id])
-    add_breadcrumb @instrument.model, :instrument_path
+    respond_to do |format|
+      format.html { add_breadcrumb @instrument.model, :instrument_path }
+      format.json { render :json =>@instrument }
+    end
   end
 
   # GET /instruments/new
@@ -35,9 +43,15 @@ class InstrumentsController < ApplicationController
     @instrument = Instrument.create(params[:instrument])
     current_user.instruments << @instrument
     if @instrument.valid?
-      redirect_to @instrument, :notice => t('instruments.create.successful')
+      respond_to do |format|
+        format.html { redirect_to @instrument, :notice => t('instruments.create.successful') }
+        format.json { render :json => @instrument }
+      end
     else
-      render :action => "new"
+      respond_to do |format|
+        format.html { render :action => "new" }
+        format.json { render :json => @instrument.errors, :status => 406}
+      end
     end
   end
 
@@ -46,12 +60,21 @@ class InstrumentsController < ApplicationController
     @instrument = Instrument.find params[:id]
     if @instrument.user == current_user
       if @instrument.update_attributes params[:instrument]
-        redirect_to @instrument, :notice => t('.success_message')
+        respond_to do |format|
+          format.html { redirect_to @instrument, :notice => t('.success_message') }
+          format.json { render :json => @instrument }
+        end
       else
-        render :action => "edit"
+        respond_to do |format|
+          format.html { render :action => "edit" }
+          format.json { render :json => @instrument.errors, :status => 406}
+        end
       end
     else
-      render action: "show"
+      respond_to do |format|
+        format.html { render :action => "show" }
+        format.json { render :json => @instrument, :status => 401}
+      end
     end
   end
 
@@ -59,6 +82,10 @@ class InstrumentsController < ApplicationController
   def destroy
     @instrument = Instrument.find(params[:id])
     @instrument.destroy
-    redirect_to(instruments_url)
+    
+    respond_to do |format|
+      format.html { redirect_to(instruments_url) }
+      format.json { render :json => @instrument}
+    end
   end
 end
