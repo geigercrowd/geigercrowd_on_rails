@@ -1,7 +1,6 @@
-%h2= t('.title')
 %p= link_to t('.new_sample'), new_instrument_sample_path
 
-%table
+%table#data
   %thead
     %tr
       %th= t('samples.value')
@@ -18,7 +17,6 @@
         %td= l sample.timestamp.localtime, format: :short_with_zone
         %td= link_to sample.instrument.model, sample.instrument
         %td
-          = link_to t('show'), [ sample.instrument, sample ]
           = link_to t('edit'), edit_instrument_sample_path(sample.instrument, sample)
           = link_to t('destroy'), [ sample.instrument, sample ], :confirm => t('confirm_delete'), :method => :delete
 

@@ -154,7 +154,7 @@ class InstrumentsControllerTest < ActionController::TestCase
       assert_equal Hash, data.class 
       assert_equal 'edited', data['model']
     end
-    
+
     should "be shown" do
       get :show, :id => @our_instrument.to_param, :api_key => @user.authentication_token, :format => 'json'
       assert_response :success

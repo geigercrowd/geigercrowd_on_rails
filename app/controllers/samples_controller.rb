@@ -31,7 +31,7 @@ class SamplesController < ApplicationController
   def new
     @instrument = Instrument.first conditions:
       { user_id: current_user.id, id: params[:instrument_id] }
-    add_breadcrumb I18n.t('new'), :new_instrument_sample_path
+    add_breadcrumb I18n.t('breadcrumbs.new'), :new_instrument_sample_path
 
     if @instrument.nil?
       flash[:error] = t('samples.new.add_instrument_notice', link: new_instrument_path)
@@ -62,7 +62,7 @@ class SamplesController < ApplicationController
       respond_to do |format|
         format.html { 
           redirect_to new_instrument_sample_path,
-                      :notice => 'Sample was successfully created' 
+            :notice => I18n.t('.successfully_created')
         }
         format.json { render :json =>@sample }
       end

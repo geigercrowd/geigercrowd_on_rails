@@ -9,7 +9,7 @@ en:
   time:
     zone: timezone
     formats:
-      short_with_zone: "%d %m %H:%M %Z"
+      short_with_zone: "%m/%d/%Y %H:%M %Z"
   back: back
   show: show
   edit: edit
@@ -17,6 +17,8 @@ en:
   destroy: delete
   confirm_delete: Are you sure?
   actions: actions
+  general:
+    not_applicable: n/a
   locations:
     title: Location
     geolocate_me: try to locate me
@@ -28,6 +30,10 @@ en:
     new:
       title: Create a new Location
       name: Name of Location (can be a personal Name, only Coordinates will be exported)
+    form_locator:
+      name: Name
+      name_desription: (only visible to you)
+      locator_text_field: search for location
   instruments:
     title: Instruments
     si_unit: SI unit
@@ -35,6 +41,8 @@ en:
     model: model
     notes: description
     error: dead time error
+    add_samples: add data
+    view_samples: view data
     form:
       model: model or type of device
       model_parameters: model parameters
@@ -47,8 +55,7 @@ en:
       instrument_location_correction: The instrument has <b>not</b> been moved, the coordinates are only corrected. Please note, that this also changes the location for all Samples associated with this instrument and location.
     index:
       title: Instruments
-      new_instrument: Add Instrument
-      add_samples: add samples
+      new_instrument: add device
     new:
       title: New instrument
     edit:
@@ -70,7 +77,7 @@ en:
       new_sample: submit new Sample
     new:
       title: Add sample
-      new_sample_for: New sample for
+      new_sample_for: new reading
     form:
       location_from_instrument: The location is determined by the location of your instrument. If you intend to specify a location for each sample seperately (e.g. for mobile equipment), clear the location of your instrument.
   data_types:
@@ -84,8 +91,11 @@ en:
     show:
       title: Show data type
   breadcrumbs:
-    instruments: instruments
-    samples: samples
+    instruments: my equipment
+    samples: data
+    new: add
   errors:
     402:
       message: You are not allowed to access this page.
+  users:
+    sign_out: logout

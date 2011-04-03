@@ -23,7 +23,7 @@ class InstrumentTest < ActiveSupport::TestCase
       end
 
       should "create new location when new_location set to true" do
-        @instrument.update_attributes new_location: true,
+        @instrument.update_attributes new_location: "true",
           location_attributes: { id:        @old_location["id"],
                                  latitude:  @old_location["latitude"]  + 5,
                                  longitude: @old_location["longitude"] + 5 }
@@ -34,7 +34,7 @@ class InstrumentTest < ActiveSupport::TestCase
       end
 
       should "update location when new_location set to false" do
-        @instrument.update_attributes new_location: false,
+        @instrument.update_attributes new_location: "false",
           location_attributes: { id:        @old_location["id"],
                                  latitude:  @old_location["latitude"]  + 5,
                                  longitude: @old_location["longitude"] + 5 }

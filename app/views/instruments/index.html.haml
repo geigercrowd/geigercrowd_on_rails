@@ -1,9 +1,11 @@
-%h2= t('.title')
 %p= link_to t('.new_instrument'), new_instrument_path
 #instruments
   - for instrument in @instruments
-    = instrument.model
-    = link_to t('show'), instrument_path(instrument)
-    = link_to t('edit'), edit_instrument_path(instrument)
-    &nbsp;
-    = link_to t('.add_samples'), new_instrument_sample_path(instrument_id: instrument.id)
+    .instrument
+      .model= link_to instrument.model, instrument_path(instrument)
+      .location.gray= instrument.location.try(:name)
+      .data_links
+        = link_to t('instruments.view_samples'), instrument_samples_path(instrument)
+        &nbsp;
+        = link_to t('instruments.add_samples'), new_instrument_sample_path(instrument)
+      %br.clear

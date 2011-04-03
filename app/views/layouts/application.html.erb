@@ -39,7 +39,7 @@ hope you enjoy it and find it usefull :)
       <div id="header_inside">
         <h1>geiger<span>crowd</span>.net</h1>
         <ul>
-          <li><a class="active" href="#">Data entry</a></li>
+          <li><a class="active" href="#">Data</a></li>
           <li><a href="http://geigercrowd.net">Main</a></li>
         </ul>		
       </div>
@@ -52,10 +52,12 @@ hope you enjoy it and find it usefull :)
             <% if current_user.try :admin? %>
               <li><%= link_to t('data_types.index.title'), data_types_path %></li>
             <% end %>
+            <li><%= link_to "API" %></li>
+            <li><%= link_to t("users.sign_out"), destroy_user_session_path %></li>
           </ul>
         </div>
         <div id="content_inside_main">
-          <div id="breadcrumbs">
+          <div id="breadcrumbs" class="gray">
             <%= render_breadcrumbs.html_safe %>
           </div>
           <%= yield %>

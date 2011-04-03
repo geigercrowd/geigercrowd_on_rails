@@ -7,27 +7,9 @@ form input, form textarea, form select {
   background-color: #f4f4f4;
 }
 
-.flash {
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  padding: 5px;
-}
-
-.notice {
-  outline: 2px dashed #ffdd00;
-}
-
-.error {
-  outline: 2px dashed #ff0000;
-}
-
-.clear {
-  clear: both;
-}
-
 input {
   margin: 5px;
+  vertical-align: middle;
 }
 
 fieldset {
@@ -55,8 +37,84 @@ input[type="radio"] {
   outline: none;
 }
 
-#breadcrumbs {
-  color: #aaaaaa;
-  font-weight: normal;
-  font-weight: bold;
+ul {
+  list-style-type: none;
 }
+
+.gray {
+  color: #aaaaaa;
+}
+
+.flash {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  padding: 5px;
+}
+
+.notice {
+  outline: 2px dashed #ffdd00;
+}
+
+.error {
+  outline: 2px dashed #ff0000;
+}
+
+.clear {
+  clear: both;
+}
+
+#breadcrumbs {
+  margin-bottom: 15px;
+}
+
+#instruments .instrument {
+  border-bottom: 1px solid #eeeeee;
+  position: relative;
+}
+
+#instruments .instrument:first-child {
+  border-top: 1px solid #eeeeee;
+}
+
+#instruments .instrument:hover {
+  background-color: #FCFFDB;
+}
+
+#instruments .instrument div {
+  float: left;
+}
+
+#instrument .instrument .model {
+  position: relative;
+}
+
+#instruments .instrument .model a {
+  font-size: 1em;
+  font-weight: bold;
+  float: left;
+}
+
+#instruments .instrument .location {
+  margin-left: 5px;
+  margin-left: 5px;
+  position: relative;
+}
+
+#instruments .instrument .data_links {
+  right: 0;
+  float: none;
+  position: absolute;
+  margin-left: 5px;
+}
+
+table#data th {
+  padding-right: 10px;
+  text-align: left;
+}
+
+table#data td {
+  padding-right: 10px;
+}
+
+

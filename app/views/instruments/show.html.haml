@@ -1,38 +1,29 @@
-%h2= t '.title'
-%p
-  = link_to t('back'), instruments_path
-  = link_to t('edit'), edit_instrument_path(@instrument)
-  = link_to t('destroy'), @instrument, :confirm => t('confirm_delete'), :method => :delete
-%p
-  %span.label= t('instruments.model')
-  %br
-  = @instrument.model
-%p
-  %span.label= t('instruments.si_unit')
-  %br
-  = @instrument.data_type.si_unit
-%p
-  %span.label= t('instruments.deadtime')
-  %br
-  = @instrument.deadtime
-%p
-  %span.label= t('instruments.error')
-  %br
-  = @instrument.error
-%p
-  %span.label= t('locations.title')
-  - if @instrument.location.present?
-    %br
-    = t('locations.latitude')
-    \:
-    = @instrument.location.latitude
-    &nbsp;
-    = t('locations.longitude')
-    \:
-    = @instrument.location.longitude
-  - else
-    = t('.no_location')
-%p
-  %span.label= t('instruments.notes')
-  %br
-  = simple_format @instrument.notes
+%h3= @instrument.model
+= link_to t('edit'), edit_instrument_path(@instrument)
+&nbsp;
+= link_to t('destroy'), @instrument, :confirm => t('confirm_delete'), :method => :delete
+&nbsp;
+= link_to t('instruments.view_samples'), instrument_samples_path(@instrument)
+&nbsp;
+= link_to t('instruments.add_samples'), new_instrument_sample_path(@instrument)
+%ul
+  %li
+    %span.label= "#{t('instruments.si_unit')}:"
+    = @instrument.data_type.si_unit
+  %li
+    %span.label= "#{t('instruments.deadtime')}:"
+    = @instrument.deadtime || t('general.not_applicable')
+  %li
+    %span.label= "#{t('instruments.error')}:"
+    = @instrument.error || t('general.not_applicable')
+  %li
+    %span.label= "#{t('locations.title')}:"
+    - if @instrument.location.present?
+      = @instrument.location.name
+      = "(#{@instrument.location.latitude}"
+      = "#{@instrument.location.longitude})"
+    - else
+      = t('general.not_applicable')
+  %li
+    %span.label= "#{t('instruments.notes')}:"
+    = simple_format @instrument.notes
