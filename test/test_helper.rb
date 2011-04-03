@@ -16,7 +16,7 @@ end
 
 # FIXME figure out a way to get the same date format
 def delete_dates(data) 
-  ['created_at', 'updated_at'].each do |key|
+  ['created_at', 'updated_at', 'timestamp'].each do |key|
     data.delete key if data[key]
   end
   data

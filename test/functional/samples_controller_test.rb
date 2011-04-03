@@ -111,5 +111,94 @@ class SamplesControllerTest < ActionController::TestCase
         assert_redirected_to :root
       end
     end
+    
+    context "using the api" do
+      setup do
+        @us = @our_sample.user
+        @us.confirm!
+  
+        assert_equal 2, Sample.count
+      end
+  
+      should "show all samples associated with a given instrument" do
+        get :index, instrument_id: @our_sample.instrument.id, :api_key => @us.authentication_token, :format => 'json'
+        assert_response :success
+        data = JSON.parse(response.body)
+        assert_equal 1, data.length
+        assert_equal delete_dates(@our_sample.attributes), delete_dates(data[0])
+      end
+  
+      should "be creatable" do
+        assert_difference('@our_sample.instrument.samples.count') do
+          post :create, instrument_id: @our_sample.instrument,
+            sample: { value: 1.234, timestamp: DateTime.now },
+            :api_key => @us.authentication_token, :format => 'json'
+        end
+        data = JSON.parse(response.body)
+        assert_equal Hash, data.class
+        assert_equal data['value'], 1.234
+      end
+  
+      should "be shown" do
+        get :show, instrument_id: @our_sample.instrument.id,
+                              id: @our_sample.to_param,
+                              :api_key => @us.authentication_token, :format => 'json'
+        assert_response :success
+        data = JSON.parse(response.body)
+        assert_equal Hash, data.class
+        assert_equal delete_dates(@our_sample.attributes), delete_dates(data)
+
+      end
+  
+      should "be updated" do
+        time = DateTime.now
+        put :update, id: @our_sample.to_param,
+          instrument_id: @our_sample.instrument.id,
+          sample: { value: 123.45, timestamp: time },
+          :api_key => @us.authentication_token, :format => 'json'
+        @our_sample.reload
+        data = JSON.parse(response.body)
+        assert_equal Hash, data.class
+        assert_equal delete_dates(@our_sample.attributes), delete_dates(data)
+      end
+  
+      should "be destroyable" do
+        assert_difference('Sample.count', -1) do
+          delete :destroy, id: @our_sample.to_param,
+            instrument_id: @our_sample.instrument.id,
+            :api_key => @us.authentication_token, :format => 'json'
+        end
+        data = JSON.parse(response.body)
+        assert_equal Hash, data.class
+        assert_equal delete_dates(@our_sample.attributes), delete_dates(data)
+      end
+  
+      context "of other users" do
+        should "not be updated" do
+          old_times = @other_sample.timestamp
+          old_values = @other_sample.value
+          put :update, id: @other_sample.to_param,
+            instrument_id: @other_sample.instrument.id,
+            sample: { value:     old_values + 5.0,
+                      timestamp: old_times - 1.day },
+            :api_key => @us.authentication_token, :format => 'json'
+          assert_equal '406', response.code
+          @other_sample.reload
+          assert_equal old_values, @other_sample.value
+          #FIXME why the heck
+          assert_equal old_times.to_s, @other_sample.timestamp.to_s
+
+        end
+  
+        should "not be created" do
+          assert_no_difference("Sample.count") do
+            post :create, instrument_id: @other_sample.instrument.id,
+              sample: { value: 1.4, timestamp: DateTime.now },
+              :api_key => @us.authentication_token, :format => 'json'
+          end
+          assert_equal '406', response.code
+        end
+      end
+    end
   end
 end

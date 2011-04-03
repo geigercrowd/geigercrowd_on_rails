@@ -8,6 +8,10 @@ class SamplesController < ApplicationController
     @instrument = Instrument.first conditions:
       { user_id: current_user.id, id: params[:instrument_id] }
     @samples = @instrument.samples
+    respond_to do |format|
+      format.html 
+      format.json { render :json =>@samples }
+    end
   end
 
   # GET /instruments/1/samples/1
@@ -16,7 +20,11 @@ class SamplesController < ApplicationController
       { user_id: current_user.id, id: params[:instrument_id] }
     @sample = Sample.first conditions: {
       id: params[:id], instrument_id: params[:instrument_id], }
-    add_breadcrumb @sample.id, :instrument_sample_path
+    
+    respond_to do |format|
+      format.html { add_breadcrumb @sample.id, :instrument_sample_path }
+      format.json { render :json =>@sample }
+    end
   end
 
   # GET /instruments/1/samples/new
@@ -51,10 +59,18 @@ class SamplesController < ApplicationController
     @sample = current_user.instruments.find(params[:instrument_id]).
       samples.new(params[:sample]) rescue nil
     if @sample && @sample.save
-      redirect_to new_instrument_sample_path,
-        :notice => 'Sample was successfully created'
+      respond_to do |format|
+        format.html { 
+          redirect_to new_instrument_sample_path,
+                      :notice => 'Sample was successfully created' 
+        }
+        format.json { render :json =>@sample }
+      end
     else
-      redirect_to :root
+      respond_to do |format|
+        format.html { redirect_to :root }
+        format.json { render :json => (@sample ? @sample.errors : {:instrument_id => "was not found"}), :status => 406  }
+      end
     end
   end
 
@@ -63,10 +79,18 @@ class SamplesController < ApplicationController
     @sample = current_user.instruments.find(params[:instrument_id]).
       samples.find(params[:id]) rescue nil
     if @sample && @sample.update_attributes(params[:sample])
-      redirect_to [ @sample.instrument, @sample ],
-        notice: 'Sample was successfully updated.'
+      respond_to do |format|
+        format.html { 
+          redirect_to [ @sample.instrument, @sample ],
+            notice: 'Sample was successfully updated.'
+        }
+        format.json { render :json =>@sample }
+      end
     else
-      redirect_to :root
+      respond_to do |format|
+        format.html { redirect_to :root }
+        format.json { render :json => (@sample ? @sample.errors : {:instrument_id => "was not found"}), :status => 406  }
+      end
     end
   end
 
@@ -74,6 +98,10 @@ class SamplesController < ApplicationController
   def destroy
     @sample = Sample.find(params[:id])
     @sample.destroy
-    redirect_to instrument_samples_path @sample.instrument
+    
+    respond_to do |format|
+      format.html { redirect_to instrument_samples_path @sample.instrument }
+      format.json { render :json => @sample }
+    end
   end
 end
