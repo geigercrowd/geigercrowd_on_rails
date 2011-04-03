@@ -1,9 +1,13 @@
 class DataTypesController < ApplicationController
-  before_filter :admin_only
+  before_filter :admin_only, :except => :index
 
   # GET /data_types
   def index
     @data_types = DataType.all
+    respond_to do |format|
+      format.html
+      format.json { render :json => @data_types }
+    end
   end
 
   # GET /data_types/1

@@ -10,8 +10,7 @@ class DataTypesControllerTest < ActionController::TestCase
 
     should "not be accessible for regular users" do
       sign_in @user
-      { index: :get,
-        new: :get,
+      { new: :get,
         show: :get,
         edit: :get,
         update: :put,
@@ -68,6 +67,16 @@ class DataTypesControllerTest < ActionController::TestCase
         end
 
         assert_redirected_to data_types_path
+      end
+    end
+    
+    context "using the api" do
+      should "get listed for non admins" do
+        get :index, {:api_key => @user.authentication_token, :format => 'json'}
+        assert_response :success 
+        data = JSON.parse(response.body)
+        assert_equal 1, data.length
+        assert_equal delete_dates(@data_type.attributes), delete_dates(data[0])
       end
     end
   end
