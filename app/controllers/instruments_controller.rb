@@ -1,13 +1,15 @@
 class InstrumentsController < ApplicationController
   add_breadcrumb I18n.t('breadcrumbs.instruments'), :instruments_path
-
+  
+  before_filter :rewrite_api_parameters, :only => [:create, :update]
+  
   # GET /instruments
   def index
     @instruments = current_user.instruments
     
     respond_to do |format|
       format.html
-      format.json { render :json =>@instruments }
+      format.json { render :json =>@instruments.to_json(:include => :location) }
     end
   end
 
@@ -16,7 +18,7 @@ class InstrumentsController < ApplicationController
     @instrument = Instrument.find(params[:id])
     respond_to do |format|
       format.html { add_breadcrumb @instrument.model, :instrument_path }
-      format.json { render :json =>@instrument }
+      format.json { render :json =>@instrument.to_json(:include => :location) }
     end
   end
 
@@ -45,7 +47,7 @@ class InstrumentsController < ApplicationController
     if @instrument.valid?
       respond_to do |format|
         format.html { redirect_to @instrument, :notice => t('instruments.create.successful') }
-        format.json { render :json => @instrument }
+        format.json { render :json =>@instrument.to_json(:include => :location) }
       end
     else
       respond_to do |format|
@@ -62,7 +64,7 @@ class InstrumentsController < ApplicationController
       if @instrument.update_attributes params[:instrument]
         respond_to do |format|
           format.html { redirect_to @instrument, :notice => t('.success_message') }
-          format.json { render :json => @instrument }
+          format.json { render :json =>@instrument.to_json(:include => :location) }
         end
       else
         respond_to do |format|
@@ -85,7 +87,23 @@ class InstrumentsController < ApplicationController
     
     respond_to do |format|
       format.html { redirect_to(instruments_url) }
-      format.json { render :json => @instrument}
+      format.json { render :json =>@instrument.to_json(:include => :location)}
+    end
+  end
+  
+  private
+
+  def rewrite_api_parameters
+    logger.debug "Using!"
+    return unless request.format == 'application/json'
+    logger.debug "json!"
+    params["instrument"] = {} unless params["instrument"]
+    ["data_type_id", "deadtime", "error", "location_id", "model", "notes"].each do |key|
+      params["instrument"][key] = params.delete key
+    end
+    params["instrument"]["location_attributes"] = {} unless params["instrument"]["location_attributes"]
+    ["name", "latitude", "longitude"].each do |key|
+      params["instrument"]["location_attributes"][key] = params.delete "location_#{key}"
     end
   end
 end

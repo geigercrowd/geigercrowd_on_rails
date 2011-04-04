@@ -1,0 +1,7 @@
+local:
+  excludes:
+    - "content-length"
+staging:
+  excludes:
+    - "Foo"
+    - "Bar"

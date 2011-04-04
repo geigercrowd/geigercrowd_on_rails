@@ -1,0 +1,40 @@
+local:
+  protocol: http
+  host: localhost
+  port: 8080
+staging:
+  protocol: http
+  host: staging.premium.yourhost.com
+  port: 80
+  namespace: api1v0
+production:
+  protocol: http
+  host: vtu.premium.yourhost.com
+  port: 80
+  namespace: api1v0
+general:
+  verbosity:
+    - verbose_on_error
+    - verbose_on_success
+    - rspec
+    - performance
+    - verbose_with_curl
+  priority: 0
+  substitution:
+    substitutes:
+      - duffybasic
+      - daisyduck
+      - duffyduck
+      - duffyduck2
+      - duffyduck3
+      - duffydad
+      - duffykid
+      - roadrunner
+      - teletubby
+      - luckyluke
+      - wileecoyote
+    prefix: abc_
+  csv_mode:
+    - append
+    - create
+    - none

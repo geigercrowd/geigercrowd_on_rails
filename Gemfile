@@ -10,8 +10,9 @@ gem 'ruby_parser',          '2.0.6'
 gem 'jquery-rails',         '0.2.7'
 gem 'breadcrumbs_on_rails', '1.0.1'
 
-group :development do
+group :development, :test do
   gem 'silent-postgres', '~> 0.0.7'
+  gem 'apirunner'
 end
  
 group :test do

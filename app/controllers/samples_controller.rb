@@ -3,6 +3,8 @@ class SamplesController < ApplicationController
   add_breadcrumb :instrument_model, :instruments_path
   add_breadcrumb I18n.t('breadcrumbs.samples'), :instrument_samples_path
 
+  before_filter :rewrite_api_parameters, :only => [:create, :update]
+
   # GET /instruments/1/samples
   def index
     @instrument = Instrument.first conditions:
@@ -103,5 +105,16 @@ class SamplesController < ApplicationController
       format.html { redirect_to instrument_samples_path @sample.instrument }
       format.json { render :json => @sample }
     end
+  end
+  
+  private
+
+  def rewrite_api_parameters
+    return unless request.format == 'application/json'
+    params["sample"] = {} unless params["sample"]
+    ["timestamp", "value", "timezone"].each do |key|
+      params["sample"][key] = params.delete key
+    end
+
   end
 end

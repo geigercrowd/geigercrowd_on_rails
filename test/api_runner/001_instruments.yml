@@ -1,0 +1,50 @@
+---
+- name: "001/1: Create a new Instrument without location"
+  request:
+    headers:
+      Content-Type: 'application/json'
+      Accept:       'application/json'
+    path:           '/instruments'
+    method:         'POST'
+    parameters:
+    body:
+      api_key: 'APITOKEN'
+      data_type_id: 1
+      model: 'ApiRunner Test'
+      notes: 'test'
+      error: 11.21
+      deadtime: 22.21
+  response_expectation:
+    status_code:    200
+    body:
+      model:      'ApiRunner Test'
+- name: "001/2: Create a new Instrument with location"
+  request:
+    headers:
+      Content-Type: 'application/json'
+      Accept:       'application/json'
+    path:           '/instruments'
+    method:         'POST'
+    parameters:
+    body:
+      api_key: 'APITOKEN'
+      data_type_id: 1
+      model: 'ApiRunner Test'
+      notes: 'test'
+      error: 11.21
+      deadtime: 22.21
+      location_latitude: 52.372068
+      location_longitude: 52.372068
+      location_name: 'Hannover'
+  response_expectation:
+    status_code:    200
+    body:
+      model:      'ApiRunner Test'
+      error: 11.21
+      deadtime: 22.21
+      location:
+        latitude: 52.372068
+        longitude: 52.372068
+        name: 'Hannover'
+
+

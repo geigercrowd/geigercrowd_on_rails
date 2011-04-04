@@ -61,6 +61,19 @@ class SampleTest < ActiveSupport::TestCase
         assert_equal 7200, sample.timestamp.utc_offset
       end
     end
-
+    context "using changing timezones" do
+      should "be saved correctly" do
+        timestamp = '2011-04-04 20:38:22'
+        sample = @instrument.samples.create value: 1.2345, 
+          timestamp: timestamp, timezone: "UTC"
+        sample.reload
+        assert_equal '2011-04-04 20:38:22', sample.timestamp.utc.strftime('%Y-%m-%d %H:%M:%S')
+        sample = @instrument.samples.create value: 1.2345, 
+          timestamp: timestamp, timezone: "Berlin"
+        sample.reload
+        # FIXME wrong test assumption, or a real bug in the code?
+        assert_equal '2011-04-04 18:38:22', sample.timestamp.utc.strftime('%Y-%m-%d %H:%M:%S')
+      end
+    end
   end
 end

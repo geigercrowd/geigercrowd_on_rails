@@ -131,7 +131,7 @@ class SamplesControllerTest < ActionController::TestCase
       should "be creatable" do
         assert_difference('@our_sample.instrument.samples.count') do
           post :create, instrument_id: @our_sample.instrument,
-            sample: { value: 1.234, timestamp: DateTime.now },
+            value: 1.234, timestamp: DateTime.now,
             :api_key => @us.authentication_token, :format => 'json'
         end
         data = JSON.parse(response.body)
@@ -154,7 +154,7 @@ class SamplesControllerTest < ActionController::TestCase
         time = DateTime.now
         put :update, id: @our_sample.to_param,
           instrument_id: @our_sample.instrument.id,
-          sample: { value: 123.45, timestamp: time },
+          value: 123.45, timestamp: time,
           :api_key => @us.authentication_token, :format => 'json'
         @our_sample.reload
         data = JSON.parse(response.body)

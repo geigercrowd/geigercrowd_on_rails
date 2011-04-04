@@ -121,8 +121,8 @@ class InstrumentsControllerTest < ActionController::TestCase
       assert_nil instrument.location
       location = Factory.build :location, user: @user
       assert_difference('Instrument.count') do
-        post :create, { :api_key => @user.authentication_token, :format => 'json', :instrument => instrument.attributes.
-          merge(location_attributes: location.attributes) }
+        post :create, { :api_key => @user.authentication_token, :format => 'json', :location_latitude => location.latitude,
+                        :location_longitude => location.longitude, :location_name => location.name }.merge(instrument.attributes)
       end
       assert_response :success
       data = JSON.parse(response.body)
@@ -134,8 +134,8 @@ class InstrumentsControllerTest < ActionController::TestCase
       instrument = Factory.build :instrument, location: nil
       assert_nil instrument.location
       assert_difference('Instrument.count') do
-        post :create, { :api_key => @user.authentication_token, :format => 'json', instrument: { model: "fubarator",
-          location_attributes: { latitude: "", longitude: "" }} }
+        post :create, { :api_key => @user.authentication_token, :format => 'json', model: "fubarator",
+          location_latitude: "", location_longitude: "" } 
       end
       assert_response :success
       data = JSON.parse(response.body)
@@ -148,7 +148,7 @@ class InstrumentsControllerTest < ActionController::TestCase
     should "be edited" do
       attributes = @our_instrument.attributes
       attributes[:model] = 'edited'
-      put :update, {:id => @our_instrument.to_param, :instrument => attributes, :api_key => @user.authentication_token, :format => 'json'}
+      put :update, {:id => @our_instrument.to_param, :api_key => @user.authentication_token, :format => 'json'}.merge(attributes)
       assert_response :success
       data = JSON.parse(response.body)
       assert_equal Hash, data.class 
