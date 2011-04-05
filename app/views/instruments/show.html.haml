@@ -1,11 +1,11 @@
 %h3= @instrument.model
-= link_to t('edit'), edit_instrument_path(@instrument)
+= link_to t('edit'), edit_user_instrument_path(current_user.id, @instrument)
 &nbsp;
-= link_to t('destroy'), @instrument, :confirm => t('confirm_delete'), :method => :delete
+= link_to t('destroy'), user_instrument_path(current_user.id, @instrument), :confirm => t('confirm_delete'), :method => :delete
 &nbsp;
-= link_to t('instruments.view_samples'), instrument_samples_path(@instrument)
+= link_to t('instruments.view_samples'), user_instrument_samples_path(@user_id, @instrument)
 &nbsp;
-= link_to t('instruments.add_samples'), new_instrument_sample_path(@instrument)
+= link_to t('instruments.add_samples'), new_user_instrument_sample_path(current_user.id, @instrument)
 %ul
   %li
     %span.label= "#{t('instruments.si_unit')}:"

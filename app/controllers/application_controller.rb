@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :timezone_from_user
   before_filter :authenticate_user!
+  before_filter :set_user_id
 
   private
 
@@ -13,5 +14,8 @@ class ApplicationController < ActionController::Base
   def timezone_from_user
     tz = current_user.try(:timezone)
     Time.zone = tz if tz.present?
+  end
+  def set_user_id
+    @user_id = params[:user_id]
   end
 end

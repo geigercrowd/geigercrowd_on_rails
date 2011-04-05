@@ -48,7 +48,7 @@ hope you enjoy it and find it usefull :)
       <div id="content_inside">
         <div id="content_inside_sidebar">
           <ul>
-            <li><%= link_to t('instruments.index.title'), instruments_path %></li>
+            <li><%= link_to t('instruments.index.title'), user_instruments_path(current_user) %></li>
             <% if current_user.try :admin? %>
               <li><%= link_to t('data_types.index.title'), data_types_path %></li>
             <% end %>

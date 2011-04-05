@@ -1,5 +1,5 @@
 class InstrumentsController < ApplicationController
-  add_breadcrumb I18n.t('breadcrumbs.instruments'), :instruments_path
+  add_breadcrumb I18n.t('breadcrumbs.instruments'), Proc.new { |c| c.user_instruments_path(c.current_user) }
   
   before_filter :rewrite_api_parameters, :only => [:create, :update]
   
@@ -17,7 +17,7 @@ class InstrumentsController < ApplicationController
   def show
     @instrument = Instrument.find(params[:id])
     respond_to do |format|
-      format.html { add_breadcrumb @instrument.model, :instrument_path }
+      format.html { add_breadcrumb @instrument.model, :user_instrument_path }
       format.json { render :json =>@instrument.to_json(:include => :location) }
     end
   end
@@ -28,7 +28,7 @@ class InstrumentsController < ApplicationController
     @instrument = Instrument.new
     @instrument.location = Location.new
     @locations = current_user.locations
-    add_breadcrumb I18n.t('new'), :new_instrument_path
+    add_breadcrumb I18n.t('new'), :new_user_instrument_path
   end
 
   # GET /instruments/1/edit
@@ -36,8 +36,8 @@ class InstrumentsController < ApplicationController
     @data_types = DataType.all
     @instrument = Instrument.find(params[:id])
     @instrument.location ||= Location.new
-    add_breadcrumb @instrument.model, :instrument_path
-    add_breadcrumb I18n.t('edit'), :edit_instrument_path
+    add_breadcrumb @instrument.model, :user_instrument_path
+    add_breadcrumb I18n.t('edit'), :edit_user_instrument_path
   end
 
   # POST /instruments
@@ -46,7 +46,7 @@ class InstrumentsController < ApplicationController
     current_user.instruments << @instrument
     if @instrument.valid?
       respond_to do |format|
-        format.html { redirect_to @instrument, :notice => t('instruments.create.successful') }
+        format.html { redirect_to [current_user, @instrument], :notice => t('instruments.create.successful') }
         format.json { render :json =>@instrument.to_json(:include => :location) }
       end
     else
@@ -63,7 +63,7 @@ class InstrumentsController < ApplicationController
     if @instrument.user == current_user
       if @instrument.update_attributes params[:instrument]
         respond_to do |format|
-          format.html { redirect_to @instrument, :notice => t('.success_message') }
+          format.html { redirect_to [current_user, @instrument], :notice => t('.success_message') }
           format.json { render :json =>@instrument.to_json(:include => :location) }
         end
       else
@@ -86,7 +86,7 @@ class InstrumentsController < ApplicationController
     @instrument.destroy
     
     respond_to do |format|
-      format.html { redirect_to(instruments_url) }
+      format.html { redirect_to(user_instruments_url) }
       format.json { render :json =>@instrument.to_json(:include => :location)}
     end
   end
@@ -94,9 +94,7 @@ class InstrumentsController < ApplicationController
   private
 
   def rewrite_api_parameters
-    logger.debug "Using!"
     return unless request.format == 'application/json'
-    logger.debug "json!"
     params["instrument"] = {} unless params["instrument"]
     ["data_type_id", "deadtime", "error", "location_id", "model", "notes"].each do |key|
       params["instrument"][key] = params.delete key

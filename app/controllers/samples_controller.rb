@@ -1,7 +1,7 @@
 class SamplesController < ApplicationController
-  add_breadcrumb I18n.t('breadcrumbs.instruments'), :instruments_path
-  add_breadcrumb :instrument_model, :instruments_path
-  add_breadcrumb I18n.t('breadcrumbs.samples'), :instrument_samples_path
+  add_breadcrumb I18n.t('breadcrumbs.instruments'), :user_instruments_path
+  add_breadcrumb :instrument_model, :user_instruments_path
+  add_breadcrumb I18n.t('breadcrumbs.samples'), :user_instrument_samples_path
 
   before_filter :rewrite_api_parameters, :only => [:create, :update]
 
@@ -24,7 +24,7 @@ class SamplesController < ApplicationController
       id: params[:id], instrument_id: params[:instrument_id], }
     
     respond_to do |format|
-      format.html { add_breadcrumb @sample.id, :instrument_sample_path }
+      format.html { add_breadcrumb @sample.id, :user_instrument_sample_path }
       format.json { render :json =>@sample }
     end
   end
@@ -33,7 +33,7 @@ class SamplesController < ApplicationController
   def new
     @instrument = Instrument.first conditions:
       { user_id: current_user.id, id: params[:instrument_id] }
-    add_breadcrumb I18n.t('breadcrumbs.new'), :new_instrument_sample_path
+    add_breadcrumb I18n.t('breadcrumbs.new'), :new_user_instrument_sample_path
 
     if @instrument.nil?
       flash[:error] = t('samples.new.add_instrument_notice', link: new_instrument_path)
@@ -52,8 +52,8 @@ class SamplesController < ApplicationController
     @data_types = DataType.all
     @sample = Sample.find(params[:id])
     @locations = current_user.locations
-    add_breadcrumb @sample.id, :instrument_sample_path
-    add_breadcrumb I18n.t('edit'), :edit_instrument_sample_path
+    add_breadcrumb @sample.id, :user_instrument_sample_path
+    add_breadcrumb I18n.t('edit'), :edit_user_instrument_sample_path
   end
 
   # POST /instruments/1/samples
@@ -63,7 +63,7 @@ class SamplesController < ApplicationController
     if @sample && @sample.save
       respond_to do |format|
         format.html { 
-          redirect_to new_instrument_sample_path,
+          redirect_to new_user_instrument_sample_path,
             :notice => I18n.t('.successfully_created')
         }
         format.json { render :json =>@sample }
@@ -83,7 +83,7 @@ class SamplesController < ApplicationController
     if @sample && @sample.update_attributes(params[:sample])
       respond_to do |format|
         format.html { 
-          redirect_to [ @sample.instrument, @sample ],
+          redirect_to [ current_user, @sample.instrument, @sample ],
             notice: 'Sample was successfully updated.'
         }
         format.json { render :json =>@sample }
@@ -102,7 +102,7 @@ class SamplesController < ApplicationController
     @sample.destroy
     
     respond_to do |format|
-      format.html { redirect_to instrument_samples_path @sample.instrument }
+      format.html { redirect_to user_instrument_samples_path current_user, @sample.instrument }
       format.json { render :json => @sample }
     end
   end

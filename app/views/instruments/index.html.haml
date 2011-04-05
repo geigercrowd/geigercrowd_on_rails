@@ -1,11 +1,11 @@
-%p= link_to t('.new_instrument'), new_instrument_path
+%p= link_to t('.new_instrument'), new_user_instrument_path(current_user)
 #instruments
   - for instrument in @instruments
     .instrument
-      .model= link_to instrument.model, instrument_path(instrument)
+      .model= link_to instrument.model, user_instrument_path(instrument.user, instrument)
       .location.gray= instrument.location.try(:name)
       .data_links
-        = link_to t('instruments.view_samples'), instrument_samples_path(instrument)
+        = link_to t('instruments.view_samples'), user_instrument_samples_path(instrument.user, instrument)
         &nbsp;
-        = link_to t('instruments.add_samples'), new_instrument_sample_path(instrument)
+        = link_to t('instruments.add_samples'), new_user_instrument_sample_path(instrument.user, instrument)
       %br.clear

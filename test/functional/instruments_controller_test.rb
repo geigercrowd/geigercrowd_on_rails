@@ -13,13 +13,13 @@ class InstrumentsControllerTest < ActionController::TestCase
 
     context "of the current user" do
       should "be listed" do
-        get :index
+        get :index, user_id: @user.id
         assert_response :success
         assert_equal [ @our_instrument ], assigns(:instruments)
       end
 
       should "be new" do
-        get :new
+        get :new, user_id: @user.id
         assert_response :success
       end
 
@@ -28,10 +28,10 @@ class InstrumentsControllerTest < ActionController::TestCase
         assert_nil instrument.location
         location = Factory.build :location, user: @user
         assert_difference('Instrument.count') do
-          post :create, instrument: instrument.attributes.
+          post :create, user_id: @user.id, instrument: instrument.attributes.
             merge(location_attributes: location.attributes)
         end
-        assert_redirected_to instrument_path(assigns(:instrument))
+        assert_redirected_to user_instrument_path(@user, assigns(:instrument))
         assert_equal location.latitude, Instrument.last.location.latitude
         assert_equal location.longitude, Instrument.last.location.longitude
         assert_equal @user, Instrument.last.user
@@ -41,10 +41,10 @@ class InstrumentsControllerTest < ActionController::TestCase
         instrument = Factory.build :instrument, location: nil
         assert_nil instrument.location
         assert_difference('Instrument.count') do
-          post :create, instrument: { model: "fubarator",
+          post :create, user_id: @user.id, instrument: { model: "fubarator",
             location_attributes: { latitude: "", longitude: "" }}
         end
-        assert_redirected_to instrument_path(assigns(:instrument))
+        assert_redirected_to user_instrument_path(@user, assigns(:instrument))
         assert_nil Instrument.last.location
         assert_equal @user, Instrument.last.user
       end
@@ -55,36 +55,36 @@ class InstrumentsControllerTest < ActionController::TestCase
         assert instrument.user.id
         assert_not_equal @user, instrument.user
         assert_difference('Instrument.count') do
-          post :create, instrument: instrument.attributes
+          post :create, {instrument: instrument.attributes, user_id: @user.id}
         end
-        assert_redirected_to instrument_path(assigns(:instrument))
+        assert_redirected_to user_instrument_path(@user, assigns(:instrument))
         assert_equal @user, Instrument.last.user
       end
 
       should "be shown" do
-        get :show, :id => @our_instrument.to_param
+        get :show, :id => @our_instrument.to_param, user_id: @user.id
         assert_response :success
         assert_equal @our_instrument, assigns(:instrument)
       end
 
       should "be editable" do
-        get :edit, :id => @our_instrument.to_param
+        get :edit, :id => @our_instrument.to_param, user_id: @user.id
         assert_response :success
         assert_equal @our_instrument, assigns(:instrument)
       end
 
       should "destroy instrument" do
         assert_difference('Instrument.count', -1) do
-          delete :destroy, :id => @our_instrument.to_param
+          delete :destroy, :id => @our_instrument.to_param, user_id: @user.id
         end
-        assert_redirected_to instruments_path
+        assert_redirected_to user_instruments_path
       end
     end
 
     context "of others" do
       should "not be updated" do
         old_model = @other_instrument.model
-        put :update, id: @other_instrument.id, model: "Gray Face 2000"
+        put :update, id: @other_instrument.id, model: "Gray Face 2000", user_id: @user.id
         assert_response :success
         assert_template :show
         @other_instrument.reload
@@ -103,13 +103,13 @@ class InstrumentsControllerTest < ActionController::TestCase
     end
     
     should "be listed using the api_key" do
-      get :index, :api_key => @user.authentication_token
+      get :index, :api_key => @user.authentication_token, user_id: @user.id
       assert_response :success
       assert_equal [ @our_instrument ], assigns(:instruments)
     end
     
     should "return a json formatted list" do
-      get :index, :api_key => @user.authentication_token, :format => 'json'
+      get :index, :api_key => @user.authentication_token, :format => 'json', user_id: @user.id
       assert_response :success
       data = JSON.parse(response.body)
       assert_equal 1, data.length
@@ -121,7 +121,7 @@ class InstrumentsControllerTest < ActionController::TestCase
       assert_nil instrument.location
       location = Factory.build :location, user: @user
       assert_difference('Instrument.count') do
-        post :create, { :api_key => @user.authentication_token, :format => 'json', :location_latitude => location.latitude,
+        post :create, { user_id: @user.id, :api_key => @user.authentication_token, :format => 'json', :location_latitude => location.latitude,
                         :location_longitude => location.longitude, :location_name => location.name }.merge(instrument.attributes)
       end
       assert_response :success
@@ -134,7 +134,7 @@ class InstrumentsControllerTest < ActionController::TestCase
       instrument = Factory.build :instrument, location: nil
       assert_nil instrument.location
       assert_difference('Instrument.count') do
-        post :create, { :api_key => @user.authentication_token, :format => 'json', model: "fubarator",
+        post :create, { user_id: @user.id, :api_key => @user.authentication_token, :format => 'json', model: "fubarator",
           location_latitude: "", location_longitude: "" } 
       end
       assert_response :success
@@ -148,7 +148,7 @@ class InstrumentsControllerTest < ActionController::TestCase
     should "be edited" do
       attributes = @our_instrument.attributes
       attributes[:model] = 'edited'
-      put :update, {:id => @our_instrument.to_param, :api_key => @user.authentication_token, :format => 'json'}.merge(attributes)
+      put :update, {:id => @our_instrument.to_param, user_id: @user.id, :api_key => @user.authentication_token, :format => 'json'}.merge(attributes)
       assert_response :success
       data = JSON.parse(response.body)
       assert_equal Hash, data.class 
@@ -156,7 +156,7 @@ class InstrumentsControllerTest < ActionController::TestCase
     end
 
     should "be shown" do
-      get :show, :id => @our_instrument.to_param, :api_key => @user.authentication_token, :format => 'json'
+      get :show, :id => @our_instrument.to_param, user_id: @user.id, :api_key => @user.authentication_token, :format => 'json'
       assert_response :success
       data = JSON.parse(response.body)
       assert_equal Hash, data.class 
@@ -165,7 +165,7 @@ class InstrumentsControllerTest < ActionController::TestCase
 
     should "destroy instrument" do
       assert_difference('Instrument.count', -1) do
-        delete :destroy, :id => @our_instrument.to_param, :api_key => @user.authentication_token, :format => 'json'
+        delete :destroy, :id => @our_instrument.to_param, user_id: @user.id, :api_key => @user.authentication_token, :format => 'json'
       end
       data = JSON.parse(response.body)
       assert_equal Hash, data.class 
