@@ -8,5 +8,5 @@ Geigercrowd::Application.routes.draw do
   end
   
   devise_for :users
-  root :to => "instruments#index"
+  root :to => "welcome#index"
 end

@@ -72,7 +72,7 @@ class InstrumentsControllerTest < ActionController::TestCase
         assert_response :success
         assert_equal @our_instrument, assigns(:instrument)
       end
-
+      
       should "destroy instrument" do
         assert_difference('Instrument.count', -1) do
           delete :destroy, :id => @our_instrument.to_param, user_id: @user.id
@@ -84,14 +84,73 @@ class InstrumentsControllerTest < ActionController::TestCase
     context "of others" do
       should "not be updated" do
         old_model = @other_instrument.model
+        assert_not_equal @other_instrument.user_id, @user.id
         put :update, id: @other_instrument.id, model: "Gray Face 2000", user_id: @user.id
         assert_response :success
         assert_template :show
         @other_instrument.reload
         assert_equal old_model, @other_instrument.model
       end
+      
+      should "be shown" do
+        get :show, :id => @other_instrument.to_param, user_id: @other_instrument.user.id
+        assert_response :success
+        assert_equal @other_instrument, assigns(:instrument)
+      end
     end
   end
+
+  context "instruments of others" do
+    setup do
+      @our_instrument = Factory :instrument
+      @user = @our_instrument.user
+      @user.confirm!
+      @other_instrument = Factory :instrument
+    end
+
+    should "be listed" do
+      get :index, user_id: @user.id
+      assert_response :success
+      assert_equal [ @our_instrument ], assigns(:instruments)
+    end
+
+    should "be shown" do
+      get :show, :id => @our_instrument.to_param, user_id: @user.id
+      assert_response :success
+      assert_equal @our_instrument, assigns(:instrument)
+    end
+
+    should "not be new" do
+      get :new, user_id: @user.id
+      assert_redirected_to new_user_session_path
+    end
+
+    should "not be created with location" do
+      instrument = Factory.build :instrument, location: nil
+      assert_nil instrument.location
+      location = Factory.build :location, user: @user
+      assert_no_difference('Instrument.count') do
+        post :create, user_id: @user.id, instrument: instrument.attributes.
+          merge(location_attributes: location.attributes)
+      end
+      assert_redirected_to new_user_session_path
+    end
+
+
+    should "not be editable" do
+      sign_in @user
+      get :edit, :id => @other_instrument.to_param, user_id: @user.id+1
+      assert_redirected_to root_path
+    end
+    
+    should "not destroy instrument" do
+      assert_no_difference('Instrument.count') do
+        delete :destroy, :id => @other_instrument.to_param, user_id: @user.id
+      end
+      assert_redirected_to new_user_session_path
+    end
+  end
+
   
   context "using the api" do
     setup do
@@ -122,7 +181,7 @@ class InstrumentsControllerTest < ActionController::TestCase
       location = Factory.build :location, user: @user
       assert_difference('Instrument.count') do
         post :create, { user_id: @user.id, :api_key => @user.authentication_token, :format => 'json', :location_latitude => location.latitude,
-                        :location_longitude => location.longitude, :location_name => location.name }.merge(instrument.attributes)
+                        :location_longitude => location.longitude, :location_name => location.name }.merge(instrument.attributes.except('user_id'))
       end
       assert_response :success
       data = JSON.parse(response.body)
@@ -170,6 +229,24 @@ class InstrumentsControllerTest < ActionController::TestCase
       data = JSON.parse(response.body)
       assert_equal Hash, data.class 
       assert_equal delete_dates(@our_instrument.attributes), delete_dates(data)
+    end
+    
+    should "not destroy other users instrument" do
+      assert_no_difference('Instrument.count') do
+        delete :destroy, :id => @other_instrument.to_param, user_id: @user.id, :api_key => @user.authentication_token, :format => 'json'
+      end
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class 
+      assert_equal "you do not own this instrument.", data['error']
+    end
+      
+    should "not be editable of others " do
+      get :edit, id: @other_instrument.to_param,
+                  user_id: 1337, api_key: @user.authentication_token, format: 'json'
+      assert_equal '406', response.code
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class 
+      assert_equal "you do not own this entry.", data['error']
     end
   end
 

@@ -15,7 +15,29 @@ class ApplicationController < ActionController::Base
     tz = current_user.try(:timezone)
     Time.zone = tz if tz.present?
   end
+  
   def set_user_id
-    @user_id = params[:user_id]
+    @user_id = params[:user_id].to_i if params[:user_id]
+  end
+  
+  def ensure_owned
+    if !current_user or current_user.id != @user_id
+      respond_to do |format|
+        format.html {
+          begin
+            redirect_to :back 
+          rescue ActionController::RedirectBackError
+            redirect_to root_path
+          end
+        }
+        format.json {
+          render :json => {"error" => "you do not own this entry."}, :status => 406
+        }
+      end
+    end
+  end
+  
+  def is_owned?
+    current_user and current_user.id == @user_id
   end
 end

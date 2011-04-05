@@ -91,7 +91,8 @@ en:
     show:
       title: Show data type
   breadcrumbs:
-    instruments: my equipment
+    own_instruments: my equipment
+    other_instruments: %{user}'s equipment
     samples: data
     new: add
   errors:

@@ -1,11 +1,26 @@
 class InstrumentsController < ApplicationController
-  add_breadcrumb I18n.t('breadcrumbs.instruments'), Proc.new { |c| c.user_instruments_path(c.current_user) }
   
   before_filter :rewrite_api_parameters, :only => [:create, :update]
+  skip_before_filter :authenticate_user!, :only => [:index, :show]
+  before_filter :ensure_owned, :except => [:index, :show]
+  before_filter :breadcrumb
+  
+  def breadcrumb
+    if is_owned?
+      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), Proc.new { |c| c.user_instruments_path(c.current_user) }
+    elsif @user_id
+      add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => User.find(@user_id).screen_name), Proc.new { |c| c.user_instruments_path(@user_id) }
+    end
+  end
   
   # GET /instruments
   def index
-    @instruments = current_user.instruments
+    if is_owned?
+      @instruments = current_user.instruments
+    else
+      @instruments = User.find(@user_id).instruments
+    end
+    
     
     respond_to do |format|
       format.html
@@ -82,12 +97,18 @@ class InstrumentsController < ApplicationController
 
   # DELETE /instruments/1
   def destroy
-    @instrument = Instrument.find(params[:id])
-    @instrument.destroy
-    
-    respond_to do |format|
-      format.html { redirect_to(user_instruments_url) }
-      format.json { render :json =>@instrument.to_json(:include => :location)}
+    @instrument = current_user.instruments.where(:id => params[:id]).first
+    if @instrument
+      @instrument.destroy
+      respond_to do |format|
+        format.html { redirect_to(user_instruments_url) }
+        format.json { render :json =>@instrument.to_json(:include => :location)}
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to(user_instruments_url) }
+        format.json { render :json => {"error" => "you do not own this instrument."}, :status => 406 }
+      end
     end
   end
   

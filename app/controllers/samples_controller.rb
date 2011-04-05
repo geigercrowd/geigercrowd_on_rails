@@ -1,14 +1,24 @@
 class SamplesController < ApplicationController
-  add_breadcrumb I18n.t('breadcrumbs.instruments'), :user_instruments_path
-  add_breadcrumb :instrument_model, :user_instruments_path
-  add_breadcrumb I18n.t('breadcrumbs.samples'), :user_instrument_samples_path
 
   before_filter :rewrite_api_parameters, :only => [:create, :update]
-
+  skip_before_filter :authenticate_user!, :only => [:index, :show]
+  before_filter :ensure_owned, :except => [:index, :show]
+  before_filter :breadcrumb
+  
+  def breadcrumb
+    if is_owned?
+      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), Proc.new { |c| c.user_instruments_path(c.current_user) }
+    else
+      add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => User.find(@user_id).screen_name), Proc.new { |c| c.user_instruments_path(@user_id) }
+    end
+    add_breadcrumb :instrument_model, :user_instruments_path
+    add_breadcrumb I18n.t('breadcrumbs.samples'), :user_instrument_samples_path
+  end
+  
+  
   # GET /instruments/1/samples
   def index
-    @instrument = Instrument.first conditions:
-      { user_id: current_user.id, id: params[:instrument_id] }
+    @instrument = Instrument.first conditions: { id: params[:instrument_id] }
     @samples = @instrument.samples
     respond_to do |format|
       format.html 
@@ -19,7 +29,7 @@ class SamplesController < ApplicationController
   # GET /instruments/1/samples/1
   def show
     @instrument = Instrument.first conditions:
-      { user_id: current_user.id, id: params[:instrument_id] }
+      { id: params[:instrument_id] }
     @sample = Sample.first conditions: {
       id: params[:id], instrument_id: params[:instrument_id], }
     
@@ -98,12 +108,18 @@ class SamplesController < ApplicationController
 
   # DELETE /instruments/1/samples/1
   def destroy
-    @sample = Sample.find(params[:id])
-    @sample.destroy
-    
-    respond_to do |format|
-      format.html { redirect_to user_instrument_samples_path current_user, @sample.instrument }
-      format.json { render :json => @sample }
+    @sample = current_user.samples.where(:id => params[:id]).first
+    if @sample
+      @sample.destroy
+      respond_to do |format|
+        format.html { redirect_to user_instrument_samples_path current_user, @sample.instrument }
+        format.json { render :json => @sample }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to user_instrument_samples_path current_user, params[:instrument_id] }
+        format.json { render :json => {"error" => "you do not own this sample."}, :status => 406 }
+      end
     end
   end
   

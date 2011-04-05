@@ -1,4 +1,5 @@
-%p= link_to t('.new_instrument'), new_user_instrument_path(current_user)
+- if is_owned?
+  %p= link_to t('.new_instrument'), new_user_instrument_path(current_user)
 #instruments
   - for instrument in @instruments
     .instrument
@@ -6,6 +7,7 @@
       .location.gray= instrument.location.try(:name)
       .data_links
         = link_to t('instruments.view_samples'), user_instrument_samples_path(instrument.user, instrument)
-        &nbsp;
-        = link_to t('instruments.add_samples'), new_user_instrument_sample_path(instrument.user, instrument)
+        - if is_owned?
+          &nbsp;
+          = link_to t('instruments.add_samples'), new_user_instrument_sample_path(instrument.user, instrument)
       %br.clear
