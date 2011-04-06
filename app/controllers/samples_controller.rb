@@ -2,10 +2,11 @@ class SamplesController < ApplicationController
 
   before_filter :rewrite_api_parameters, :only => [:create, :update]
   skip_before_filter :authenticate_user!, :only => [:index, :show]
-  before_filter :ensure_owned, :except => [:index, :show]
+  before_filter :ensure_owned, :except => [:index, :show, :list]
   before_filter :breadcrumb
   
   def breadcrumb
+    return if request.format == 'application/json'
     if is_owned?
       add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), Proc.new { |c| c.user_instruments_path(c.current_user) }
     else
@@ -122,6 +123,14 @@ class SamplesController < ApplicationController
         format.html { redirect_to user_instrument_samples_path current_user, params[:instrument_id] }
         format.json { render :json => {"error" => "you do not own this sample."}, :status => 406 }
       end
+    end
+  end
+  
+  # GET /instruments
+  def list
+    @samples = Sample.list(params)
+    respond_to do |format|
+      format.json { render :json =>@samples.to_json(:include => :location) }
     end
   end
   

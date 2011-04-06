@@ -8,6 +8,19 @@ class Instrument < ActiveRecord::Base
   before_validation :on_location_change
   attr_accessor :new_location
 
+  def self.list_limit
+    50
+  end
+
+  def self.list(params)
+    params[:page] = 0 unless params[:page]
+    if params[:option] == 'last_changed'
+      Instrument.joins(:location).order("updated_at DESC").limit(Instrument.list_limit).offset(params[:page].to_i*Instrument.list_limit)
+    else
+      Instrument.joins(:location).order(:id).limit(Instrument.list_limit).offset(params[:page].to_i*Instrument.list_limit)
+    end
+  end
+
   private
 
   # When the associated location's coordinates are changed:

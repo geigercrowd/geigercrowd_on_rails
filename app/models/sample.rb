@@ -11,6 +11,19 @@ class Sample < ActiveRecord::Base
   before_validation :location_from_instrument 
   before_validation :set_timezone
 
+  def self.list_limit
+    50
+  end
+
+  def self.list(params)
+    params[:page] = 0 unless params[:page]
+    if params[:option] == 'last_changed'
+      Sample.joins(:location).order("timestamp DESC").limit(Sample.list_limit).offset(params[:page].to_i*Sample.list_limit)
+    else
+      Sample.joins(:location).order(:id).limit(Sample.list_limit).offset(params[:page].to_i*Sample.list_limit)
+    end
+  end
+
   private
 
   def location_from_instrument

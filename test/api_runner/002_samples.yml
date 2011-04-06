@@ -4,7 +4,7 @@
     headers:
       Content-Type: 'application/json'
       Accept:       'application/json'
-    path:           '/instruments/33/samples'
+    path:           '/user/1/instruments/33/samples'
     method:         'POST'
     parameters:
     body:
@@ -22,7 +22,7 @@
     headers:
       Content-Type: 'application/json'
       Accept:       'application/json'
-    path:           '/instruments/33/samples'
+    path:           '/user/1/instruments/33/samples'
     method:         'POST'
     parameters:
     body:
