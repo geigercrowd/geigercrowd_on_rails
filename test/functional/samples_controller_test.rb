@@ -41,8 +41,11 @@ class SamplesControllerTest < ActionController::TestCase
             timezone: "Berlin" }, user_id: @us.id
       end
       assert_equal "Berlin", Time.zone.name
-      offset = Time.now.utc_offset
+      offset = Time.zone.utc_offset
       sample = Sample.last
+      # FIXME is that weird or is it just me?
+      offset += 3600 if sample.timestamp.dst?
+
       assert_equal timestamp, (sample.timestamp.utc + offset.seconds).
         strftime('%Y-%m-%d %H:%M')
     end
@@ -54,8 +57,11 @@ class SamplesControllerTest < ActionController::TestCase
         id: @our_sample.id, sample: { value: 1.234, timestamp: timestamp,
           timezone: "Berlin" }
       assert_equal "Berlin", Time.zone.name
-      offset = Time.now.utc_offset
+      offset = Time.zone.utc_offset
       @our_sample.reload
+      # FIXME is that weird or is it just me?
+      offset += 3600 if @our_sample.timestamp.dst?
+
       assert_equal timestamp, (@our_sample.timestamp.utc + offset.seconds).
         strftime('%Y-%m-%d %H:%M')
     end
