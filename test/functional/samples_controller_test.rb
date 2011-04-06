@@ -25,11 +25,39 @@ class SamplesControllerTest < ActionController::TestCase
 
     should "be creatable" do
       assert_difference('@our_sample.instrument.samples.count') do
-        post :create, instrument_id: @our_sample.instrument,
+        post :create, instrument_id: @our_sample.instrument.id,
           sample: { value: 1.234, timestamp: DateTime.now },
           user_id: @us.id
       end
       assert_redirected_to new_user_instrument_sample_path
+    end
+
+    should "be created with the correct timezone" do
+      Time.zone = "UTC"
+      timestamp = '2011-04-06 09:09'
+      assert_difference('@our_sample.instrument.samples.count') do
+        post :create, instrument_id: @our_sample.instrument.id,
+          sample: { value: 1.234, timestamp: timestamp,
+            timezone: "Berlin" }, user_id: @us.id
+      end
+      assert_equal "Berlin", Time.zone.name
+      offset = Time.now.utc_offset
+      sample = Sample.last
+      assert_equal timestamp, (sample.timestamp.utc + offset.seconds).
+        strftime('%Y-%m-%d %H:%M')
+    end
+
+    should "be updated with the correct timezone" do
+      Time.zone = "UTC"
+      timestamp = '2011-04-06 09:09'
+      post :update, user_id: @us.id, instrument_id: @our_sample.instrument.id,
+        id: @our_sample.id, sample: { value: 1.234, timestamp: timestamp,
+          timezone: "Berlin" }
+      assert_equal "Berlin", Time.zone.name
+      offset = Time.now.utc_offset
+      @our_sample.reload
+      assert_equal timestamp, (@our_sample.timestamp.utc + offset.seconds).
+        strftime('%Y-%m-%d %H:%M')
     end
 
     should "be shown" do
@@ -264,7 +292,6 @@ class SamplesControllerTest < ActionController::TestCase
         assert_equal old_values, @other_sample.value
         
         assert_equal old_times.to_s, @other_sample.timestamp.to_s
-
       end
 
       should "not be created" do

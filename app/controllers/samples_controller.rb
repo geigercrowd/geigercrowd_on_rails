@@ -41,6 +41,7 @@ class SamplesController < ApplicationController
 
   # GET /instruments/1/samples/new
   def new
+    Time.zone = params[:sample][:timezone] if params[:sample] and params[:sample][:timezone]
     @instrument = Instrument.first conditions:
       { user_id: current_user.id, id: params[:instrument_id] }
     add_breadcrumb I18n.t('breadcrumbs.new'), :new_user_instrument_sample_path
@@ -68,6 +69,7 @@ class SamplesController < ApplicationController
 
   # POST /instruments/1/samples
   def create
+    Time.zone = params[:sample][:timezone] if params[:sample] and params[:sample][:timezone]
     @sample = current_user.instruments.find(params[:instrument_id]).
       samples.new(params[:sample]) rescue nil
     if @sample && @sample.save
