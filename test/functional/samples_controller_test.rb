@@ -249,6 +249,32 @@ class SamplesControllerTest < ActionController::TestCase
       assert_equal data['value'], 1.234
     end
 
+    should "be creatable with a location" do
+      assert_difference('@our_sample.instrument.samples.count') do
+        @our_sample.instrument.location_id = nil
+        post :create, instrument_id: @our_sample.instrument, user_id: @us.id,
+          value: 1.234, timestamp: DateTime.now, location_name: 'test', location_latitude: 1,
+          location_longitude: 0, api_key: @us.authentication_token, format: 'json'
+      end
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class
+      assert_equal data['value'], 1.234
+      assert_not_nil data['location']
+      assert_equal 'test', data['location']['name']
+    end
+    
+    should "not be creatable without any location" do
+      assert_difference('@our_sample.instrument.samples.count') do
+        @our_sample.instrument.location_id = nil
+        post :create, instrument_id: @our_sample.instrument, user_id: @us.id,
+          value: 1.234, timestamp: DateTime.now, 
+          api_key: @us.authentication_token, format: 'json'
+      end
+      data = JSON.parse(response.body)
+      assert_equal 406, response.status
+      pp data
+    end
+
     should "be shown" do
       get :show, instrument_id: @our_sample.instrument.id,
                             id: @our_sample.to_param, user_id: @us.id,

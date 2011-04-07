@@ -44,6 +44,11 @@ Factory.define :location do |l|
   l.longitude 1.23456789
 end
 
+Factory.define :other_location, parent: :location do |l|
+  l.latitude 2.23456789
+  l.longitude 2.23456789
+end
+
 Factory.define :data_source do |ds|
   ds.name 'Saga and Nagasaki 2'
   ds.url "#{Rails.root}/test/html/saga1.html"

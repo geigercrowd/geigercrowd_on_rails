@@ -8,7 +8,7 @@ class Sample < ActiveRecord::Base
   validates_presence_of :timestamp
   validates_presence_of :location
   validates_presence_of :value
-  before_validation :location_from_instrument 
+  before_validation :check_location 
   before_validation :set_timezone
 
   def self.list_limit
@@ -26,11 +26,18 @@ class Sample < ActiveRecord::Base
 
   private
 
-  def location_from_instrument
-    if location && location.latitude.blank? && location.longitude.blank?
-      location = nil
+  def check_location
+    if location
+      # i do not see how this is useful
+      #if location.latitude.blank? && location.longitude.blank?
+      #  location = nil
+      #end
+      if instrument.location_id != location_id
+        errors.add(:location, 'cannot be set, because already set in instrument')
+      end
+    else
+      self.location ||= instrument.location
     end
-    self.location ||= instrument.location
   end
 
   def set_timezone

@@ -5,6 +5,7 @@ class SampleTest < ActiveSupport::TestCase
     setup do
       @sample = Factory :sample
       @instrument = @sample.instrument
+      @other_location = Factory :other_location
       @user = @sample.user
     end
 
@@ -31,6 +32,18 @@ class SampleTest < ActiveSupport::TestCase
       new_sample = @instrument.samples.create value: 12.34, timestamp: DateTime.now
       assert_valid new_sample
       assert_equal @instrument.location, @instrument.samples.last.location
+    end
+    
+    should "not be valid given no location and belonging to an instrument without location" do
+      @instrument.location = nil
+      @instrument.save
+      new_sample = @instrument.samples.new value: 12.34, timestamp: DateTime.now
+      assert_equal false, new_sample.save
+    end
+    
+    should "not accept a location when belonging to an instrument with location" do
+      new_sample = @instrument.samples.new value: 12.34, timestamp: DateTime.now, location: @other_location
+      assert_equal false, new_sample.save
     end
   end
 end
