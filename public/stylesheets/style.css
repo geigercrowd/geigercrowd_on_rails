@@ -101,14 +101,11 @@ a:hover {
 	width:800px;
 }
 #content_inside_sidebar {
-	border-left:1px solid #bbb;
-	clear:both;
-	float:right;
-	height:auto;
+	border-bottom:1px solid #e9e9e9;
 	line-height:175%;
-	margin:5px 0;
-	padding:0 10px;
-	width:200px;
+	width:800px;
+	height: auto;
+	float:left;
 }
 #content_inside_sidebar h2 {
 	background:#fff;
@@ -120,18 +117,15 @@ a:hover {
 }
 #content_inside_sidebar ul {
 	letter-spacing:-1px;
-	list-style:none;
-	margin:0 0 10px;
 }
 #content_inside_sidebar ul li {
 	list-style:none;
+	float: left;
 }
 #content_inside_sidebar ul li a {
-	border-bottom:1px solid #e9e9e9;
 	display:block;
-	padding:3px;
+	padding:3px 10px 3px 10px;
 	text-align:right;
-	width:194px;
 }
 #content_inside_sidebar ul li a:hover {
 	background:#ddd;
@@ -142,9 +136,8 @@ a:hover {
 	float:left;
 	letter-spacing:-1px;
 	line-height:175%;
-	margin:0 auto;
-	padding:10px;
-	width:559px;
+	margin:10px;
+	width:780px;
 }
 #content_inside_main h1 {
 	border-bottom:1px solid #ccc;
