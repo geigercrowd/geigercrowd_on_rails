@@ -91,6 +91,7 @@ class SamplesController < ApplicationController
 
   # PUT /users/1/instruments/1/samples/1
   def update
+    Time.zone = params[:sample][:timezone] if params[:sample] and params[:sample][:timezone]
     @sample = current_user.instruments.find(params[:instrument_id]).
       samples.find(params[:id]) rescue nil
     if @sample && @sample.update_attributes(params[:sample])

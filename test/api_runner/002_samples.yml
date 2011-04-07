@@ -40,7 +40,7 @@
     headers:
       Content-Type: 'application/json'
       Accept:       'application/json'
-    path:           '/user/1/instruments/33/samples'
+    path:           '/user/1/instruments/34/samples'
     method:         'POST'
     parameters:
     body:
@@ -51,6 +51,5 @@
   response_expectation:
     status_code:    406
     body:
-      value: 11.0
-      timestamp: '2011-04-04 18:38:22'
+      insturment_id: "was not found"
 
