@@ -1,10 +1,9 @@
 Factory.define :user do |u|
   u.real_name "John Doe"
-  u.screen_name "john_doe"
+  u.sequence(:screen_name) { |i| "johndoe#{i}" }
   u.sequence(:email) { |i| "johnny#{i}@example.com" }
   u.password "secret"
   u.confirmed_at { DateTime.now }
-  u.timezone ActiveSupport::TimeZone.new("Berlin")
 end
 
 Factory.define :admin, parent: :user do |u|

@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   has_many :locations
   has_many :instruments
   has_many :samples, through: :instruments
+  validates_uniqueness_of :screen_name, case_sensitive: false
+  validates_format_of :screen_name, with: /\A[-0-9a-zA-Z]+\Z/,
+    message: "must only contain letters, numbers and dashes"
   after_create :create_token
 
   def create_token
@@ -23,5 +26,13 @@ class User < ActiveRecord::Base
   def timezone
     tz = read_attribute :timezone
     tz.present? ? ActiveSupport::TimeZone.new(tz) : nil
+  end
+
+  def to_param
+    screen_name
+  end
+
+  def self.find_by_screen_name screen_name
+    first conditions: "lower(screen_name) = '#{screen_name.downcase}'"
   end
 end

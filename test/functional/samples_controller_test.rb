@@ -5,7 +5,6 @@ class SamplesControllerTest < ActionController::TestCase
     setup do
       @our_sample = Factory :sample
       @us = @our_sample.user
-      @us.confirm!
       sign_in @us
 
       @other_sample = Factory :sample
@@ -13,13 +12,13 @@ class SamplesControllerTest < ActionController::TestCase
     end
 
     should "show all samples associated with a given instrument" do
-      get :index, instrument_id: @our_sample.instrument.id, user_id: @us.id
+      get :index, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
       assert_response :success
       assert_equal [ @our_sample ], assigns(:samples)
     end
 
     should "be new" do
-      get :new, instrument_id: @our_sample.instrument.id, user_id: @us.id
+      get :new, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
       assert_response :success
     end
 
@@ -27,7 +26,7 @@ class SamplesControllerTest < ActionController::TestCase
       assert_difference('@our_sample.instrument.samples.count') do
         post :create, instrument_id: @our_sample.instrument.id,
           sample: { value: 1.234, timestamp: DateTime.now },
-          user_id: @us.id
+          user_id: @us.to_param
       end
       assert_redirected_to new_user_instrument_sample_path
     end
@@ -38,7 +37,7 @@ class SamplesControllerTest < ActionController::TestCase
       assert_difference('@our_sample.instrument.samples.count') do
         post :create, instrument_id: @our_sample.instrument.id,
           sample: { value: 1.234, timestamp: timestamp,
-            timezone: "Berlin" }, user_id: @us.id
+            timezone: "Berlin" }, user_id: @us.to_param
       end
       assert_equal "Berlin", Time.zone.name
       offset = Time.zone.utc_offset
@@ -53,7 +52,7 @@ class SamplesControllerTest < ActionController::TestCase
     should "be updated with the correct timezone" do
       Time.zone = "UTC"
       timestamp = '2011-04-06 09:09'
-      post :update, user_id: @us.id, instrument_id: @our_sample.instrument.id,
+      post :update, user_id: @us.to_param, instrument_id: @our_sample.instrument.id,
         id: @our_sample.id, sample: { value: 1.234, timestamp: timestamp,
           timezone: "Berlin" }
       assert_equal "Berlin", Time.zone.name
@@ -69,14 +68,14 @@ class SamplesControllerTest < ActionController::TestCase
     should "be shown" do
       get :show, instrument_id: @our_sample.instrument.id,
                             id: @our_sample.to_param,
-                            user_id: @us.id
+                            user_id: @us.to_param
       assert_response :success
     end
 
     should "be editable" do
-      get :edit, :id => @our_sample.to_param,
+      get :edit,   id: @our_sample.to_param,
         instrument_id: @our_sample.instrument.id, 
-        user_id: @us.id
+              user_id: @us.to_param
       assert_response :success
     end
 
@@ -85,7 +84,7 @@ class SamplesControllerTest < ActionController::TestCase
       put :update, id: @our_sample.to_param,
         instrument_id: @our_sample.instrument.id,
         sample: { value: 123.45, timestamp: time },
-        user_id: @us.id
+        user_id: @us.to_param
       assert_redirected_to user_instrument_sample_path(@us, assigns(:sample).instrument,
                                                   assigns(:sample))
       @our_sample.reload
@@ -97,7 +96,7 @@ class SamplesControllerTest < ActionController::TestCase
       assert_difference('Sample.count', -1) do
         delete :destroy, id: @our_sample.to_param,
           instrument_id: @our_sample.instrument.id,
-          user_id: @us.id
+          user_id: @us.to_param
       end
       assert_redirected_to user_instrument_samples_path @us, @our_sample.instrument
     end
@@ -106,7 +105,7 @@ class SamplesControllerTest < ActionController::TestCase
       should "be set to UTC if we don't know better" do
         Time.zone = "UTC"
         @us.update_attribute :timezone, nil
-        get :new, instrument_id: @our_sample.instrument.id, user_id: @us.id
+        get :new, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
         assert_equal "UTC", Hpricot(@response.body).
           search('select#sample_timezone option[@selected]').first[:value]
       end
@@ -114,7 +113,7 @@ class SamplesControllerTest < ActionController::TestCase
       should "be set to the user's timezone, if he has one set" do
         Time.zone = "UTC"
         @us.update_attribute :timezone, ActiveSupport::TimeZone.new("Berlin")
-        get :new, instrument_id: @our_sample.instrument.id, user_id: @us.id
+        get :new, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
         assert_equal "Berlin", Hpricot(@response.body).
           search('select#sample_timezone option[@selected]').first[:value]
       end
@@ -122,7 +121,7 @@ class SamplesControllerTest < ActionController::TestCase
       should "be set if otherwise determined" do
         Time.zone = "Berlin"
         @us.update_attribute :timezone, nil
-        get :new, instrument_id: @our_sample.instrument.id, user_id: @us.id
+        get :new, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
         assert_equal "Berlin", Hpricot(@response.body).
           search('select#sample_timezone option[@selected]').first[:value]
       end
@@ -134,7 +133,7 @@ class SamplesControllerTest < ActionController::TestCase
         old_values = @other_sample.value
         put :update, id: @other_sample.to_param,
           instrument_id: @other_sample.instrument.id,
-          user_id: @us.id,
+          user_id: @us.to_param,
           sample: { value:     old_values + 5.0,
                     timestamp: old_times - 1.day }
         assert_redirected_to :root
@@ -147,7 +146,7 @@ class SamplesControllerTest < ActionController::TestCase
         assert_no_difference("Sample.count") do
           post :create, instrument_id: @other_sample.instrument.id,
             sample: { value: 1.4, timestamp: DateTime.now },
-            user_id: @us.id
+            user_id: @us.to_param
         end
         assert_redirected_to :root
       end
@@ -158,14 +157,13 @@ class SamplesControllerTest < ActionController::TestCase
     setup do
       @our_sample = Factory :sample
       @us = @our_sample.user
-      @us.confirm!
 
       @other_sample = Factory :sample
       assert_equal 2, Sample.count
     end
 
     should "show all samples associated with a given instrument" do
-      get :index, instrument_id: @our_sample.instrument.id, user_id: @us.id
+      get :index, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
       assert_response :success
       assert_equal [ @our_sample ], assigns(:samples)
     end
@@ -173,12 +171,12 @@ class SamplesControllerTest < ActionController::TestCase
     should "be shown" do
       get :show, instrument_id: @our_sample.instrument.id,
                             id: @our_sample.to_param,
-                            user_id: @us.id
+                            user_id: @us.to_param
       assert_response :success
     end
 
     should "not be new" do
-      get :new, instrument_id: @our_sample.instrument.id, user_id: @us.id
+      get :new, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
       assert_redirected_to new_user_session_path
     end
 
@@ -186,7 +184,7 @@ class SamplesControllerTest < ActionController::TestCase
       assert_no_difference('@our_sample.instrument.samples.count') do
         post :create, instrument_id: @our_sample.instrument,
           sample: { value: 1.234, timestamp: DateTime.now },
-          user_id: @us.id
+          user_id: @us.to_param
       end
       assert_redirected_to new_user_session_path
     end
@@ -194,7 +192,7 @@ class SamplesControllerTest < ActionController::TestCase
     should "not be editable" do
       get :edit, :id => @our_sample.to_param,
         instrument_id: @our_sample.instrument.id, 
-        user_id: @us.id
+        user_id: @us.to_param
       assert_redirected_to new_user_session_path
     end
 
@@ -203,7 +201,7 @@ class SamplesControllerTest < ActionController::TestCase
       put :update, id: @our_sample.to_param,
         instrument_id: @our_sample.instrument.id,
         sample: { value: 123.45, timestamp: time },
-        user_id: @us.id
+        user_id: @us.to_param
       assert_redirected_to new_user_session_path
     end
 
@@ -211,7 +209,7 @@ class SamplesControllerTest < ActionController::TestCase
       assert_no_difference('Sample.count') do
         delete :destroy, id: @our_sample.to_param,
           instrument_id: @our_sample.instrument.id,
-          user_id: @us.id
+          user_id: @us.to_param
       end
       assert_redirected_to new_user_session_path
     end
@@ -223,14 +221,13 @@ class SamplesControllerTest < ActionController::TestCase
     setup do
       @our_sample = Factory :sample
       @us = @our_sample.user
-      @us.confirm!
 
       @other_sample = Factory :sample
       assert_equal 2, Sample.count
     end
 
     should "show all samples associated with a given instrument" do
-      get :index, instrument_id: @our_sample.instrument.id, user_id: @us.id, 
+      get :index, instrument_id: @our_sample.instrument.id, user_id: @us.to_param, 
                   api_key: @us.authentication_token, format: 'json'
       assert_response :success
       data = JSON.parse(response.body)
@@ -240,7 +237,7 @@ class SamplesControllerTest < ActionController::TestCase
 
     should "be creatable" do
       assert_difference('@our_sample.instrument.samples.count') do
-        post :create, instrument_id: @our_sample.instrument, user_id: @us.id,
+        post :create, instrument_id: @our_sample.instrument, user_id: @us.to_param,
           value: 1.234, timestamp: DateTime.now,
           api_key: @us.authentication_token, format: 'json'
       end
@@ -251,7 +248,7 @@ class SamplesControllerTest < ActionController::TestCase
 
     should "be shown" do
       get :show, instrument_id: @our_sample.instrument.id,
-                            id: @our_sample.to_param, user_id: @us.id,
+                            id: @our_sample.to_param, user_id: @us.to_param,
                             api_key: @us.authentication_token, format: 'json'
       assert_response :success
       data = JSON.parse(response.body)
@@ -264,7 +261,7 @@ class SamplesControllerTest < ActionController::TestCase
       time = DateTime.now
       put :update, id: @our_sample.to_param,
         instrument_id: @our_sample.instrument.id,
-        value: 123.45, timestamp: time, user_id: @us.id,
+        value: 123.45, timestamp: time, user_id: @us.to_param,
         api_key: @us.authentication_token, format: 'json'
       @our_sample.reload
       data = JSON.parse(response.body)
@@ -275,7 +272,7 @@ class SamplesControllerTest < ActionController::TestCase
     should "be destroyable" do
       assert_difference('Sample.count', -1) do
         delete :destroy, id: @our_sample.to_param,
-          instrument_id: @our_sample.instrument.id, user_id: @us.id,
+          instrument_id: @our_sample.instrument.id, user_id: @us.to_param,
           api_key: @us.authentication_token, format: 'json'
       end
       data = JSON.parse(response.body)
@@ -291,7 +288,7 @@ class SamplesControllerTest < ActionController::TestCase
           instrument_id: @other_sample.instrument.id,
           sample: { value:     old_values + 5.0,
                     timestamp: old_times - 1.day },
-          user_id: @us.id,
+          user_id: @us.to_param,
           api_key: @us.authentication_token, format: 'json'
         assert_equal '406', response.code
         @other_sample.reload
@@ -304,7 +301,7 @@ class SamplesControllerTest < ActionController::TestCase
         assert_no_difference("Sample.count") do
           post :create, instrument_id: @other_sample.instrument.id,
             sample: { value: 1.4, timestamp: DateTime.now },
-            user_id: @us.id,
+            user_id: @us.to_param,
             api_key: @us.authentication_token, format: 'json'
         end
         assert_equal '406', response.code
@@ -313,21 +310,21 @@ class SamplesControllerTest < ActionController::TestCase
       should "not be created with an invalid api_key" do
         post :create, instrument_id: @our_sample.instrument.id,
           sample: { value: 1.4, timestamp: DateTime.now },
-          user_id: @us.id,
+          user_id: @us.to_param,
           api_key: 'invalid', format: 'json'
         assert_equal '401', response.code
       end
       
       should "not be editable" do
         get :edit, instrument_id: @other_sample.instrument_id, id: @other_sample.id,
-                    user_id: @us.id+1, api_key: @us.authentication_token, format: 'json'
+          user_id: @us.to_param, api_key: @us.authentication_token, format: 'json'
         assert_equal '406', response.code
       end
       
       should "not destroy other users instrument" do
         assert_no_difference('Sample.count') do
           delete :destroy, id: @other_sample.to_param,
-            instrument_id: @other_sample.instrument.id, user_id: @us.id,
+            instrument_id: @other_sample.instrument.id, user_id: @us.to_param,
             api_key: @us.authentication_token, format: 'json'
         end
         data = JSON.parse(response.body)

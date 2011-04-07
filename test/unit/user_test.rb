@@ -1,3 +1,4 @@
+# encoding: utf-8
 require_relative '../test_helper'
 
 class UserTest < ActiveSupport::TestCase
@@ -22,5 +23,16 @@ class UserTest < ActiveSupport::TestCase
       assert_nil @user.timezone
     end
 
+    should "validate screen_name" do
+      assert_raise ActiveRecord::RecordInvalid do
+        Factory :user, screen_name: "FÄIL"
+      end
+    end
+
+    should "have a case insensitive screen_name" do
+      assert_equal @user.id, User.find_by_screen_name(@user.screen_name).id
+      assert_equal @user.id, User.find_by_screen_name(@user.screen_name.downcase).id
+      assert_equal @user.id, User.find_by_screen_name(@user.screen_name.upcase).id
+    end
   end
 end

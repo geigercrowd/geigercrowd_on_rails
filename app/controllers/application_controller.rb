@@ -17,11 +17,11 @@ class ApplicationController < ActionController::Base
   end
   
   def set_user_id
-    @user_id = params[:user_id].to_i if params[:user_id]
+    @user_id = params[:user_id] if params[:user_id]
   end
   
   def ensure_owned
-    if !current_user or current_user.id != @user_id
+    if !current_user || current_user.to_param != @user_id
       respond_to do |format|
         format.html {
           begin
@@ -38,6 +38,6 @@ class ApplicationController < ActionController::Base
   end
   
   def is_owned?
-    current_user and current_user.id == @user_id
+    current_user and current_user.to_param == @user_id
   end
 end
