@@ -17,17 +17,17 @@ class SamplesController < ApplicationController
   end
   
   
-  # GET /instruments/1/samples
+  # GET /users/1/instruments/1/samples
   def index
     @instrument = Instrument.first conditions: { id: params[:instrument_id] }
     @samples = @instrument.samples
     respond_to do |format|
       format.html 
-      format.json { render :json =>@samples }
+      format.json { render :json => @samples.to_json(:except => [:created_at, :updated_at]) }
     end
   end
 
-  # GET /instruments/1/samples/1
+  # GET /users/1/instruments/1/samples/1
   def show
     @instrument = Instrument.first conditions:
       { id: params[:instrument_id] }
@@ -36,11 +36,11 @@ class SamplesController < ApplicationController
     
     respond_to do |format|
       format.html { add_breadcrumb @sample.id, :user_instrument_sample_path }
-      format.json { render :json =>@sample }
+      format.json { render :json => @samples.to_json(:except => [:created_at, :updated_at]) }
     end
   end
 
-  # GET /instruments/1/samples/new
+  # GET /users/1/instruments/1/samples/new
   def new
     Time.zone = params[:sample][:timezone] if params[:sample] and params[:sample][:timezone]
     @instrument = Instrument.first conditions:
@@ -56,7 +56,7 @@ class SamplesController < ApplicationController
     end
   end
 
-  # GET /instruments/1/samples/1/edit
+  # GET /users/1/instruments/1/samples/1/edit
   def edit
     @instrument = Instrument.first conditions:
       { user_id: current_user.id, id: params[:instrument_id] }
@@ -68,7 +68,7 @@ class SamplesController < ApplicationController
     add_breadcrumb I18n.t('edit'), :edit_user_instrument_sample_path
   end
 
-  # POST /instruments/1/samples
+  # POST /users/1/instruments/1/samples
   def create
     Time.zone = params[:sample][:timezone] if params[:sample] and params[:sample][:timezone]
     @sample = current_user.instruments.find(params[:instrument_id]).
@@ -79,7 +79,7 @@ class SamplesController < ApplicationController
           redirect_to new_user_instrument_sample_path,
             :notice => I18n.t('.successfully_created')
         }
-        format.json { render :json =>@sample }
+        format.json { render :json => @samples.to_json(:except => [:created_at, :updated_at]) }
       end
     else
       respond_to do |format|
@@ -89,7 +89,7 @@ class SamplesController < ApplicationController
     end
   end
 
-  # PUT /instruments/1/samples/1
+  # PUT /users/1/instruments/1/samples/1
   def update
     @sample = current_user.instruments.find(params[:instrument_id]).
       samples.find(params[:id]) rescue nil
@@ -109,14 +109,14 @@ class SamplesController < ApplicationController
     end
   end
 
-  # DELETE /instruments/1/samples/1
+  # DELETE /users/1/instruments/1/samples/1
   def destroy
     @sample = current_user.samples.where(:id => params[:id]).first
     if @sample
       @sample.destroy
       respond_to do |format|
         format.html { redirect_to user_instrument_samples_path current_user, @sample.instrument }
-        format.json { render :json => @sample }
+        format.json { render :json => @samples.to_json(:except => [:created_at, :updated_at]) }
       end
     else
       respond_to do |format|
@@ -130,7 +130,7 @@ class SamplesController < ApplicationController
   def list
     @samples = Sample.list(params)
     respond_to do |format|
-      format.json { render :json =>@samples.to_json(:include => :location) }
+      format.json { render :json =>@samples.to_json(:except => [:created_at, :updated_at], :include => :location) }
     end
   end
   

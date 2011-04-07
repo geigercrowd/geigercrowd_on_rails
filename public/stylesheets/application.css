@@ -117,4 +117,19 @@ table#data td {
   padding-right: 10px;
 }
 
+table.parameters {
+}
+
+table.parameters td.param {
+  font-family: monospace;
+  font-size: 120%;
+  width: 100px;
+}
+table.parameters td.type {
+  font-style: italic;
+  width: 75px;
+}
+table.parameters td.desc {
+  
+}
 

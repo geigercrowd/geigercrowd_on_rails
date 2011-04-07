@@ -148,14 +148,23 @@ a:hover {
 }
 #content_inside_main h1 {
 	border-bottom:1px solid #ccc;
-	font-size:125%;
-	padding:0 0 2px;
+	font-size: 150%;
+	margin:0 0 2px;
 }
 #content_inside_main h2 {
-	color:#ccc;
-	font-size:115%;
-	text-align:right;
+	font-size:125%;
+	margin:20px 0 0;
 }
+#content_inside_main div.nested {
+	padding-left: 10px;
+}
+
+#content_inside_main h3 {
+	color:#aaa;
+	font-size:115%;
+	margin-left: -5px;
+}
+
 #content_inside_main p {
 	padding:0 0 10px;
 }

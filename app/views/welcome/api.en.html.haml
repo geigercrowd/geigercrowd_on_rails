@@ -1,0 +1,33 @@
+%h1= title 'API Documentation'
+%p
+  Because geigercrowd.net is designed as an open platform, we provide a API to query and update every data available.
+  %br
+  Currently we provide a REST-orientated JSON API.
+
+%h1=link_to "Public API", '/api/public'
+%p
+  The public API can be used to get a list of every instrument and sample, it is intended for applications which want to either visualize data or merge it with it's own database.
+  It also provides user-based data, useful to validate submitted samples.
+  
+%h1=link_to "Private API", '/api/private'
+%p
+  The private API is used to manage a users instruments and samples. It's main focus is to create and or update instruments and samples.
+
+
+%h1 Consistent parameters
+%p
+  These parameters are required or supported by every API call.
+%h2 Required
+%ul
+  %li!= "api_key - #{link_to 'Your API key', ''} for authentication and tracking"
+%h2 Optional
+%ul
+  %li page - Require the next 50 entries (supported by every call which returns an array)
+
+%h2 Example URIs
+%p
+  Click through to each URI to see the returned JSON.
+%ul
+  %li
+    =link_to '/instruments.json', "#{root_url}instruments.json?api_key=#{api_key}"
+    \- global list of the first 50 instruments
