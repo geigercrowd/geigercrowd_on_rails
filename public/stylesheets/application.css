@@ -132,4 +132,7 @@ table.parameters td.type {
 table.parameters td.desc {
   
 }
-
+span.pre {
+  font-family: monospace;
+  font-size: 120%;
+}
