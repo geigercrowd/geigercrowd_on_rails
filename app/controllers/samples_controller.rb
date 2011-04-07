@@ -33,10 +33,10 @@ class SamplesController < ApplicationController
       { id: params[:instrument_id] }
     @sample = Sample.first conditions: {
       id: params[:id], instrument_id: params[:instrument_id], }
-    
+
     respond_to do |format|
       format.html { add_breadcrumb @sample.id, :user_instrument_sample_path }
-      format.json { render :json => @samples.to_json(:except => [:created_at, :updated_at]) }
+      format.json { render :json => @sample.to_json(:except => [:created_at, :updated_at]) }
     end
   end
 
@@ -79,7 +79,7 @@ class SamplesController < ApplicationController
           redirect_to new_user_instrument_sample_path,
             :notice => I18n.t('.successfully_created')
         }
-        format.json { render :json => @samples.to_json(:except => [:created_at, :updated_at]) }
+        format.json { render :json => @sample.to_json(:except => [:created_at, :updated_at]) }
       end
     else
       respond_to do |format|
@@ -99,7 +99,7 @@ class SamplesController < ApplicationController
           redirect_to [ current_user, @sample.instrument, @sample ],
             notice: 'Sample was successfully updated.'
         }
-        format.json { render :json =>@sample }
+        format.json { render :json =>@sample.to_json(:except => [:created_at, :updated_at]) }
       end
     else
       respond_to do |format|
@@ -116,7 +116,7 @@ class SamplesController < ApplicationController
       @sample.destroy
       respond_to do |format|
         format.html { redirect_to user_instrument_samples_path current_user, @sample.instrument }
-        format.json { render :json => @samples.to_json(:except => [:created_at, :updated_at]) }
+        format.json { render :json => @sample.to_json(:except => [:created_at, :updated_at]) }
       end
     else
       respond_to do |format|
