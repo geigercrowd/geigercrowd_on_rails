@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
   end
   
   def is_owned?
-    current_user and current_user.to_param == @user_id
+    current_user && current_user.screen_name_matches?(@user_id)
+  end
+
+  def admin?
+    current_user.admin?
   end
 end

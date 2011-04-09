@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :real_name
   has_many :locations
   has_many :instruments
   has_many :samples, through: :instruments
@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
 
   def to_param
     screen_name
+  end
+
+  def screen_name_matches? screen_name_in_question
+    screen_name.casecmp(screen_name_in_question) == 0
   end
 
   def self.find_by_screen_name screen_name
