@@ -35,10 +35,10 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
     
     context "pagination" do
       setup do
-        50.times do |i|
+        Sample::ROWS_PER_PAGE.times do |i|
           @samples << Factory(:sample, timestamp: DateTime.now)
         end
-        assert_equal 60, Sample.count
+        assert_equal Sample::ROWS_PER_PAGE+10, Sample.count
       end
 
       should "return samples for page=2" do
