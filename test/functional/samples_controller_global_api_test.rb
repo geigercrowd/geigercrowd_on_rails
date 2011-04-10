@@ -16,7 +16,7 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       assert_equal 2, Sample.list_limit
     end
 
-    should "return Instrument.limit_amount of Samples" do
+    should "return limited amount of samples" do
       get :list, format: 'json', api_key: @user.authentication_token
       assert_response :success
       data = JSON.parse(response.body)

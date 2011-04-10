@@ -13,20 +13,21 @@ class Sample < ActiveRecord::Base
   before_validation :check_location 
   before_validation :set_timezone
 
-  def self.list_limit
-    50
-  end
+  ROWS_PER_PAGE = 50
 
-  def self.list(params)
-    params[:page] = 0 unless params[:page]
-    if params[:option] == 'last_changed'
-      Sample.joins(:location).order("timestamp DESC").limit(Sample.list_limit).offset(params[:page].to_i*Sample.list_limit)
-    else
-      Sample.joins(:location).order(:id).limit(Sample.list_limit).offset(params[:page].to_i*Sample.list_limit)
-    end
-  end
+  scope :page, lambda { |page|
+    { limit: ROWS_PER_PAGE, offset: page * ROWS_PER_PAGE }
+  }
+
+  scope :latest, lambda { |params|
+    { select: "distinct(instrument_id)", order: "timestamp desc" }
+  }
+
+  scope :after,  lambda { |after|  { conditions: "timestamp > #{after}" }}
+  scope :before, lambda { |before| { conditions: "timestamp < #{before}" }}
 
   def to_json *args
+    # TODO: merge in the args
     super only: [ :id, :instrument_id, :timestamp, :value ],
       include: { location: { only: [ :latitude, :longitude, :name, :id ] }}
   end

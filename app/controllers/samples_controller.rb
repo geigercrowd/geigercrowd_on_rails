@@ -3,10 +3,9 @@ class SamplesController < ApplicationController
   respond_to :html
   respond_to :json, except: [ :edit, :new ]
   
-  before_filter :instrument
+  before_filter :instrument, except: [ :list ]
   before_filter :rewrite_api_parameters, :only => [:create, :update]
-  skip_before_filter :authenticate_user!, :only => [:index, :show]
- # before_filter :ensure_owned, :except => [:index, :show, :list]
+  #skip_before_filter :authenticate_user!, :only => [:index, :show]
   before_filter :breadcrumb
 
   def breadcrumb
@@ -107,9 +106,9 @@ class SamplesController < ApplicationController
     end
   end
   
-  # GET /instruments
+  # GET /samples
   def list
-    @samples = Sample.list(params)
+    @samples = Sample.after(1.week.ago).latest.page(params[:page]).all
     respond_with @samples
   end
   
