@@ -1,0 +1,277 @@
+%h1= title 'Private API Documentation'
+%p
+  The private API enables a user to update their data automatically.
+  - if current_user
+    %br
+    %b Warning:
+    the shown URIs already contain your user id.
+%h1 Supported API Calls
+#toc
+  = link_to "POST /users/#{user_id}/instruments.json", '#instruments_post'
+  %br
+  = link_to "PUT /users/#{user_id}/instruments/<INSTRUMENT ID>.json", '#instruments_put'
+  %br
+  = link_to "DELETE /users/#{user_id}/instruments/<INSTRUMENT ID>.json", '#instruments_delete'
+  %br
+  = link_to "POST /users/#{user_id}/instruments/<INSTRUMENT ID>/samples.json", '#samples_post'
+  %br
+  = link_to "PUT /users/#{user_id}/instruments/<INSTRUMENT ID>/samples/<SAMPLE ID>.json", '#samples_put'
+  %br
+  = link_to "DELETE /users/#{user_id}/instruments/<INSTRUMENT ID>/samples/<SAMPLE ID>.json", '#samples_delete'
+#methods
+  %h2#instruments_post="POST /users/#{user_id}/instruments.json"
+  .nested
+    Creates a new instrument.
+    %h3 Required parameters
+    %table.parameters
+      %tr
+        %td.param data_type_id
+        %td.type integer
+        %td.desc the id of the SI unit your instrument measures radiation in
+      %tr
+        %td.param model
+        %td.type string
+        %td.desc name of your instrument
+      %tr
+        %td.param notes
+        %td.type string
+        %td.desc additional notes
+      %tr
+        %td.param error
+        %td.type integer
+        %td.desc average error-rate of your device's dead-time in microseconds
+      %tr
+        %td.param deadtime
+        %td.type integer
+        %td.desc 
+          deadtime of your device in microseconds. See your device's manual and read 
+          = link_to 'this', 'http://en.wikipedia.org/wiki/Dead_time', :target => '_blank'
+  
+    %h3 Optional parameters
+    To specify the instruments location you can either use an existing location:
+    %table.parameters
+      %tr
+        %td.param location_id 
+        %td.type integer 
+        %td.desc id of an existing location
+    Or create a new location:
+    %table.parameters
+      %tr
+        %td.param location_name
+        %td.type string
+        %td.desc name of the  location
+      %tr
+        %td.param location_latitude
+        %td.type float
+        %td.desc latitude of the location
+      %tr
+        %td.param location_longitude
+        %td.type float
+        %td.desc longitude of the location
+    %p
+      %b Note: 
+      If a location_id is specified every other location parameter is ignored.
+      %br
+      %b Note: 
+      If you do not pass any location parameter it is assumed that your instrument is mobile, you will have to specify a location for every sample.
+    
+    %h3 Returns
+    The created instrument in the form of 
+    = link_to "GET /user/#{user_id}/instruments/1", '/api/public#instrument_get'
+  
+  
+  
+  %h2#instruments_put="PUT /users/#{user_id}/instruments/<INSTRUMENT ID>.json"
+  .nested
+    Updates the instrument.
+    
+    %h3 Required parameters
+    At least one of the listed optional parameters.
+    
+    %h3 Optional parameters
+    %table.parameters
+      %tr
+        %td.param data_type_id
+        %td.type integer
+        %td.desc the id of the SI unit your instrument measures radiation in
+      %tr
+        %td.param model
+        %td.type string
+        %td.desc name of your instrument
+      %tr
+        %td.param notes
+        %td.type string
+        %td.desc additional notes
+      %tr
+        %td.param error
+        %td.type integer
+        %td.desc average error-rate of your device's dead-time in microseconds
+      %tr
+        %td.param deadtime
+        %td.type integer
+        %td.desc 
+          deadtime of your device in microseconds. See your device's manual and read 
+          = link_to 'this', 'http://en.wikipedia.org/wiki/Dead_time', :target => '_blank'
+    %table.parameters
+      %tr
+        %td.param location_name
+        %td.type string
+        %td.desc name of the  location
+      %tr
+        %td.param location_latitude
+        %td.type float
+        %td.desc latitude of the location
+      %tr
+        %td.param location_longitude
+        %td.type float
+        %td.desc longitude of the location
+      %tr
+        %td.param new_location
+        %td.type true|false
+        %td.desc send true if the instrument was moved, false if you just want to correct some location data
+    
+    %p
+      %b Note: 
+      If a location_id is specified every other location parameter is ignored.
+    
+    %h3 Returns
+    The updated instrument in the form of 
+    = link_to "GET /user/#{user_id}/instruments/1", '/api/public#instrument_get'
+  
+  
+  %h2#instruments_delete="DELETE /users/#{user_id}/instruments/<INSTRUMENT ID>.json"
+  .nested
+    Deletes the instrument.
+    
+    %h3 Required parameters
+    None
+    
+    %h3 Optional parameters
+    None
+    
+    %h3 Returns
+    The deleted instrument in the form of 
+    = link_to "GET /user/#{user_id}/instruments/1", '/api/public#instrument_get'
+
+
+  %h2#samples_post="POST /users/#{user_id}/instruments/<INSTRUMENT ID>/samples.json"
+  .nested
+    Creates a new sample.
+    %h3 Required parameters
+    %table.parameters
+      %tr
+        %td.param value
+        %td.type float
+        %td.desc the measured value 
+      %tr
+        %td.param timestamp
+        %td.type string
+        %td.desc parse able timestamp like '2011-04-04 15:08:11'
+
+    %h3 Optional parameters
+    %table.parameters
+      %tr
+        %td.param timezone
+        %td.type string
+        %td.desc name of your time zone like 'Berlin'
+
+    To specify the samples location you can either use an existing location:
+    %table.parameters
+      %tr
+        %td.param location_id 
+        %td.type integer 
+        %td.desc id of an existing location
+    Or create a new location:
+    %table.parameters
+      %tr
+        %td.param location_name
+        %td.type string
+        %td.desc name of the  location
+      %tr
+        %td.param location_latitude
+        %td.type float
+        %td.desc latitude of the location
+      %tr
+        %td.param location_longitude
+        %td.type float
+        %td.desc longitude of the location
+    %p
+      %b Warning: 
+      You can just set a location if your instrument was created without a location.
+      %br
+      %b Note: 
+      If a location_id is specified every other location parameter is ignored.
+      
+    
+    %h3 Returns
+    The created sample in the form of 
+    = link_to "GET /user/#{user_id}/instruments/1/samples/1", '/api/public#sample_get'
+  
+  %h2#samples_put="PUT /users/#{user_id}/instruments/<INSTRUMENT ID>/samples/<SAMPLE ID>.json"
+  .nested
+    Updates a sample.
+    %h3 Required parameters
+    %table.parameters
+      %tr
+        %td.param value
+        %td.type float
+        %td.desc the measured value 
+      %tr
+        %td.param timestamp
+        %td.type string
+        %td.desc parse able timestamp like '2011-04-04 15:08:11'
+
+    %h3 Optional parameters
+    %table.parameters
+      %tr
+        %td.param timezone
+        %td.type string
+        %td.desc name of your time zone like 'Berlin'
+
+    To specify the samples location you can either use an existing location:
+    %table.parameters
+      %tr
+        %td.param location_id 
+        %td.type integer 
+        %td.desc id of an existing location
+    Or create a new location:
+    %table.parameters
+      %tr
+        %td.param location_name
+        %td.type string
+        %td.desc name of the  location
+      %tr
+        %td.param location_latitude
+        %td.type float
+        %td.desc latitude of the location
+      %tr
+        %td.param location_longitude
+        %td.type float
+        %td.desc longitude of the location
+    %p
+      %b Warning: 
+      You can just set a location if your instrument was created without a location.
+      %br
+      %b Note: 
+      If a location_id is specified every other location parameter is ignored.
+      
+    
+    %h3 Returns
+    The updated sample in the form of 
+    = link_to "GET /user/#{user_id}/instruments/1/samples/1", '/api/public#sample_get'
+  
+  
+  
+  %h2#samples_delete="DELETE /users/#{user_id}/instruments/<INSTRUMENT ID>/samples/<SAMPLE ID>.json"
+  .nested
+    Deletes the sample.
+    
+    %h3 Required parameters
+    None
+    
+    %h3 Optional parameters
+    None
+    
+    %h3 Returns
+    The deleted sample in the form of 
+    = link_to "GET /user/#{user_id}/instruments/1/sample/1", '/api/public#sample_get'  

@@ -36,7 +36,12 @@ class User < ActiveRecord::Base
     screen_name.casecmp(screen_name_in_question) == 0
   end
 
+  def owns? instrument_or_sample
+    admin? || instrument_or_sample.user = self
+  end
+
   def self.find_by_screen_name screen_name
     first conditions: "lower(screen_name) = '#{screen_name.downcase}'"
   end
+
 end

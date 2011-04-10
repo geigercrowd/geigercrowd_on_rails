@@ -9,7 +9,7 @@ hope you enjoy it and find it usefull :)
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head profile="http://gmpg.org/xfn/11">
-    <title>geigercrowd.net - crowd-sourcing radiation sensor data</title>	
+    <title>geigercrowd.net - <% if @title %><%= @title %> <% else %>crowd-sourcing radiation sensor data<% end %></title>	
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="/stylesheets/application.css" type="text/css" media="screen" />
@@ -54,8 +54,9 @@ hope you enjoy it and find it usefull :)
             <% if current_user.try :admin? %>
               <li><%= link_to t('data_types.index.title'), data_types_path %></li>
             <% end %>
-            <li><%= link_to "API" %></li>
+            <li><%= link_to "API", '/api' %></li>
             <li><%= link_to t("users.sign_out"), destroy_user_session_path %></li>
+            <li style="width: 100%;"></li>
           </ul>
         </div>
         <div id="content_inside_main">

@@ -1,0 +1,182 @@
+%h1= title 'Public API Documentation'
+%p
+  The public API can be used to get a list of a users instruments and samples or a complete list of every instrument and sample in the database.
+  - if current_user
+    %br
+    %b Warning:
+    the shown URIs already contain your user id.
+
+%h1 How to import every data from the api
+The 
+%span.pre /instruments.json 
+and 
+%span.pre /samples.json 
+call both return just a list of 
+= Sample.list_limit
+entries per call. To import every data you need to increment the 
+%span.pre page 
+parameter. Once you get a result which contains less then
+= Sample.list_limit
+entries, you are done for your initial import.
+
+%h1 How to keep your data up to date
+Use the
+%span.pre /instruments/last_changed.json 
+and 
+%span.pre /samples/last_changed.json 
+to get the 
+= Sample.list_limit
+last changed entries. Update your database accordingly, once it contains every returned 
+%span.pre id
+and the 
+%span.pre updated_at
+columns is older then the one in your database, you are up to date.
+Keep in might that you might need to use the 
+%span.pre page
+parameter to get older data.
+
+
+%h1 Supported API Calls
+#toc
+  = link_to "GET /instruments.json", '#instruments_get_all'
+  %br
+  = link_to "GET /instruments/last_changed.json", '#instruments_last_changed'
+  %br
+  = link_to "GET /samples.json", '#samples_get_all'
+  %br
+  = link_to "GET /samples/last_changed.json", '#samples_last_changed'
+  %br
+  = link_to "GET /users/#{user_id}/instruments.json", '#instruments_get'
+  %br
+  = link_to "GET /users/#{user_id}/instruments/<INSTRUMENT ID>.json", '#instrument_get'
+  %br
+  = link_to "GET /users/#{user_id}/instruments/<INSTRUMENT ID>/samples.json", '#samples_get'
+  %br
+  = link_to "GET /users/#{user_id}/instruments/<INSTRUMENT ID>/samples/<SAMPLE ID>.json", '#sample_get'
+
+#methods
+  %h2#instruments_get_all="GET /instruments.json"
+  .nested
+    Returns a json formatted array of the 
+    =Sample.list_limit
+    first instruments.
+    %h3 Required parameters
+    None
+  
+    %h3 Optional parameters
+    FIXME this still needs to be discussed and is not implemented yet
+    %table.parameters
+      %tr
+        %td.param page
+        %td.type integer 
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.list_limit} instruments"
+        
+    %h3 Returns
+
+  %h2#instruments_last_changed="GET /instruments/last_changed.json"
+  .nested
+    Returns a json formatted array of the 
+    =Sample.list_limit
+    last changed instruments.
+    %h3 Required parameters
+    None
+  
+    %h3 Optional parameters
+    FIXME this still needs to be discussed and is not implemented yet
+    %table.parameters
+      %tr
+        %td.param page
+        %td.type integer 
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.list_limit} instruments"
+        
+    %h3 Returns
+
+  %h2#instruments_get_all="GET /samples.json"
+  .nested
+    Returns a json formatted array of the 
+    =Sample.list_limit
+    first samples.
+    %h3 Required parameters
+    None
+  
+    %h3 Optional parameters
+    FIXME this still needs to be discussed and is not implemented yet
+    %table.parameters
+      %tr
+        %td.param page
+        %td.type integer 
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.list_limit} samples"
+        
+    %h3 Returns
+
+  %h2#instruments_last_changed="GET /samples/last_changed.json"
+  .nested
+    Returns a json formatted array of the 
+    =Sample.list_limit
+    last changed samples.
+    %h3 Required parameters
+    None
+  
+    %h3 Optional parameters
+    FIXME this still needs to be discussed and is not implemented yet
+    %table.parameters
+      %tr
+        %td.param page
+        %td.type integer 
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.list_limit} samples"
+        
+    %h3 Returns
+
+  %h2#instruments_get="GET /users/#{user_id}/instruments.json"
+  .nested
+    Returns a json formatted array of instruments belonging to the specified user.
+    %h3 Required parameters
+    None
+  
+    %h3 Optional parameters
+    FIXME this still needs to be discussed and is not implemented yet
+    %table.parameters
+      %tr
+        %td.param page
+        %td.type integer 
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.list_limit} samples"
+    
+    %h3 Returns
+
+  %h2#instrument_get="GET /users/#{user_id}/instruments/<INSTRUMENT ID>.json"
+  .nested
+    Returns a json formatted hash of the specified instrument.
+    %h3 Required parameters
+    None
+  
+    %h3 Optional parameters
+    None
+        
+    %h3 Returns
+
+  %h2#samples_get="GET /users/#{user_id}/instruments/<INSTRUMENT ID>/samples.json"
+  .nested
+    Returns a json formatted array of samples belonging to the specified instrument.
+    %h3 Required parameters
+    None
+  
+    %h3 Optional parameters
+    FIXME this still needs to be discussed and is not implemented yet
+    %table.parameters
+      %tr
+        %td.param page
+        %td.type integer 
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.list_limit} samples"
+    
+    %h3 Returns
+
+  %h2#instrument_get="GET /users/#{user_id}/instruments/<INSTRUMENT ID>.json"
+  .nested
+    Returns a json formatted hash of the specified sample.
+    %h3 Required parameters
+    None
+  
+    %h3 Optional parameters
+    None
+        
+    %h3 Returns

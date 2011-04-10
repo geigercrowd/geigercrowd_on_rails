@@ -142,7 +142,7 @@ class InstrumentsController < ApplicationController
   def rewrite_api_parameters
     return unless request.format == 'application/json'
     params["instrument"] = {} unless params["instrument"]
-    ["data_type_id", "deadtime", "error", "location_id", "model", "notes"].each do |key|
+    ["data_type_id", "deadtime", "error", "location_id", "model", "notes", "new_location"].each do |key|
       params["instrument"][key] = params.delete key
     end
     params["instrument"]["location_attributes"] = {} unless params["instrument"]["location_attributes"]

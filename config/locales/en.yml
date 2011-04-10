@@ -95,6 +95,9 @@ en:
     other_instruments: %{user}'s equipment
     samples: data
     new: add
+    api: API
+    api_public: public
+    api_private: private
   errors:
     402:
       message: You are not allowed to access this page.

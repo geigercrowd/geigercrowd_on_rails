@@ -35,5 +35,21 @@
     body:
       value: 11.0
       timestamp: '2011-04-04 18:38:22'
-
+- name: "001/3: Not create a new sample for a instrument that isnt owned"
+  request:
+    headers:
+      Content-Type: 'application/json'
+      Accept:       'application/json'
+    path:           '/user/1/instruments/34/samples'
+    method:         'POST'
+    parameters:
+    body:
+      api_key: 'APITOKEN'
+      timestamp: '2011-04-04 20:38:22'
+      timezone: 'Berlin'
+      value: 11
+  response_expectation:
+    status_code:    406
+    body:
+      insturment_id: "was not found"
 

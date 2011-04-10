@@ -17,16 +17,22 @@ class SamplesControllerTest < ActionController::TestCase
       assert_equal [ @our_sample ], assigns(:samples)
     end
 
+    should "fail when the user-instrument combination doesn't exist" do
+      get :index, user_id: @other_sample.user.to_param,
+        instrument_id: @our_sample.instrument.id
+      assert_response :forbidden
+    end
+
     should "be new" do
       get :new, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
       assert_response :success
     end
 
-    should "be creatable" do
+    should "be created" do
       assert_difference('@our_sample.instrument.samples.count') do
-        post :create, instrument_id: @our_sample.instrument.id,
+        post :create, user_id: @us.to_param,
+          instrument_id: @our_sample.instrument.id,
           sample: { value: 1.234, timestamp: DateTime.now },
-          user_id: @us.to_param
       end
       assert_redirected_to new_user_instrument_sample_path
     end
@@ -131,12 +137,12 @@ class SamplesControllerTest < ActionController::TestCase
       should "not be updated" do
         old_times = @other_sample.timestamp
         old_values = @other_sample.value
-        put :update, id: @other_sample.to_param,
-          instrument_id: @other_sample.instrument.id,
-          user_id: @us.to_param,
+        put :update, id: @our_sample.id,
+          instrument_id: @our_sample.instrument.id,
+          user_id: @other_sample.user.to_param,
           sample: { value:     old_values + 5.0,
                     timestamp: old_times - 1.day }
-        assert_redirected_to :root
+        assert_template "errors/403"
         @other_sample.reload
         assert_equal old_times.to_s, @other_sample.timestamp.to_s
         assert_equal old_values, @other_sample.value
@@ -148,7 +154,8 @@ class SamplesControllerTest < ActionController::TestCase
             sample: { value: 1.4, timestamp: DateTime.now },
             user_id: @us.to_param
         end
-        assert_redirected_to :root
+        assert_response :forbidden
+        assert_template "errors/403"
       end
     end
   end
@@ -246,6 +253,34 @@ class SamplesControllerTest < ActionController::TestCase
       assert_equal data['value'], 1.234
     end
 
+    should "be creatable with a location" do
+      assert_difference('@our_sample.instrument.samples.count') do
+        @our_sample.instrument.update_attribute :location, nil
+        post :create, instrument_id: @our_sample.instrument.id,
+          user_id: @us.to_param, value: 1.234, timestamp: DateTime.now,
+          location: { name: 'optional', latitude: 1.0, longitude: 0.1 },
+          api_key: @us.authentication_token, format: 'json'
+      end
+      data = JSON.parse(response.body)
+      assert_equal Hash, data.class
+      assert_equal data['value'], 1.234
+      assert_not_nil data['location']
+      assert_equal 'optional', data['location']['name']
+    end
+    
+    should "not be creatable without any location" do
+      assert @our_sample.instrument.
+        update_attributes location: nil, new_location: true
+      assert_no_difference('@our_sample.instrument.samples.count') do
+        post :create, instrument_id: @our_sample.instrument.id,
+          user_id: @us.to_param, value: 1.234, timestamp: DateTime.now,
+          api_key: @us.authentication_token, format: 'json'
+      end
+      data = JSON.parse(response.body)
+      assert_equal({ "location" => ["can't be blank"] }, JSON.parse(response.body))
+      assert_response :unprocessable_entity
+    end
+
     should "be shown" do
       get :show, instrument_id: @our_sample.instrument.id,
                             id: @our_sample.to_param, user_id: @us.to_param,
@@ -253,8 +288,7 @@ class SamplesControllerTest < ActionController::TestCase
       assert_response :success
       data = JSON.parse(response.body)
       assert_equal Hash, data.class
-      assert_equal delete_dates(@our_sample.attributes), delete_dates(data)
-
+      assert_equal @our_sample.id, data["id"]
     end
 
     should "be updated" do
@@ -266,7 +300,7 @@ class SamplesControllerTest < ActionController::TestCase
       @our_sample.reload
       data = JSON.parse(response.body)
       assert_equal Hash, data.class
-      assert_equal delete_dates(@our_sample.attributes), delete_dates(data)
+      assert_equal 123.45, data["value"]
     end
 
     should "be destroyable" do
@@ -275,9 +309,17 @@ class SamplesControllerTest < ActionController::TestCase
           instrument_id: @our_sample.instrument.id, user_id: @us.to_param,
           api_key: @us.authentication_token, format: 'json'
       end
+      assert_response :success
       data = JSON.parse(response.body)
-      assert_equal Hash, data.class
-      assert_equal delete_dates(@our_sample.attributes), delete_dates(data)
+      assert_equal Hash.new, data
+    end
+
+    should "return something if non existent sample should be destroyed" do
+      delete :destroy, id: Sample.maximum(:id) + 1,
+        instrument_id: @our_sample.instrument.id, user_id: @us.to_param,
+        api_key: @us.authentication_token, format: 'json'
+      assert_response :not_found
+      assert_equal({"errors"=>{"sample"=>"not found"}}, JSON.parse(response.body))
     end
 
     context "of other users" do
@@ -290,10 +332,9 @@ class SamplesControllerTest < ActionController::TestCase
                     timestamp: old_times - 1.day },
           user_id: @us.to_param,
           api_key: @us.authentication_token, format: 'json'
-        assert_equal '406', response.code
+        assert_response :forbidden
         @other_sample.reload
         assert_equal old_values, @other_sample.value
-        
         assert_equal old_times.to_s, @other_sample.timestamp.to_s
       end
 
@@ -304,7 +345,7 @@ class SamplesControllerTest < ActionController::TestCase
             user_id: @us.to_param,
             api_key: @us.authentication_token, format: 'json'
         end
-        assert_equal '406', response.code
+        assert_response :forbidden
       end
       
       should "not be created with an invalid api_key" do
@@ -316,20 +357,20 @@ class SamplesControllerTest < ActionController::TestCase
       end
       
       should "not be editable" do
-        get :edit, instrument_id: @other_sample.instrument_id, id: @other_sample.id,
+        get :edit, instrument_id: @other_sample.instrument.id, id: @other_sample.id,
           user_id: @us.to_param, api_key: @us.authentication_token, format: 'json'
-        assert_equal '406', response.code
+        assert_response :forbidden
       end
       
       should "not destroy other users instrument" do
         assert_no_difference('Sample.count') do
-          delete :destroy, id: @other_sample.to_param,
+          delete :destroy, id: @other_sample.id,
             instrument_id: @other_sample.instrument.id, user_id: @us.to_param,
             api_key: @us.authentication_token, format: 'json'
         end
+        assert_response :forbidden
         data = JSON.parse(response.body)
         assert_equal Hash, data.class
-        assert_equal "you do not own this sample.", data['error']
       end
     end
   end

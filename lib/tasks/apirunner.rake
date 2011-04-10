@@ -26,5 +26,10 @@ namespace :apirunner do
     i.location_id = Location.find(1).id rescue Location.create!(:name => 'ApiRunner', :latitude => 0, :longitude => 0).id
     i.id = 33
     i.save!
+    i = Instrument.find(34) rescue Instrument.new(:model => 'apirunner')
+    i.user_id = 2
+    i.location_id = Location.find(2).id rescue Location.create!(:name => 'ApiRunner', :latitude => 0, :longitude => 0).id
+    i.id = 34
+    i.save!
   end
 end
