@@ -7,32 +7,46 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
     setup do
       @instrument = Factory.build :instrument
       @user = @instrument.user
-      @user.confirm!
-      @sequence = []
+      @samples = []
       10.times do |i|
-        @sequence <<  Factory(:sample_sequence)
+        @samples <<  Factory(:sample, timestamp: (i.days + 1.hour).ago)
       end
-      Sample.stubs(:list_limit).returns(2)
-      assert_equal 2, Sample.list_limit
     end
 
-    should "return limited amount of samples" do
-      get :list, format: 'json', api_key: @user.authentication_token
-      assert_response :success
-      data = JSON.parse(response.body)
-      assert_equal 2, data.length
-      assert_equal @sequence[0].id, data[0]['id']
-      assert_equal @sequence[1].id, data[1]['id']
+    context "defaults" do
+      should "return samples not older than 1 week" do
+        get :list, format: 'json', api_key: @user.authentication_token
+        assert_response :success
+        data = JSON.parse(response.body)
+        assert_equal 7, data.length
+      end
+     
+      should "return one sample per instrument" do
+        sample = @samples.first
+        assert sample.timestamp > 1.week.ago
+        Factory :sample, instrument: sample.instrument, timestamp: DateTime.now
+        get :list, format: 'json', api_key: @user.authentication_token
+        assert_response :success
+        data = JSON.parse(response.body)
+        assert_equal data.uniq.size, data.size
+        assert_equal 7, data.length
+      end
     end
     
-    should "return the 5th and 6th instrument for page=2" do
-      get :list, format: 'json', api_key: @user.authentication_token, page: 2
-      assert_response :success
-      data = JSON.parse(response.body)
-      assert_equal 2, data.length
+    context "pagination" do
+      setup do
+        50.times do |i|
+          @samples << Factory(:sample, timestamp: DateTime.now)
+        end
+        assert_equal 60, Sample.count
+      end
 
-      assert_equal @sequence[4].id, data[0]['id']
-      assert_equal @sequence[5].id, data[1]['id']
+      should "return samples for page=2" do
+        get :list, format: 'json', api_key: @user.authentication_token, page: 2
+        assert_response :success
+        data = JSON.parse(response.body)
+        assert_equal 3, data.length
+      end
     end
     
     should "return an empty list for page=5" do
@@ -48,8 +62,8 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
 
       data = JSON.parse(response.body)
       assert_equal 2, data.length
-      assert_equal @sequence[9].id, data[0]['id']
-      assert_equal @sequence[8].id, data[1]['id']
+      assert_equal @samples[9].id, data[0]['id']
+      assert_equal @samples[8].id, data[1]['id']
     end
     
     should "return the second last_changed instrument with page=1" do
@@ -58,8 +72,8 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
 
       data = JSON.parse(response.body)
       assert_equal 2, data.length
-      assert_equal @sequence[7].id, data[0]['id']
-      assert_equal @sequence[6].id, data[1]['id']
+      assert_equal @samples[7].id, data[0]['id']
+      assert_equal @samples[6].id, data[1]['id']
     end
  
   end

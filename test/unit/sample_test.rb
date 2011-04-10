@@ -66,7 +66,7 @@ class SampleTest < ActiveSupport::TestCase
     end
 
     context "scopes" do
-      should "find samples after some point in time" do
+      should "return samples after some point in time" do
         sample = Factory :sample, timestamp: 1.week.ago
         assert Sample.after((1.week + 1.day).ago).find(sample.id)
         assert_raise ActiveRecord::RecordNotFound do
@@ -74,12 +74,22 @@ class SampleTest < ActiveSupport::TestCase
         end
       end
 
-      should "find samples before some point in time" do
+      should "return samples before some point in time" do
         sample = Factory :sample, timestamp: 1.week.ago
         assert Sample.before((1.week - 1.day).ago).find(sample.id)
         assert_raise ActiveRecord::RecordNotFound do
           assert Sample.before((1.week + 1.day).ago).find(sample.id)
         end
+      end
+
+      should "return only the latest sample per instrument" do
+        samples = []
+        2.times do |i|
+          samples << Factory(:sample, timestamp: i.hours.ago,
+                             instrument: @sample.instrument)
+        end
+        assert_equal [ samples.first ],
+          Sample.latest.all(conditions: { instrument_id: @sample.instrument.id })
       end
     end
   end

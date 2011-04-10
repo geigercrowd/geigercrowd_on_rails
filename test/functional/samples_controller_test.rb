@@ -160,63 +160,63 @@ class SamplesControllerTest < ActionController::TestCase
     end
   end
 
-  context "samples of others" do
+  context "samples of other users" do
     setup do
-      @our_sample = Factory :sample
-      @us = @our_sample.user
+      @other_sample = Factory :sample
+      @us = @other_sample.user
+      sign_in @us
 
       @other_sample = Factory :sample
       assert_equal 2, Sample.count
     end
 
-    should "show all samples associated with a given instrument" do
-      get :index, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
+    should "be indexable" do
+      get :index, instrument_id: @other_sample.instrument.id,
+        user_id: @other_sample.user.to_param
       assert_response :success
-      assert_equal [ @our_sample ], assigns(:samples)
+      assert_equal [ @other_sample ], assigns(:samples)
     end
 
     should "be shown" do
-      get :show, instrument_id: @our_sample.instrument.id,
-                            id: @our_sample.to_param,
-                            user_id: @us.to_param
+      get :show, instrument_id: @other_sample.instrument.id,
+        id: @other_sample.id, user_id: @other_sample.user.to_param
       assert_response :success
     end
 
     should "not be new" do
-      get :new, instrument_id: @our_sample.instrument.id, user_id: @us.to_param
+      get :new, instrument_id: @other_sample.instrument.id, user_id: @other_sample.user.to_param
       assert_redirected_to new_user_session_path
     end
 
     should "not be creatable" do
-      assert_no_difference('@our_sample.instrument.samples.count') do
-        post :create, instrument_id: @our_sample.instrument,
+      assert_no_difference('@other_sample.instrument.samples.count') do
+        post :create, instrument_id: @other_sample.instrument,
           sample: { value: 1.234, timestamp: DateTime.now },
-          user_id: @us.to_param
+          user_id: @other_sample.user.to_param
       end
       assert_redirected_to new_user_session_path
     end
 
     should "not be editable" do
-      get :edit, :id => @our_sample.to_param,
-        instrument_id: @our_sample.instrument.id, 
-        user_id: @us.to_param
+      get :edit, :id => @other_sample.to_param,
+        instrument_id: @other_sample.instrument.id, 
+        user_id: @other_sample.user.to_param
       assert_redirected_to new_user_session_path
     end
 
     should "not be updated" do
       time = DateTime.now
-      put :update, id: @our_sample.to_param,
-        instrument_id: @our_sample.instrument.id,
+      put :update, id: @other_sample.to_param,
+        instrument_id: @other_sample.instrument.id,
         sample: { value: 123.45, timestamp: time },
-        user_id: @us.to_param
-      assert_redirected_to new_user_session_path
+        user_id: @other_sample.user.to_param
     end
 
     should "not be destroyable" do
       assert_no_difference('Sample.count') do
-        delete :destroy, id: @our_sample.to_param,
-          instrument_id: @our_sample.instrument.id,
-          user_id: @us.to_param
+        delete :destroy, id: @other_sample.to_param,
+          instrument_id: @other_sample.instrument.id,
+          user_id: @other_sample.user.to_param
       end
       assert_redirected_to new_user_session_path
     end

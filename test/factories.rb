@@ -28,11 +28,6 @@ Factory.define :sample do |s|
   s.association :instrument
 end
 
-Factory.define :sample_sequence, parent: :sample do |s|
-  s.sequence(:value) { |i| i }
-  s.sequence(:timestamp) { |i| DateTime.now - (10-i).minutes }
-end
-
 Factory.define :data_type do |d|
   d.name "foo per second"
   d.si_unit "foo/s"

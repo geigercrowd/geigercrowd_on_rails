@@ -25,7 +25,7 @@ class Sample < ActiveRecord::Base
   }
 
   def to_json *args
-    # TODO: merge in the args
+    # TODO: merge-in the args
     super only: [ :id, :instrument_id, :timestamp, :value ],
       include: { location: { only: [ :latitude, :longitude, :name, :id ] }}
   end
