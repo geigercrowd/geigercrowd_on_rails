@@ -185,7 +185,7 @@ class SamplesControllerTest < ActionController::TestCase
 
     should "not be new" do
       get :new, instrument_id: @other_sample.instrument.id, user_id: @other_sample.user.to_param
-      assert_redirected_to new_user_session_path
+      assert_response :forbidden
     end
 
     should "not be creatable" do
@@ -194,14 +194,14 @@ class SamplesControllerTest < ActionController::TestCase
           sample: { value: 1.234, timestamp: DateTime.now },
           user_id: @other_sample.user.to_param
       end
-      assert_redirected_to new_user_session_path
+      assert_response :forbidden
     end
 
     should "not be editable" do
       get :edit, :id => @other_sample.to_param,
         instrument_id: @other_sample.instrument.id, 
         user_id: @other_sample.user.to_param
-      assert_redirected_to new_user_session_path
+      assert_response :forbidden
     end
 
     should "not be updated" do
@@ -210,6 +210,7 @@ class SamplesControllerTest < ActionController::TestCase
         instrument_id: @other_sample.instrument.id,
         sample: { value: 123.45, timestamp: time },
         user_id: @other_sample.user.to_param
+      assert_response :forbidden
     end
 
     should "not be destroyable" do
@@ -218,7 +219,7 @@ class SamplesControllerTest < ActionController::TestCase
           instrument_id: @other_sample.instrument.id,
           user_id: @other_sample.user.to_param
       end
-      assert_redirected_to new_user_session_path
+      assert_response :forbidden
     end
   end
 

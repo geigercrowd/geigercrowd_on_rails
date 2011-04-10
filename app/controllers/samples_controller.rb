@@ -126,8 +126,13 @@ class SamplesController < ApplicationController
   end
 
   def instrument
-    @instrument ||= User.find_by_screen_name(params[:user_id]).
-      instruments.find(params[:instrument_id])
+    if ['index', 'show'].include? params[:action]
+      @instrument ||= User.find_by_screen_name(params[:user_id]).
+        instruments.find(params[:instrument_id])
+    else
+      @instrument ||= current_user.
+        instruments.find(params[:instrument_id])
+    end
   rescue
     respond_with do |format|
       format.html { render "errors/403", status: :forbidden }
