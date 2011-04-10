@@ -15,16 +15,14 @@ class Sample < ActiveRecord::Base
 
   ROWS_PER_PAGE = 50
 
+  scope :after,  lambda { |after|  { conditions: "timestamp > '#{after}'" }}
+  scope :before, lambda { |before| { conditions: "timestamp < '#{before}'" }}
+  scope :latest, { select: "distinct on (instrument_id) *", order: "instrument_id, timestamp desc" }
   scope :page, lambda { |page|
-    { limit: ROWS_PER_PAGE, offset: page * ROWS_PER_PAGE }
+    page -= 1
+    page = nil if page < 0
+    { limit: ROWS_PER_PAGE, offset: (page.presence || 0) * ROWS_PER_PAGE }
   }
-
-  scope :latest, lambda { |params|
-    { select: "distinct(instrument_id)", order: "timestamp desc" }
-  }
-
-  scope :after,  lambda { |after|  { conditions: "timestamp > #{after}" }}
-  scope :before, lambda { |before| { conditions: "timestamp < #{before}" }}
 
   def to_json *args
     # TODO: merge in the args

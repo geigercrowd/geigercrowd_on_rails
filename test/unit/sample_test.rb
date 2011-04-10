@@ -64,5 +64,23 @@ class SampleTest < ActiveSupport::TestCase
         assert @sample.valid?
       end
     end
+
+    context "scopes" do
+      should "find samples after some point in time" do
+        sample = Factory :sample, timestamp: 1.week.ago
+        assert Sample.after((1.week + 1.day).ago).find(sample.id)
+        assert_raise ActiveRecord::RecordNotFound do
+          assert Sample.after((1.week - 1.day).ago).find(sample.id)
+        end
+      end
+
+      should "find samples before some point in time" do
+        sample = Factory :sample, timestamp: 1.week.ago
+        assert Sample.before((1.week - 1.day).ago).find(sample.id)
+        assert_raise ActiveRecord::RecordNotFound do
+          assert Sample.before((1.week + 1.day).ago).find(sample.id)
+        end
+      end
+    end
   end
 end
