@@ -8,7 +8,7 @@ class Location < ActiveRecord::Base
   before_save :geocode
   
   def geocode
-    if longitude_changed? or latitude_changed?
+    if longitude_changed? or latitude_changed? && longitude != nil && latitude != nil
       Resque.enqueue(Geocode, self.id)
     end
   end
