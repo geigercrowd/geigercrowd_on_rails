@@ -46,25 +46,6 @@ class SampleTest < ActiveSupport::TestCase
       assert_equal false, new_sample.save
     end
 
-    context "restrictions" do
-      setup do
-        @other_user = Factory :user
-      end
-
-      should "not allow to save_as other user" do
-        @sample.value += 1
-        @sample.save_as @other_user
-        assert !@sample.valid?
-        assert_equal({ :base => [ "Permission denied" ]}, @sample.errors)
-      end
-
-      should "allow to save_as owner" do
-        @sample.value += 1
-        @sample.save_as @user
-        assert @sample.valid?
-      end
-    end
-
     context "scopes" do
       should "return samples after some point in time" do
         sample = Factory :sample, timestamp: 1.week.ago

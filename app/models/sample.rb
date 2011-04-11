@@ -1,5 +1,4 @@
 class Sample < ActiveRecord::Base
-  include Permissions
 
   belongs_to :instrument
   belongs_to :location

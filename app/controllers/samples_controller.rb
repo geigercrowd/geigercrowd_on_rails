@@ -65,7 +65,7 @@ class SamplesController < ApplicationController
       params[:sample][:timezone]
 
     @sample = instrument.samples.new params[:sample]
-    @sample.save_as current_user
+    @sample.save
     respond_with instrument.user, instrument, @sample do |format|
       format.html do
         redirect_to new_user_instrument_sample_path(instrument.user, instrument)
@@ -95,7 +95,7 @@ class SamplesController < ApplicationController
   def destroy
     @sample = instrument.samples.find params[:id] rescue nil
     if @sample
-      @sample.destroy_as current_user
+      @sample.destroy
       respond_with instrument.user, instrument, @sample
     else
       respond_with do |format|
@@ -107,10 +107,10 @@ class SamplesController < ApplicationController
   
   # GET /samples
   def list
-    options = params[:options] || []
+    flags = params[:flags] || []
     @samples = Sample
     @samples = @samples.after(1.week.ago)
-    @samples = @samples.latest unless options.include?("over_time")
+    @samples = @samples.latest unless flags.include?("over_time")
     @samples = @samples.page(params[:page])
     respond_with @samples.all
   end

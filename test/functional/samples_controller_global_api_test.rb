@@ -60,7 +60,7 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       sample = @samples.first
       assert sample.timestamp > 1.week.ago
       Factory :sample, instrument: sample.instrument, timestamp: DateTime.now
-      get :list, format: 'json', api_key: @user.authentication_token, options: [ "over_time" ]
+      get :list, format: 'json', api_key: @user.authentication_token, flags: [ "over_time" ]
       assert_response :success
 
       data = JSON.parse(response.body)
