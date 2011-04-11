@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110402113330) do
+ActiveRecord::Schema.define(:version => 20110411142337) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "name"
@@ -52,6 +52,9 @@ ActiveRecord::Schema.define(:version => 20110402113330) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "data_source_id"
+    t.string   "country"
+    t.string   "city"
+    t.string   "province"
   end
 
   add_index "locations", ["data_source_id"], :name => "index_locations_on_data_source_id"
