@@ -21,7 +21,7 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
         assert_equal 7, data.length
       end
      
-      should "return one sample per instrument" do
+      should "return only the latest sample per instrument" do
         sample = @samples.first
         assert sample.timestamp > 1.week.ago
         Factory :sample, instrument: sample.instrument, timestamp: DateTime.now
@@ -45,7 +45,7 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
         get :list, format: 'json', api_key: @user.authentication_token, page: 2
         assert_response :success
         data = JSON.parse(response.body)
-        assert_equal 3, data.length
+        assert_equal 7, data.length
       end
     end
     
@@ -56,25 +56,16 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       assert_equal 0, data.length
     end
     
-    should "return the last_changed instrument" do
-      get :list, format: 'json', api_key: @user.authentication_token, option: 'last_changed'
+    should "return not only the latest samples" do
+      sample = @samples.first
+      assert sample.timestamp > 1.week.ago
+      Factory :sample, instrument: sample.instrument, timestamp: DateTime.now
+      get :list, format: 'json', api_key: @user.authentication_token, options: [ "over_time" ]
       assert_response :success
 
       data = JSON.parse(response.body)
-      assert_equal 2, data.length
-      assert_equal @samples[9].id, data[0]['id']
-      assert_equal @samples[8].id, data[1]['id']
+      assert_equal 2,
+        data.select { |s| s["instrument_id"] == sample.instrument_id }.size
     end
-    
-    should "return the second last_changed instrument with page=1" do
-      get :list, format: 'json', api_key: @user.authentication_token, option: 'last_changed', page: 1
-      assert_response :success
-
-      data = JSON.parse(response.body)
-      assert_equal 2, data.length
-      assert_equal @samples[7].id, data[0]['id']
-      assert_equal @samples[6].id, data[1]['id']
-    end
- 
   end
 end

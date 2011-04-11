@@ -5,7 +5,6 @@ class SamplesController < ApplicationController
   
   before_filter :instrument, except: [ :list ]
   before_filter :rewrite_api_parameters, :only => [:create, :update]
-  #skip_before_filter :authenticate_user!, :only => [:index, :show]
   before_filter :breadcrumb
 
   def breadcrumb
@@ -108,8 +107,12 @@ class SamplesController < ApplicationController
   
   # GET /samples
   def list
-    @samples = Sample.after(1.week.ago).latest.page(params[:page]).all
-    respond_with @samples
+    options = params[:options] || []
+    @samples = Sample
+    @samples = @samples.after(1.week.ago)
+    @samples = @samples.latest unless options.include?("over_time")
+    @samples = @samples.page(params[:page])
+    respond_with @samples.all
   end
   
   private
