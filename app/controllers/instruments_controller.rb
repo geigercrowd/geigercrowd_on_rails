@@ -1,6 +1,6 @@
 class InstrumentsController < ApplicationController
 
-  respond_to :html
+  respond_to :html, except: [ :list ]
   respond_to :json, except: [ :edit, :new ]
 
   before_filter :rewrite_api_parameters, :only => [:create, :update]
@@ -127,10 +127,10 @@ class InstrumentsController < ApplicationController
   
   # GET /instruments
   def list
-    @instruments = Instrument.list(params)
-    respond_to do |format|
-      format.json { render :json =>@instruments }
-    end
+    @instruments = Instrument.page(params[:page]).latest
+    @instruments = @instruments.after(params[:after].presence || 1.week.ago)
+    @instruments = @instruments.before(params[:before]) if params[:before]
+    respond_with @instruments.all
   end
   
   private

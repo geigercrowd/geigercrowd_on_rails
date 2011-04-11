@@ -106,11 +106,10 @@ class SamplesController < ApplicationController
   
   # GET /samples
   def list
-    flags = params[:flags] || []
-    @samples = Sample
-    @samples = @samples.after(1.week.ago)
-    @samples = @samples.latest unless flags.include?("over_time")
-    @samples = @samples.page(params[:page])
+    @samples = Sample.page(params[:page])
+    @samples = @samples.latest if params[:option] == 'current'
+    @samples = @samples.after(params[:after].presence || 1.week.ago)
+    @samples = @samples.before(params[:before]) if params[:before]
     respond_with @samples.all
   end
   

@@ -8,18 +8,17 @@ class Instrument < ActiveRecord::Base
   before_validation :on_location_change
   attr_accessor :new_location
 
-  def self.list_limit
-    50
-  end
+  scope :after,  lambda { |after|  { conditions: ["updated_at > ?", after] }}
+  scope :before, lambda { |before| { conditions: ["updated_at < ?", before] }}
+  scope :latest, { order: "updated_at desc" }
+  scope :page, lambda { |page|
+    page = page.to_i
+    page -= 1
+    page = nil if page < 0
+    { limit: ROWS_PER_PAGE, offset: (page.presence || 0) * ROWS_PER_PAGE }
+  }
 
-  def self.list(params)
-    params[:page] = 0 unless params[:page]
-    if params[:option] == 'last_changed'
-      Instrument.joins(:location).order("updated_at DESC").limit(Instrument.list_limit).offset(params[:page].to_i*Instrument.list_limit)
-    else
-      Instrument.joins(:location).order(:id).limit(Instrument.list_limit).offset(params[:page].to_i*Instrument.list_limit)
-    end
-  end
+  ROWS_PER_PAGE = 50
 
   def to_json *args
     # TODO: merge-in the args

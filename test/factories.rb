@@ -17,11 +17,6 @@ Factory.define :instrument do |i|
   i.association :user
 end
 
-Factory.define :instrument_sequence, parent: :instrument do |i|
-  i.sequence(:model) { |i| "Instrument #{i}" }
-  i.sequence(:updated_at) { |i| DateTime.now - (10-i).minutes }
-end
-
 Factory.define :sample do |s|
   s.value 1.2345
   s.timestamp { DateTime.now }

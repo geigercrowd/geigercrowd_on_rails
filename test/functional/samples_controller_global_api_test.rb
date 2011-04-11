@@ -20,12 +20,35 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
         data = JSON.parse(response.body)
         assert_equal 7, data.length
       end
-     
+      
+      should "respect the after parameter" do
+        get :list, format: 'json', api_key: @user.authentication_token, after: 100.days.ago
+        assert_response :success
+        data = JSON.parse(response.body)
+        assert_equal 10, data.length
+      end
+      
+      should "respect the before parameter" do
+        get :list, format: 'json', api_key: @user.authentication_token, before: 5.days.ago
+        assert_response :success
+        data = JSON.parse(response.body)
+        assert_equal 2, data.length
+      end
+      
+      should "respect both the before and after parameter" do
+        get :list, format: 'json', api_key: @user.authentication_token, before: 5.days.ago, after: 100.days.ago
+        assert_response :success
+        data = JSON.parse(response.body)
+        assert_equal 5, data.length
+      end
+    end
+    
+    context "current samples" do
       should "return only the latest sample per instrument" do
         sample = @samples.first
         assert sample.timestamp > 1.week.ago
         Factory :sample, instrument: sample.instrument, timestamp: DateTime.now
-        get :list, format: 'json', api_key: @user.authentication_token
+        get :list, format: 'json', api_key: @user.authentication_token, option: 'current'
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal data.uniq.size, data.size

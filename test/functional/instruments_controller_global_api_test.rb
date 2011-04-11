@@ -8,61 +8,67 @@ class InstrumentsControllerGlobalApiTest < ActionController::TestCase
       @instrument = Factory.build :instrument
       @user = @instrument.user
       @user.confirm!
-      @sequence = []
+      @instruments = []
       10.times do |i|
-        @sequence <<  Factory(:instrument_sequence)
+        @instruments <<  Factory(:instrument, updated_at: i.days.ago)
       end
-      Instrument.stubs(:list_limit).returns(2)
-      assert_equal 2, Instrument.list_limit
+      @old_constant = Instrument::ROWS_PER_PAGE
+      Instrument.__send__(:remove_const,'ROWS_PER_PAGE') 
+      Instrument.const_set('ROWS_PER_PAGE', 2) 
+      assert_equal 2, Instrument::ROWS_PER_PAGE
     end
-
-    should "return Instrument.limit_amount of instruments" do
+    
+    teardown do
+      Instrument.__send__(:remove_const,'ROWS_PER_PAGE')
+      Instrument.const_set('ROWS_PER_PAGE', @old_constant)
+    end
+    
+    should "return the #{Instrument::ROWS_PER_PAGE} last updated instruments" do
       get :list, format: 'json', api_key: @user.authentication_token
-      assert_response :success
-      data = JSON.parse(response.body)
-      assert_equal 2, data.length
-      assert_equal @sequence[0].id, data[0]['id']
-      assert_equal @sequence[1].id, data[1]['id']
-    end
-    
-    should "return the 5th and 6th instrument for page=2" do
-      get :list, format: 'json', api_key: @user.authentication_token, page: 2
-      assert_response :success
-      data = JSON.parse(response.body)
-      assert_equal 2, data.length
-      #pp @sequence.collect(&:id).zip data.collect {|x| x["id"]}
-
-      assert_equal @sequence[4].id, data[0]['id']
-      assert_equal @sequence[5].id, data[1]['id']
-    end
-    
-    should "return an empty list for page=5" do
-      get :list, format: 'json', api_key: @user.authentication_token, page: 5
-      assert_response :success
-      data = JSON.parse(response.body)
-      assert_equal 0, data.length
-    end
-    
-    should "return the last_changed instrument" do
-      get :list, format: 'json', api_key: @user.authentication_token, option: 'last_changed'
       assert_response :success
 
       data = JSON.parse(response.body)
       #pp @sequence.collect(&:updated_at).zip data.collect {|x| x["updated_at"]}
       assert_equal 2, data.length
-      assert_equal @sequence[9].id, data[0]['id']
-      assert_equal @sequence[8].id, data[1]['id']
+      assert_equal @instruments[0].id, data[0]['id']
+      assert_equal @instruments[1].id, data[1]['id']
     end
     
-    should "return the second last_changed instrument with page=1" do
-      get :list, format: 'json', api_key: @user.authentication_token, option: 'last_changed', page: 1
+    should "return the next #{Instrument::ROWS_PER_PAGE} last updated instrument page=2" do
+      get :list, format: 'json', api_key: @user.authentication_token, page: 2
       assert_response :success
 
       data = JSON.parse(response.body)
       assert_equal 2, data.length
-      assert_equal @sequence[7].id, data[0]['id']
-      assert_equal @sequence[6].id, data[1]['id']
+      assert_equal @instruments[2].id, data[0]['id']
+      assert_equal @instruments[3].id, data[1]['id']
+    end
+    
+    should "not return instruments older then one week per default" do
+      get :list, format: 'json', api_key: @user.authentication_token, page: 4
+      assert_response :success
+
+      data = JSON.parse(response.body)
+      assert_equal 1, data.length
+    end
+    
+    should "respect the after parameter" do
+      get :list, format: 'json', api_key: @user.authentication_token, after: 1.day.ago
+      assert_response :success
+
+      data = JSON.parse(response.body)
+      assert_equal 1, data.length
+      assert_equal @instruments[0].id, data[0]['id']
     end
  
+    should "respect the before parameter" do
+      get :list, format: 'json', api_key: @user.authentication_token, before: 5.days.ago
+      assert_response :success
+
+      data = JSON.parse(response.body)
+      assert_equal 2, data.length
+      assert_equal @instruments[5].id, data[0]['id']
+      assert_equal @instruments[6].id, data[1]['id']
+    end 
   end
 end
