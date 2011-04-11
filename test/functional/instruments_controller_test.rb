@@ -179,13 +179,15 @@ class InstrumentsControllerTest < ActionController::TestCase
       assert_nil instrument.location
       location = Factory.build :location, user: @user
       assert_difference('Instrument.count') do
-        post :create, { user_id: @user.to_param, :api_key => @user.authentication_token, :format => 'json', :location_latitude => location.latitude,
-                        :location_longitude => location.longitude, :location_name => location.name }.merge(instrument.attributes.except('user_id'))
+        post :create, { user_id: @user.to_param, :api_key => @user.authentication_token, :format => 'json', 
+                        location: {latitude: location.latitude, longitude: location.longitude, name: location.name } }
+                        .merge(instrument.attributes.except('user_id'))
       end
       assert_response :success
       data = JSON.parse(response.body)
       assert_equal Hash, data.class 
       assert_equal "Kaleidoscope", data['model']
+      assert_equal location.name, data['location']['name']
     end
 
     should "be created without location" do
@@ -217,7 +219,7 @@ class InstrumentsControllerTest < ActionController::TestCase
       assert_response :success
       data = JSON.parse(response.body)
       assert_equal Hash, data.class 
-      assert_equal delete_dates(@our_instrument.attributes), delete_dates(data)
+      assert_equal @our_instrument.to_json, response.body
     end
 
     should "destroy instrument" do
@@ -226,7 +228,7 @@ class InstrumentsControllerTest < ActionController::TestCase
       end
       data = JSON.parse(response.body)
       assert_equal Hash, data.class 
-      assert_equal delete_dates(@our_instrument.attributes), delete_dates(data)
+      assert_equal @our_instrument.to_json, response.body
     end
     
     should "not destroy other users instrument" do

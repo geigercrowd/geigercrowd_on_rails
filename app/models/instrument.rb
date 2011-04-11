@@ -21,6 +21,13 @@ class Instrument < ActiveRecord::Base
     end
   end
 
+  def to_json *args
+    # TODO: merge-in the args
+    super only: [ :id, :data_type_id, :model, :notes, :error, :deadtime, :updated_at ],
+      include: { location: { only: [ :latitude, :longitude, :name, :id ] }}
+  end
+
+
   private
 
   # When the associated location's coordinates are changed:

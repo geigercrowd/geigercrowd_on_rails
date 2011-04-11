@@ -25,11 +25,7 @@ class InstrumentsController < ApplicationController
       @instruments = User.find_by_screen_name(@user_id).instruments
     end
     
-    
-    respond_to do |format|
-      format.html
-      format.json { render :json =>@instruments.to_json(:include => :location) }
-    end
+    respond_with @instruments    
   end
 
   # GET /users/hulk/instruments/1
@@ -37,7 +33,7 @@ class InstrumentsController < ApplicationController
     @instrument = Instrument.find(params[:id])
     respond_to do |format|
       format.html { add_breadcrumb @instrument.model, :user_instrument_path }
-      format.json { render :json =>@instrument.to_json(:include => :location) }
+      format.json { render :json =>@instrument }
     end
   end
 
@@ -79,7 +75,7 @@ class InstrumentsController < ApplicationController
     if @instrument.valid?
       respond_to do |format|
         format.html { redirect_to [current_user, @instrument], :notice => t('instruments.create.successful') }
-        format.json { render :json =>@instrument.to_json(:include => :location) }
+        format.json { render :json =>@instrument }
       end
     else
       respond_to do |format|
@@ -96,7 +92,7 @@ class InstrumentsController < ApplicationController
       if @instrument.update_attributes params[:instrument]
         respond_to do |format|
           format.html { redirect_to [current_user, @instrument], :notice => t('.success_message') }
-          format.json { render :json =>@instrument.to_json(:include => :location) }
+          format.json { render :json =>@instrument }
         end
       else
         respond_to do |format|
@@ -119,7 +115,7 @@ class InstrumentsController < ApplicationController
       @instrument.destroy
       respond_to do |format|
         format.html { redirect_to(user_instruments_url) }
-        format.json { render :json =>@instrument.to_json(:include => :location)}
+        format.json { render :json =>@instrument }
       end
     else
       respond_to do |format|
@@ -133,7 +129,7 @@ class InstrumentsController < ApplicationController
   def list
     @instruments = Instrument.list(params)
     respond_to do |format|
-      format.json { render :json =>@instruments.to_json(:include => :location) }
+      format.json { render :json =>@instruments }
     end
   end
   
@@ -141,13 +137,12 @@ class InstrumentsController < ApplicationController
 
   def rewrite_api_parameters
     return unless request.format == 'application/json'
-    params["instrument"] = {} unless params["instrument"]
+    params[:instrument] = {} unless params[:instrument]
     ["data_type_id", "deadtime", "error", "location_id", "model", "notes", "new_location"].each do |key|
       params["instrument"][key] = params.delete key
     end
-    params["instrument"]["location_attributes"] = {} unless params["instrument"]["location_attributes"]
-    ["name", "latitude", "longitude"].each do |key|
-      params["instrument"]["location_attributes"][key] = params.delete "location_#{key}"
+    if params[:location]
+      params[:instrument].update(location_attributes: params[:location])
     end
   end
 end

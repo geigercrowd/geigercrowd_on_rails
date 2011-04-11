@@ -8,7 +8,6 @@ class SamplesController < ApplicationController
   before_filter :breadcrumb
 
   def breadcrumb
-    return
     return if request.format == 'application/json'
     if is_owned?
       add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), Proc.new { |c| c.user_instruments_path(c.current_user) }
