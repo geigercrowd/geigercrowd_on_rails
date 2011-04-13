@@ -1,4 +1,11 @@
+function onFocusClear(input) {
+  input.value = '';
+  input = $(input);
+  input.unbind('focus');
+  input.removeClass('onfocus_clear');
+}
+
 $(function() {
   $('#location_search').locationPicker();
-  $('input.onfocus_clear').focus(function() { this.value = '' });
+  $('input.onfocus_clear').bind('focus', function() { onFocusClear(this) });
 });

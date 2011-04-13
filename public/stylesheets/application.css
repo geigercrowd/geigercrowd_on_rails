@@ -12,6 +12,10 @@ input {
   vertical-align: middle;
 }
 
+input.onfocus_clear {
+  color: #bbbbbb;
+}
+
 fieldset {
   margin-top: 10px;
 }
@@ -43,6 +47,10 @@ ul {
 
 .gray {
   color: #aaaaaa;
+}
+
+.float_left {
+  float: left;
 }
 
 .flash {

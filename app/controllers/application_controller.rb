@@ -21,7 +21,13 @@ class ApplicationController < ActionController::Base
   end
 
   def user_from_path
-    @user ||= User.find_by_screen_name(params[:user_id]) if params[:user_id]
+    if params[:user_id]
+     if current_user.screen_name_matches? params[:user_id] 
+       current_user
+     else
+       @user_from_path ||= User.find_by_screen_name(params[:user_id]) if params[:user_id]
+     end
+    end
   end
   
   def ensure_owned

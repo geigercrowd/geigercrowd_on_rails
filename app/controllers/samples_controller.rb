@@ -3,9 +3,10 @@ class SamplesController < ApplicationController
   respond_to :html
   respond_to :json, except: [ :edit, :new ]
   
-  before_filter :instrument, except: [ :list ]
+  skip_before_filter :authenticate_user!, only: [ :search, :find ]
+  before_filter :instrument, except: [ :search, :find ]
   before_filter :rewrite_api_parameters, :only => [:create, :update]
-  before_filter :breadcrumb
+  before_filter :breadcrumb, except: [ :search, :find ]
 
   def breadcrumb
     return if request.format == 'application/json'
@@ -104,8 +105,8 @@ class SamplesController < ApplicationController
     end
   end
   
-  # GET /samples
-  def list
+  # GET /samples/find
+  def find
     @samples = Sample.page(params[:page])
     @samples = @samples.latest if params[:option] == 'current'
     @samples = @samples.after(params[:after].presence || 1.week.ago)

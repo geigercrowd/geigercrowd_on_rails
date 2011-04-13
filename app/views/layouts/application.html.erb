@@ -39,7 +39,7 @@ hope you enjoy it and find it usefull :)
       <div id="header_inside">
         <h1>geiger<span>crowd</span>.net</h1>
         <ul>
-          <li><a class="active" href="#">Data</a></li>
+          <li><%= link_to "Data", root_path %></li>
           <li><a href="http://geigercrowd.net">Main</a></li>
         </ul>		
       </div>
@@ -48,14 +48,19 @@ hope you enjoy it and find it usefull :)
       <div id="content_inside">
         <div id="content_inside_sidebar">
           <ul>
-            <% if current_user or @user_id %>
-            <li><%= link_to t('instruments.index.title'), user_instruments_path(current_user || @user_id) %></li>
+            <li><%= link_to t('navigation.all_data'), samples_path %>
+            <% if user_from_path || current_user %>
+              <li><%= link_to t('instruments.title'), user_instruments_path(user_from_path || current_user) %></li>
             <% end %>
-            <% if current_user.try :admin? %>
+            <% if admin? %>
               <li><%= link_to t('data_types.index.title'), data_types_path %></li>
             <% end %>
             <li><%= link_to "API", '/api' %></li>
-            <li><%= link_to t("users.sign_out"), destroy_user_session_path %></li>
+            <% if current_user %>
+              <li><%= link_to t("users.sign_out"), destroy_user_session_path %></li>
+            <% else %>
+              <li><%= link_to t("users.sign_in"), new_user_session_path %></li>
+            <% end %>
             <li style="width: 100%;"></li>
           </ul>
         </div>

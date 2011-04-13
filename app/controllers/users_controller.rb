@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   respond_to :html
   before_filter :admin_only, except: [ :show, :update ]
 

@@ -17,8 +17,10 @@ en:
   destroy: delete
   confirm_delete: Are you sure?
   actions: actions
-  general:
-    not_applicable: n/a
+  not_applicable: n/a
+  navigation:
+    all_data: All data
+    submit_data: Submit data
   locations:
     title: Location
     geolocate_me: try to locate me
@@ -35,7 +37,7 @@ en:
       name_desription: (only visible to you)
       locator_text_field: search for location
   instruments:
-    title: Instruments
+    title: Contribute data
     si_unit: SI unit
     deadtime: dead time
     model: model
@@ -103,3 +105,4 @@ en:
       message: You are not allowed to access this page.
   users:
     sign_out: logout
+    sign_in: login

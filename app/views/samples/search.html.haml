@@ -1,0 +1,14 @@
+= form_tag find_samples_path do
+  = label_tag :location, t('locations.title')
+  = text_field_tag 'location', "city, country, etc.", class: "onfocus_clear"
+  %p
+    .float_left= label_tag :after
+    .float_left= text_field_tag :after
+    .gray.float_left (YYYY/MM/DD HH:MM)
+    .clear
+    .float_left= label_tag :before
+    .float_left= text_field_tag :before
+    .gray.float_left (YYYY/MM/DD HH:MM)
+    .clear
+    = check_box_tag :history
+    = label_tag :history, 'historical data'
