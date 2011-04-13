@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110411142337) do
+ActiveRecord::Schema.define(:version => 20110413130603) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "name"
@@ -22,7 +22,10 @@ ActiveRecord::Schema.define(:version => 20110411142337) do
     t.datetime "fetched_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "short_name"
   end
+
+  add_index "data_sources", ["short_name"], :name => "index_data_sources_on_short_name"
 
   create_table "data_types", :force => true do |t|
     t.string   "name"

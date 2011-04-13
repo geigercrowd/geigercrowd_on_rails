@@ -40,7 +40,7 @@ end
 
 Factory.define :data_source do |ds|
   ds.name 'Saga and Nagasaki 2'
-  ds.url "#{Rails.root}/test/html/saga1.html"
+  ds.options do { :urls => ["#{Rails.root}/test/html/saga1.html"] } end
   ds.parser_class 'Scraper::BousaiParser'
   ds.update_interval 3600
 end
