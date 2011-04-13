@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
       respond_to do |format|
         format.html {
           begin
-            redirect_to :back 
+            redirect_to :back
           rescue ActionController::RedirectBackError
             redirect_to root_path
           end
@@ -42,6 +42,6 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    current_user.admin?
+    current_user && current_user.admin?
   end
 end
