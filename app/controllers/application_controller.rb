@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
   def set_user_id
     @user_id = params[:user_id] if params[:user_id]
   end
+
+  def user_from_path
+    @user ||= User.find_by_screen_name(params[:user_id]) if params[:user_id]
+  end
   
   def ensure_owned
     if !current_user || current_user.to_param != @user_id
