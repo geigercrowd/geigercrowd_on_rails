@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   respond_to :html
   before_filter :admin_only, except: [ :show, :update ]
-
+  skip_before_filter :authenticate_user!
+  
   # GET /users
   def index
     @users = User.all

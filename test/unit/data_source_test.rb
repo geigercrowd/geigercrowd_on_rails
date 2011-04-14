@@ -64,7 +64,7 @@ class DataSourceTest < ActiveSupport::TestCase
         setup do
           assert_equal true, @ds.fetch
           @ds.fetched_at = Time.now - 2.hours
-          @ds.url = "#{Rails.root}/test/html/saga2.html"
+          @ds.options[:urls] = ["#{Rails.root}/test/html/saga2.html"]
           assert_equal true, @ds.fetch
         end
         

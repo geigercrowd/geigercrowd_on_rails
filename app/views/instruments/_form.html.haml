@@ -31,10 +31,10 @@
       %br
       = t('.on_location_change')
       %br
-      = radio_button_tag :new_location, "true"
+      = f.radio_button:new_location, "true"
       %div= t('.instrument_has_been_moved').html_safe
       %br
-      = radio_button_tag :new_location, "false"
+      = f.radio_button :new_location, "false"
       %div= t('.instrument_location_correction').html_safe
   %fieldset
     %legend= t('instruments.notes')

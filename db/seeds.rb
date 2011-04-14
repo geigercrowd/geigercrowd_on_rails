@@ -10,115 +10,12 @@
 sources = [
 {
   :id => 1,
-  :name => 'Hokkaido',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=01',
+  :name => 'Realtime radiation data provided by the japanese Ministry of Education, Culture, Sports, Science and Technology (MEXT)',
+  :short_name => 'MEXT',
+  :url => 'http://www.bousai.ne.jp/eng/index.html',
   :parser_class => 'Scraper::BousaiParser',
   :update_interval => 3600,
-},
-{ 
-  :id => 2,
-  :name => 'Aomori',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=02',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 3,
-  :name => 'Miyagi',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=04',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 4,
-  :name => 'Fukushima',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=07',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 5,
-  :name => 'Ibaraki',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=08',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 6,
-  :name => 'Kanagawa',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=14',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 7,
-  :name => 'Niigata',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=15',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 8,
-  :name => 'Ishikawa',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=17',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 9,
-  :name => 'Fukui and Kyoto',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=18',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 10,
-  :name => 'Shizuoka',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=22',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 11,
-  :name => 'Osaka',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=27',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 12,
-  :name => 'Tottori and Okayama',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=31',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 13,
-  :name => 'Shimane',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=32',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,                   
-},
-{ 
-  :id => 14,
-  :name => 'Ehime',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=38',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 15,
-  :name => 'Saga and Nagasaki',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=41',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
-},
-{ 
-  :id => 16,
-  :name => 'Kagoshima',
-  :url => 'http://www.bousai.ne.jp/eng/speedi/pref.php?id=46',
-  :parser_class => 'Scraper::BousaiParser',
-  :update_interval => 3600,
+  :options => { :urls => ["http://www.bousai.ne.jp/eng/speedi/pref.php?id=01", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=02", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=04", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=07", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=08", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=14", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=15", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=17", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=18", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=22", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=27", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=31", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=32", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=38", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=41", "http://www.bousai.ne.jp/eng/speedi/pref.php?id=46"]}
 },
 =begin
 { 
@@ -152,6 +49,7 @@ sources = [
 }
 =end
 ]
+DataSource.delete_all
 sources.each do |s|
   id = s.delete(:id)
   ds = DataSource.where(:id => id).first || DataSource.new
