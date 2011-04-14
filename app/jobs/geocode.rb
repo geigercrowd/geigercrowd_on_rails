@@ -1,9 +1,13 @@
 module Geocode
   @queue = :geocode
-
+  
+  def self.user
+    $geonames_user ||= YAML::load_file(Rails.root.to_s + '/config/database.yml')[Rails.env]['geonames_user'] rescue 'unknown'
+  end
+  
   def self.perform(location_id)
     location = Location.find(location_id)
-    url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{location.latitude}&lng=#{location.longitude}&username=#{GEONAMES_USER}"
+    url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{location.latitude}&lng=#{location.longitude}&username=#{Geocode.user}"
     response = Net::HTTP.get(URI.parse(url))
     data = JSON.parse(response)
     if data['status']

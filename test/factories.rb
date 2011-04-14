@@ -14,7 +14,9 @@ Factory.define :instrument do |i|
   i.model "Kaleidoscope"
   i.association :data_type
   i.association :location
-  i.association :user
+  i.after_build do |i|
+    i.origin = Factory.create(:user, :instruments => [i])
+  end 
 end
 
 Factory.define :sample do |s|
@@ -43,4 +45,5 @@ Factory.define :data_source do |ds|
   ds.options do { :urls => ["#{Rails.root}/test/html/saga1.html"] } end
   ds.parser_class 'Scraper::BousaiParser'
   ds.update_interval 3600
+  ds.short_name "MEXT"
 end

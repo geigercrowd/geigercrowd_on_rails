@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
          :token_authenticatable
   #attr_accessible :email, :password, :password_confirmation, :remember_me, :real_name
   has_many :locations
-  has_many :instruments
+  has_many :instruments, :as => :origin
   has_many :samples, through: :instruments
   validates_uniqueness_of :screen_name, case_sensitive: false
   validates_format_of :screen_name, with: /\A[-0-9a-zA-Z]+\Z/,

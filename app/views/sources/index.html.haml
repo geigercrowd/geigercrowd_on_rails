@@ -1,0 +1,15 @@
+%h2= t('.title')
+
+%table
+  %thead
+    %tr
+      %th= DataSource.human_attribute_name :short_name
+      %th= DataSource.human_attribute_name :name
+      %th= DataSource.human_attribute_name :url
+  
+  %tbody
+    - for source in @sources
+      %tr{ :class => cycle(:odd, :even) }
+        %td= link_to source.short_name, data_source_instruments_path(source)
+        %td= source.name
+        %td= link_to source.url, source.url, :location => '_blank'

@@ -5,8 +5,7 @@ class InstrumentsControllerGlobalApiTest < ActionController::TestCase
 
   context "using the global api" do
     setup do
-      @instrument = Factory.build :instrument
-      @user = @instrument.user
+      @user = Factory.create :user
       @user.confirm!
       @instruments = []
       10.times do |i|

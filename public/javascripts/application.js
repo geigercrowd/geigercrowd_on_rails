@@ -8,4 +8,9 @@ function onFocusClear(input) {
 $(function() {
   $('#location_search').locationPicker();
   $('input.onfocus_clear').bind('focus', function() { onFocusClear(this) });
+  $('#location_search').keypress(function (e) {
+		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+			return false;
+		}
+  });
 });

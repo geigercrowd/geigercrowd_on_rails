@@ -11,9 +11,9 @@ class InstrumentsController < ApplicationController
   def breadcrumb
     return if request.format == 'application/json'
     if is_owned?
-      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), Proc.new { |c| c.user_instruments_path(c.current_user) }
-    elsif @user_id
-      add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => @user_id), Proc.new { |c| c.user_instruments_path(@user_id) }
+      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), user_instruments_path(current_user)
+    else
+      add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => @origin.to_param), polymorphic_path([@origin,Instrument])
     end
   end
   
@@ -22,7 +22,7 @@ class InstrumentsController < ApplicationController
     if is_owned?
       @instruments = current_user.instruments
     else
-      @instruments = User.find_by_screen_name(@user_id).instruments
+      @instruments = @origin.instruments
     end
     
     respond_with @instruments    
@@ -32,7 +32,7 @@ class InstrumentsController < ApplicationController
   def show
     @instrument = Instrument.find(params[:id])
     respond_to do |format|
-      format.html { add_breadcrumb @instrument.model, :user_instrument_path }
+      format.html { add_breadcrumb @instrument.model, polymorphic_path([@origin,@instrument]) } 
       format.json { render :json =>@instrument }
     end
   end

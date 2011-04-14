@@ -7,7 +7,13 @@ Geigercrowd::Application.routes.draw do
       resources :samples
     end
   end
-  
+
+  resources :sources, :as => 'data_sources' do
+    resources :instruments do
+      resources :samples
+    end
+  end
+
   root :to => "welcome#index"
   match "instruments" => "instruments#list", as: :instruments
   match "samples" => "samples#search", as: :samples, via: :get

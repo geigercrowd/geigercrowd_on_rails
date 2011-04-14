@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110413130603) do
+ActiveRecord::Schema.define(:version => 20110413154035) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "name"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(:version => 20110413130603) do
 
   create_table "instruments", :force => true do |t|
     t.integer  "data_type_id"
-    t.integer  "user_id"
     t.string   "model"
     t.text     "notes"
     t.datetime "created_at"
@@ -45,7 +44,11 @@ ActiveRecord::Schema.define(:version => 20110413130603) do
     t.float    "error"
     t.float    "deadtime"
     t.integer  "location_id"
+    t.integer  "origin_id"
+    t.string   "origin_type"
   end
+
+  add_index "instruments", ["origin_id"], :name => "index_instruments_on_origin_id"
 
   create_table "locations", :force => true do |t|
     t.string   "name"
