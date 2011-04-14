@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :timezone_from_user
   before_filter :authenticate_user!
-  before_filter :set_user_id
+  before_filter :set_origin
 
   private
 
@@ -16,12 +16,16 @@ class ApplicationController < ActionController::Base
     Time.zone = tz if tz.present?
   end
   
-  def set_user_id
-    @user_id = params[:user_id] if params[:user_id]
+  def set_origin
+    if params[:user_id]
+      @origin = User.find_by_screen_name(params[:user_id])
+    elsif params[:data_source_id]
+      @origin = DataSource.find_by_short_name(params[:data_source_id])
+    end
   end
   
   def ensure_owned
-    if !current_user || current_user.to_param != @user_id
+    if !current_user || current_user != @origin
       respond_to do |format|
         format.html {
           begin
@@ -38,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
   
   def is_owned?
-    current_user && current_user.screen_name_matches?(@user_id)
+    current_user == @origin
   end
 
   def admin?

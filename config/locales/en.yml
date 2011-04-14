@@ -80,6 +80,9 @@ en:
       new_sample_for: new reading
     form:
       location_from_instrument: The location is determined by the location of your instrument. If you intend to specify a location for each sample seperately (e.g. for mobile equipment), clear the location of your instrument.
+  sources:
+    index:
+      title: Imported data sources
   data_types:
     index:
       title: Data types
@@ -94,6 +97,7 @@ en:
     own_instruments: my equipment
     other_instruments: %{user}'s equipment
     samples: data
+    sources: data sources
     new: add
     api: API
     api_public: public

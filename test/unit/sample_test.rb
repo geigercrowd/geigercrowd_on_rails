@@ -19,8 +19,8 @@ class SampleTest < ActiveSupport::TestCase
         timestamp = DateTime.now
         sample = @instrument.samples.create value: 1.2345, timestamp: timestamp
         assert sample.valid?
-        assert @instrument.user.samples.include? sample
-        assert_equal @instrument.user, sample.user
+        assert @instrument.origin.samples.include? sample
+        assert_equal @instrument.origin, sample.user
       end
 
       should "have a data type" do

@@ -85,7 +85,7 @@ class InstrumentsControllerTest < ActionController::TestCase
     context "of others" do
       should "not be updated" do
         old_model = @other_instrument.model
-        assert_not_equal @other_instrument.user_id, @user.to_param
+        assert_not_equal @other_instrument.origin, @user
         put :update, id: @other_instrument.id, model: "Gray Face 2000", user_id: @user.to_param
         assert_response :success
         assert_template :show

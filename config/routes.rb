@@ -6,8 +6,12 @@ Geigercrowd::Application.routes.draw do
       resources :samples
     end
   end
-  
-  devise_for :users
+  resources :sources, :as => 'data_sources' do
+    resources :instruments do
+      resources :samples
+    end
+  end
+  devise_for :user #, :path_prefix => 'd'
   root :to => "welcome#index"
   match "instruments" => "instruments#list"
   match "samples(/:option)" => "samples#list"

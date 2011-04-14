@@ -48,12 +48,13 @@ hope you enjoy it and find it usefull :)
       <div id="content_inside">
         <div id="content_inside_sidebar">
           <ul>
-            <% if current_user or @user_id %>
-            <li><%= link_to t('instruments.index.title'), user_instruments_path(current_user || @user_id) %></li>
+            <% if current_user or @origin %>
+            <li><%= link_to t('instruments.index.title'), user_instruments_path(current_user || @origin) %></li>
             <% end %>
             <% if current_user.try :admin? %>
               <li><%= link_to t('data_types.index.title'), data_types_path %></li>
             <% end %>
+            <li><%= link_to t('breadcrumbs.sources'), data_sources_path %></li>
             <li><%= link_to "API", '/api' %></li>
             <li><%= link_to t("users.sign_out"), destroy_user_session_path %></li>
             <li style="width: 100%;"></li>

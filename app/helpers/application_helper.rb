@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def is_owned?
-    current_user && current_user.screen_name_matches?(@user_id)
+    current_user == @origin
   end
 
   def api_key

@@ -4,7 +4,7 @@
   &nbsp;
   = link_to t('destroy'), user_instrument_path(current_user, @instrument), :confirm => t('confirm_delete'), :method => :delete
   &nbsp;
-= link_to t('instruments.view_samples'), user_instrument_samples_path(@user_id, @instrument)
+= link_to t('instruments.view_samples'), polymorphic_path([@origin, @instrument, Sample])
 - if is_owned?
   &nbsp;
   = link_to t('instruments.add_samples'), new_user_instrument_sample_path(current_user, @instrument)

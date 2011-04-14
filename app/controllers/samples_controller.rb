@@ -10,12 +10,12 @@ class SamplesController < ApplicationController
   def breadcrumb
     return if request.format == 'application/json'
     if is_owned?
-      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), Proc.new { |c| c.user_instruments_path(c.current_user) }
+      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), user_instruments_path(current_user) 
     else
-      add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => User.find_by_screen_name(@user_id).screen_name), Proc.new { |c| c.user_instruments_path(@user_id) }
+      add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => @origin.to_param), polymorphic_path([@origin,Instrument])
     end
-    add_breadcrumb :instrument_model, :user_instruments_path
-    add_breadcrumb I18n.t('breadcrumbs.samples'), :user_instrument_samples_path
+    add_breadcrumb :instrument_model, polymorphic_path([@origin, instrument])
+    add_breadcrumb I18n.t('breadcrumbs.samples'), polymorphic_path([@origin, instrument, Sample])
   end
   
   
@@ -28,8 +28,8 @@ class SamplesController < ApplicationController
   # GET /users/hulk/instruments/1/samples/1
   def show
     @sample = instrument.samples.find params[:id]
-    add_breadcrumb @sample.id, :user_instrument_sample_path
-    respond_with instrument.user, instrument, @sample
+    add_breadcrumb @sample.id, polymorphic_path([@origin, @instrument, @sample])
+    respond_with @origin, instrument, @sample
   end
 
   # GET /users/hulk/instruments/1/samples/new
@@ -128,7 +128,7 @@ class SamplesController < ApplicationController
 
   def instrument
     if ['index', 'show'].include? params[:action]
-      @instrument ||= User.find_by_screen_name(params[:user_id]).
+      @instrument ||= @origin.
         instruments.find(params[:instrument_id])
     else
       @instrument ||= current_user.
