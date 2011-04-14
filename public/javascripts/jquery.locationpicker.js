@@ -43,8 +43,8 @@
                     var lng = RoundDecimal(latLng.lng(), 6);
                     marker.setPosition(latLng);
                     if(viewport){
-                        map.fitBounds(viewport);
-                        map.setZoom(map.getZoom() + 2);
+                        //map.fitBounds(viewport);
+                        //map.setZoom(map.getZoom() + 2);
                     }else{
                         map.panTo(latLng);
                     }
@@ -76,7 +76,7 @@
                 
                 var myLatlng = new google.maps.LatLng(options.defaultLat, options.defaultLng);
                 var myOptions = {
-                    zoom: 95,
+                    zoom: 13,
                     center: myLatlng,
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     mapTypeControl: false,
@@ -95,11 +95,16 @@
                 google.maps.event.addListener(map, 'dblclick', function(event) {
                     setPosition(event.latLng);
                 });
-                
+                google.maps.event.addListener(map, 'click', function(event) {
+                    setPosition(event.latLng);
+                });
                 google.maps.event.addListener(marker, 'dragend', function(event) {
                     setPosition(marker.position);
                 });
-                
+                google.maps.event.addListener(map, 'zoom_changed', function() {
+                  map.panTo(marker.position);
+                });
+
                 function getCurrentPosition(){
                     var posStr = $(that).val();
                     if(posStr != ""){
@@ -170,7 +175,7 @@
                                 }
                             });
                         }
-                        $(that).focus();
+                        //$(that).focus();
                     }
                 }
                 
@@ -184,6 +189,9 @@
                 $(that).keydown(function(event) {
                     if (event.keyCode == '13') { // enter
                         findAddress();
+                        event.stopPropagation();
+                    } else if (event.keyCode == '9') {
+                       picker.fadeOut('fast');
                     }
                 });
                 
