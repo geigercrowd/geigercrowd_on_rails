@@ -20,8 +20,8 @@ class Sample < ActiveRecord::Base
   scope :page, lambda { |page|
     page = page.to_i
     page -= 1
-    page = nil if page < 0
-    { limit: ROWS_PER_PAGE, offset: (page.presence || 0) * ROWS_PER_PAGE }
+    page = 0 if page < 0
+    { limit: ROWS_PER_PAGE, offset: page * ROWS_PER_PAGE }
   }
 
   def to_json *args

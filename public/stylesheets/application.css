@@ -45,6 +45,10 @@ ul {
   list-style-type: none;
 }
 
+table.form tr td:first-child {
+  text-align: right;
+}
+
 .gray {
   color: #aaaaaa;
 }
@@ -116,12 +120,12 @@ ul {
   margin-left: 5px;
 }
 
-table#data th {
+table.data th {
   padding-right: 10px;
   text-align: left;
 }
 
-table#data td {
+table.data td {
   padding-right: 10px;
 }
 

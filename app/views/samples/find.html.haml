@@ -1,0 +1,12 @@
+- @samples.each do |sample|
+  %table.data
+    %thead
+      %th value
+      %th SI unit
+      %th device
+      %th source
+    %tbody
+      %td= sample.value
+      %td= sample.data_type.si_unit
+      %td= link_to sample.instrument.model, [ sample.user, sample.instrument, sample ]
+      %td source?

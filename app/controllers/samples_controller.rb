@@ -107,11 +107,14 @@ class SamplesController < ApplicationController
   
   # GET /samples/find
   def find
-    @samples = Sample.page(params[:page])
-    @samples = @samples.latest if params[:option] == 'current'
+    options = params[:options] || []
+    options = options.split(",") if options.is_a?(String)
+    @samples = Sample
+    @samples = @samples.page(params[:page])
+    @samples = @samples.latest if options.include?("latest")
     @samples = @samples.after(params[:after].presence || 1.week.ago)
-    @samples = @samples.before(params[:before]) if params[:before]
-    respond_with @samples.all
+    @samples = @samples.before(params[:before]) if params[:before].present?
+    respond_with @samples.all include: [ :data_type, :instrument ]
   end
   
   private
