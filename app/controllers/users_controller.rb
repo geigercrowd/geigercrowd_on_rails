@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   respond_to :html
-  before_filter :admin_only, except: [ :show, :update ]
-  skip_before_filter :authenticate_user!
+  before_filter :admin_only, except: [ :edit, :update ]
   
   # GET /users
   def index
@@ -9,43 +8,45 @@ class UsersController < ApplicationController
     respond_with @users
   end
 
-  # GET /users/1
+  # GET /users/hulk
   def show
-    @user = User.find_by_screen_name params[:id]
+    @user = admin? ? user : current_user
     respond_with @user
   end
 
-  # GET /users/new
-  def new
-    @user = User.new
-    respond_with @user
-  end
-
-  # GET /users/1/edit
+  # GET /users/hulk/edit
   def edit
-    @user = User.find_by_screen_name params[:id]
+    @user = admin? ? user : current_user
     respond_with @user
   end
 
-  # PUT /users/1
+  # PUT /users/hulk
   def update
     if in_person? || admin?
-      @user = in_person? ? current_user : User.find_by_screen_name(params[:id])
+      @user = admin? ? user : current_user
       @user.update_attributes params[:user]
-      respond_with @user
+      respond_with @user do |format|
+        format.html { render :edit }
+      end
     else
-      redirect_to "errors/401"
+      respond_with do |format|
+        format.html { redirect_to "errors/401" }
+      end
     end
   end
 
   # DELETE /users/1
   def destroy
-    @user = User.find_by_screen_name params[:id]
+    @user = user
     @user.destroy
     respond_with @user
   end
 
   private
+
+  def user
+    @user ||= User.find_by_screen_name params[:id]
+  end
 
   def in_person?
     current_user && current_user.screen_name_matches?(params[:id])

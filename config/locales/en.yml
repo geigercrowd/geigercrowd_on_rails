@@ -18,9 +18,11 @@ en:
   confirm_delete: Are you sure?
   actions: actions
   not_applicable: n/a
+  optional: (optional)
   navigation:
     all_data: All data
     submit_data: Submit data
+    my_account: my account
   locations:
     title: Location
     geolocate_me: try to locate me
@@ -110,3 +112,11 @@ en:
   users:
     sign_out: logout
     sign_in: login
+    screen_name: screen name
+    real_name: real name
+    edit:
+      title: edit account
+    form:
+      email: email
+      password: password
+      password_confirmation: confirm password

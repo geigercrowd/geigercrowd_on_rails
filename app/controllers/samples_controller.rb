@@ -6,18 +6,7 @@ class SamplesController < ApplicationController
   skip_before_filter :authenticate_user!, only: [ :search, :find ]
   before_filter :instrument, except: [ :search, :find ]
   before_filter :rewrite_api_parameters, :only => [:create, :update]
-  before_filter :breadcrumb, except: [ :search, :find ]
-
-  def breadcrumb
-    return if request.format == 'application/json'
-    if is_owned?
-      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), user_instruments_path(current_user) 
-    else
-      add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => @origin.to_param), polymorphic_path([@origin,Instrument])
-    end
-    add_breadcrumb :instrument_model, polymorphic_path([@origin, instrument])
-    add_breadcrumb I18n.t('breadcrumbs.samples'), polymorphic_path([@origin, instrument, Sample])
-  end
+  before_filter :breadcrumb_path, except: [ :search, :find ]
   
   
   # GET /users/hulk/instruments/1/samples
@@ -118,6 +107,17 @@ class SamplesController < ApplicationController
   end
   
   private
+
+  def breadcrumb_path
+    return if request.format == 'application/json'
+    if is_owned?
+      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), user_instruments_path(current_user) 
+    else
+      add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => @origin.to_param), polymorphic_path([@origin,Instrument])
+    end
+    add_breadcrumb :instrument_model, polymorphic_path([@origin, instrument])
+    add_breadcrumb I18n.t('breadcrumbs.samples'), polymorphic_path([@origin, instrument, Sample])
+  end
 
   def rewrite_api_parameters
     return unless request.format == 'application/json'
