@@ -32,7 +32,7 @@ class InstrumentsController < ApplicationController
   def show
     @instrument = Instrument.find(params[:id])
     respond_to do |format|
-      format.html { add_breadcrumb @instrument.model, polymorphic_path([@origin,@instrument]) } 
+      format.html { add_breadcrumb (@origin.is_a?(DataSource) ? @instrument.location.try(:name) : @instrument.model), polymorphic_path([@origin,@instrument]) } 
       format.json { render :json =>@instrument }
     end
   end

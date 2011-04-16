@@ -1,10 +1,15 @@
 - if is_owned?
   %p= link_to t('.new_instrument'), new_user_instrument_path(current_user)
 #instruments
+  - data_source = @origin.is_a?(DataSource) ? true : false
   - for instrument in @instruments
     .instrument
-      .model= link_to instrument.model, polymorphic_path([instrument.origin, instrument])
-      .location.gray= instrument.location.try(:name)
+      - if data_source
+        .model= link_to instrument.location.try(:name), polymorphic_path([instrument.origin, instrument])
+        .location.gray= instrument.model
+      - else
+        .model= link_to instrument.model, polymorphic_path([instrument.origin, instrument])
+        .location.gray= instrument.location.try(:name)
       .data_links
         = link_to t('instruments.view_samples'), polymorphic_path([instrument.origin, instrument, Sample])
         - if is_owned?

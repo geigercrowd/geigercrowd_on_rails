@@ -115,7 +115,7 @@ class SamplesController < ApplicationController
     else
       add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => @origin.to_param), polymorphic_path([@origin,Instrument])
     end
-    add_breadcrumb :instrument_model, polymorphic_path([@origin, instrument])
+    add_breadcrumb (@origin.is_a?(DataSource) ? instrument.location.try(:name) : :instrument_model), polymorphic_path([@origin, instrument])
     add_breadcrumb I18n.t('breadcrumbs.samples'), polymorphic_path([@origin, instrument, Sample])
   end
 
