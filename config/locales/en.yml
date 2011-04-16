@@ -99,7 +99,7 @@ en:
       title: Show data type
   breadcrumbs:
     own_instruments: my equipment
-    other_instruments: %{user}'s equipment
+    other_instruments: "%{user}'s equipment"
     samples: data
     sources: data sources
     new: add
