@@ -16,8 +16,14 @@ class UsersController < ApplicationController
 
   # GET /users/hulk/edit
   def edit
-    @user = admin? ? user : current_user
-    respond_with @user
+    @user = user if current_user == user || admin?
+    if @user.present?
+      respond_with @user
+    else
+      respond_with do |format|
+        format.html { redirect_to "errors/401" }
+      end
+    end
   end
 
   # PUT /users/hulk
@@ -49,7 +55,7 @@ class UsersController < ApplicationController
   private
 
   def user
-    @user ||= User.find_by_screen_name params[:id]
+    @user_from_path ||= User.find_by_screen_name params[:id]
   end
 
   def in_person?
