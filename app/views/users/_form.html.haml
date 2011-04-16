@@ -1,6 +1,4 @@
-= #render partial: "layouts/flash_message", locals: { object: @user }
 = form_for(@user) do |f|
-  = messages_for @user
   %fieldset
     .label= f.label :email, t('.email')
     = f.text_field :email

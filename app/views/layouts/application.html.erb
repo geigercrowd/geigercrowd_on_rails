@@ -50,7 +50,7 @@ hope you enjoy it and find it usefull :)
           <ul>
             <li><%= link_to t('navigation.all_data'), samples_path %></li>
             <% if current_user || @origin %>
-              <li><%= link_to t('instruments.index.title'), user_instruments_path(current_user || @origin) %></li>
+              <li><%= link_to t('navigation.submit_data'), user_instruments_path(current_user || @origin) %></li>
             <% end %>
             <% if admin? %>
               <li><%= link_to t('data_types.index.title'), data_types_path %></li>
@@ -69,7 +69,7 @@ hope you enjoy it and find it usefull :)
           </ul>
         </div>
         <div id="content_inside_main">
-          <% if breadcrumbs.blank? %>
+          <% if breadcrumbs.present? %>
             <div id="breadcrumbs" class="gray">
               <%= render_breadcrumbs.html_safe %>
             </div>
