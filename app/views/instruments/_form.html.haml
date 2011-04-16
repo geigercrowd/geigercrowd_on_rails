@@ -1,11 +1,4 @@
 = form_for([current_user, @instrument]) do |f|
-  - if @instrument.errors.any?
-    #errorExplanation
-      %h2= "#{pluralize(@instrument.errors.count, 'error')} prohibited this instrument from being saved:"
-      %ul
-      - @instrument.errors.full_messages.each do |msg|
-        %li= msg
-  
   %fieldset
     = f.label :model, t('.model')
     %br
