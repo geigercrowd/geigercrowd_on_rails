@@ -65,19 +65,37 @@ table.form tr td:first-child {
   float: left;
 }
 
-.flash {
-  margin-left: auto;
-  margin-right: auto;
+#flash {
   position: relative;
   padding: 5px;
+  width: 790px;
+  left: -10px;
+  margin-top: 5px;
 }
 
-.notice {
-  outline: 2px dashed #ffdd00;
+#flash.notice {
+  background-color: #ffffd3;
+  border-top: 1px solid #FFD786;
+  border-bottom: 1px solid #FFD786;
 }
 
-.error {
-  outline: 2px dashed #ff0000;
+#flash.error {
+  background-color: #FFD6C7;
+  border-top: 1px solid #FF0000;
+  border-bottom: 1px solid #FF0000;
+}
+
+#flash h2 {
+  margin: 0;
+}
+
+#flash ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+#flash ul li {
+  margin-left: 10px;
 }
 
 .clear {

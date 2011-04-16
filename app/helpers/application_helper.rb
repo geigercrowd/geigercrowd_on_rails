@@ -18,4 +18,8 @@ module ApplicationHelper
   def user_id
     current_user ? current_user.screen_name : '<YOUR USER ID>'
   end
+
+  def messages_for object
+    render partial: "layouts/flash_message", locals: { object: object }
+  end
 end

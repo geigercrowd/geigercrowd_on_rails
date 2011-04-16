@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validates_format_of :screen_name, with: /\A[-0-9a-zA-Z]+\Z/,
     message: "must only contain letters, numbers and dashes"
   after_create :create_token
+  before_validation :check_for_blank_password
 
   def create_token
     self.reset_authentication_token!
@@ -42,6 +43,14 @@ class User < ActiveRecord::Base
 
   def self.find_by_screen_name screen_name
     first conditions: "lower(screen_name) = '#{screen_name.downcase}'"
+  end
+
+  private
+
+  def check_for_blank_password
+    if password.blank? && password_confirmation.blank?
+      self.password = self.password_confirmation = nil
+    end
   end
 
 end

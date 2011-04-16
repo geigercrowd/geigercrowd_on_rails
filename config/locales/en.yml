@@ -120,3 +120,5 @@ en:
       email: email
       password: password
       password_confirmation: confirm password
+    update:
+      success: Your information has been updated.

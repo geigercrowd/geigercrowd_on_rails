@@ -69,9 +69,11 @@ hope you enjoy it and find it usefull :)
           </ul>
         </div>
         <div id="content_inside_main">
-          <div id="breadcrumbs" class="gray">
-            <%= render_breadcrumbs.html_safe %>
-          </div>
+          <% if breadcrumbs.blank? %>
+            <div id="breadcrumbs" class="gray">
+              <%= render_breadcrumbs.html_safe %>
+            </div>
+          <% end %>
           <%= yield %>
         </div>	
       </div>

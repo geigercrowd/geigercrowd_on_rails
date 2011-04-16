@@ -26,7 +26,11 @@ class UsersController < ApplicationController
       @user = admin? ? user : current_user
       @user.update_attributes params[:user]
       respond_with @user do |format|
-        format.html { render :edit }
+        format.html do
+          flash[:notice] = I18n.t('users.update.success') if @user.valid?
+          @user.password = @user.password_confirmation = ""
+          render :edit
+        end
       end
     else
       respond_with do |format|

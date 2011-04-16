@@ -1,22 +1,16 @@
-%h3= @user.screen_name
+= #render partial: "layouts/flash_message", locals: { object: @user }
 = form_for(@user) do |f|
-  - if @user.errors.any?
-    #errorExplanation
-      %h2= "#{pluralize(@user.errors.count, 'error')} prohibited this user from being saved:"
-      %ul
-      - @user.errors.full_messages.each do |msg|
-        %li= msg
-  
+  = messages_for @user
   %fieldset
     .label= f.label :email, t('.email')
     = f.text_field :email
   %fieldset
     .label= f.label :password, t('.password')
-    .float_left= f.text_field :password
+    .float_left= f.password_field :password
     .gray= t('optional')
     .clear
     .label= f.label :password_confirmation, t('.password_confirmation')
-    = f.text_field :password_confirmation
+    = f.password_field :password_confirmation
 
     .actions
       = f.submit
