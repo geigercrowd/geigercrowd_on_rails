@@ -20,7 +20,7 @@ en:
   not_applicable: n/a
   optional: (optional)
   navigation:
-    all_data: All data
+    access_data: Access data
     submit_data: Submit data
     my_account: my account
   locations:
@@ -45,7 +45,7 @@ en:
     model: model
     notes: description
     error: dead time error
-    add_samples: add data
+    add_samples: submit data
     view_samples: view data
     form:
       model: model or type of device
@@ -70,7 +70,7 @@ en:
       title: Data sheet
       no_location: No location
   samples:
-    title: Submit Data
+    title: Submit data
     value: value
     si_unit: SI unit
     timestamp: time
@@ -80,6 +80,7 @@ en:
       title: Data submissions
       new_sample: submit new Sample
     new:
+      success_message: Your sample has been submitted. You may add another.
       title: Add sample
       new_sample_for: new reading
     form:
@@ -122,3 +123,14 @@ en:
       password_confirmation: confirm password
     update:
       success: Your information has been updated.
+  welcome:
+    message: Welcome to GeigerCrowd.
+    sign_in: Sign in
+    sign_up: Sign up
+    first_steps:
+      headline: Getting started
+      access_data_headline: Access data
+      access_data: 'To get to the data you can either use our <a href="/samples">search</a> or learn about <a href="/api">how to use our API</a>.'
+      submit_data_headline: Submit data
+      submit_data: 'If you want to help out by submitting data, you first have to <a href="/users/%{user}/instruments/new">tell us about your equipment</a>.'
+      

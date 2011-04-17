@@ -20,6 +20,6 @@ module ApplicationHelper
   end
 
   def messages_for object
-    render partial: "layouts/flash_message", locals: { object: object }
+    render partial: "layouts/flash_message", locals: { object: object } if object.present?
   end
 end

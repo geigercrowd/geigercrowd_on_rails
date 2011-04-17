@@ -8,24 +8,24 @@
 - if is_owned?
   &nbsp;
   = link_to t('instruments.add_samples'), new_user_instrument_sample_path(current_user, @instrument)
-%ul
-  %li
-    %span.label= "#{t('instruments.si_unit')}:"
-    = @instrument.data_type.si_unit
-  %li
-    %span.label= "#{t('instruments.deadtime')}:"
-    = @instrument.deadtime || t('general.not_applicable')
-  %li
-    %span.label= "#{t('instruments.error')}:"
-    = @instrument.error || t('general.not_applicable')
-  %li
-    %span.label= "#{t('locations.title')}:"
-    - if @instrument.location.present?
-      = @instrument.location.name
-      = "(#{@instrument.location.latitude}"
-      = "#{@instrument.location.longitude})"
-    - else
-      = t('general.not_applicable')
-  %li
-    %span.label= "#{t('instruments.notes')}:"
-    = simple_format @instrument.notes
+  .clear
+  .label= "#{t('instruments.si_unit')}:"
+  = @instrument.data_type.si_unit
+  .clear
+  .label= "#{t('instruments.deadtime')}:"
+  = @instrument.deadtime || t('not_applicable')
+  .clear
+  .label= "#{t('instruments.error')}:"
+  = @instrument.error || t('not_applicable')
+  .clear
+  .label= "#{t('locations.title')}:"
+  - if @instrument.location.present?
+    = @instrument.location.name
+    = "(#{@instrument.location.latitude}"
+    = "#{@instrument.location.longitude})"
+  - else
+    = t('not_applicable')
+  .clear
+  .label= t('instruments.notes')
+  .clear
+  = simple_format @instrument.notes

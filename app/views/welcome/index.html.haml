@@ -1,0 +1,10 @@
+- if user_signed_in?
+  %h3= t('welcome.first_steps.headline')
+  %h4= t('welcome.first_steps.access_data_headline')
+  = t('welcome.first_steps.access_data').html_safe
+  %h4= t('welcome.first_steps.submit_data_headline')
+  = t('welcome.first_steps.submit_data', user: current_user.to_param).html_safe
+- else
+  %p.intro= t('welcome.message')
+  .button.sign_up= link_to t('welcome.sign_up'), new_user_registration_path
+  .button.sign_in= link_to t('welcome.sign_in'), new_user_session_path

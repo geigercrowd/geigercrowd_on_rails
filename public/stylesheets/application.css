@@ -43,7 +43,7 @@ form .label {
 }
 
 input[type="radio"] {
-vertical-align: middle;
+  vertical-align: middle;
   float: left;
   margin-right: 10px;
   outline: none;
@@ -163,14 +163,56 @@ table.parameters td.param {
   font-size: 120%;
   width: 100px;
 }
+
 table.parameters td.type {
   font-style: italic;
   width: 75px;
 }
+
 table.parameters td.desc {
-  
 }
+
 span.pre {
   font-family: monospace;
   font-size: 120%;
+}
+
+
+.button {
+  display: block;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: #94BE13;
+  float: left;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  margin-right: 10px;
+
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.34, rgb(136,168,32)),
+    color-stop(0.67, rgb(147,190,19))
+  );
+  background-image: -moz-linear-gradient(
+    center bottom,
+    rgb(136,168,32) 34%,
+    rgb(147,190,19) 67%
+  ); 
+}
+
+.button a {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-shadow: #888888 1px 1px;
+}
+
+div.label {
+  width: 100px;
+  float: left;
+  font-weight: bold;
 }

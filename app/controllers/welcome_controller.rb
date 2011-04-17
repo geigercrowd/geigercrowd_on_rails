@@ -1,8 +1,9 @@
 class WelcomeController < ApplicationController
+  respond_to :html
   skip_before_filter :authenticate_user!
   
   def index
-    render :text => "Welcome to Geigercrowd.net", :layout => true
+    respond_with
   end
   
   def api
