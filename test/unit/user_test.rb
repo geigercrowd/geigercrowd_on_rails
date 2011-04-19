@@ -23,10 +23,22 @@ class UserTest < ActiveSupport::TestCase
       assert_nil @user.timezone
     end
 
-    should "validate screen_name" do
-      assert_raise ActiveRecord::RecordInvalid do
-        Factory :user, screen_name: "FÄIL"
-      end
+    should "not have an invalid screen_name" do
+      user = User.create screen_name: "fübert-2000"
+      assert !user.valid?
+      assert_equal ["must only contain letters, numbers and dashes"], user.errors[:screen_name]
+    end
+
+    should "have a valid screen name" do
+      user = User.create screen_name: "foobert-2000", password: "foobar",
+        password_confirmation: "foobar", email: "foo@bar.xxx"
+      assert user.valid?
+    end
+
+    should "not change his screen name" do
+      @user.screen_name = "awesome_new_screen_name"
+      assert !@user.save
+      assert_equal({ screen_name: [ "can't be changed" ]}, @user.errors)
     end
 
     should "have a case insensitive screen_name" do
