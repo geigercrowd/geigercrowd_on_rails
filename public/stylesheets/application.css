@@ -65,6 +65,14 @@ table.form tr td:first-child {
   float: left;
 }
 
+.field_with_errors {
+  color: red;
+}
+
+.field_with_errors input {
+  outline: 1px solid red;
+}
+
 #flash, #error_explanation {
   position: relative;
   padding: 5px;
