@@ -65,7 +65,7 @@ table.form tr td:first-child {
   float: left;
 }
 
-#flash {
+#flash, #error_explanation {
   position: relative;
   padding: 5px;
   width: 790px;
@@ -79,7 +79,7 @@ table.form tr td:first-child {
   border-bottom: 1px solid #FFD786;
 }
 
-#flash.error {
+#flash.error, #error_explanation {
   background-color: #FFD6C7;
   border-top: 1px solid #FF0000;
   border-bottom: 1px solid #FF0000;
