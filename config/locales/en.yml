@@ -47,6 +47,7 @@ en:
     error: dead time error
     add_samples: submit data
     view_samples: view data
+    create_first: Before you can submit data, please tell as about your equipment.
     form:
       model: model or type of device
       model_parameters: model parameters

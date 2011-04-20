@@ -57,6 +57,12 @@ class SamplesController < ApplicationController
     @sample.save
     respond_with instrument.user, instrument, @sample do |format|
       format.html do
+        if @sample.valid?
+          flash[:notice] = I18n.t('samples.new.success_message')
+          @sample = Sample.new
+        else
+          flash[:error] = @sample.errors
+        end
         redirect_to new_user_instrument_sample_path(instrument.user, instrument)
       end
     end

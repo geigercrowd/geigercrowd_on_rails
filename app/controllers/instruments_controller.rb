@@ -25,7 +25,15 @@ class InstrumentsController < ApplicationController
       @instruments = @origin.instruments
     end
     
-    respond_with @instruments    
+    respond_with @instruments do |format|
+      format.html do
+        if is_owned? && @instruments.empty?
+          redirect_to action: :new
+        else
+          render
+        end
+      end
+    end
   end
 
   # GET /users/hulk/instruments/1
@@ -39,6 +47,9 @@ class InstrumentsController < ApplicationController
 
   # GET /users/hulk/instruments/new
   def new
+    if current_user.instruments.size == 0
+      flash[:notice] = I18n.t('instruments.create_first')
+    end
     @data_types = DataType.all
     @instrument = Instrument.new
     @instrument.location = Location.new
@@ -70,17 +81,14 @@ class InstrumentsController < ApplicationController
 
   # POST /users/hulk/instruments
   def create
-    @instrument = Instrument.create(params[:instrument])
-    current_user.instruments << @instrument
-    if @instrument.valid?
-      respond_to do |format|
-        format.html { redirect_to [current_user, @instrument], :notice => t('instruments.create.successful') }
-        format.json { render :json =>@instrument }
-      end
+    if is_owned?
+      @instrument = current_user.instruments.create params[:instrument]
+      flash[:notice] = I18n.t('instruments.create.successful') if @instrument.valid?
+      respond_with current_user, @instrument
     else
-      respond_to do |format|
-        format.html { render :action => "new" }
-        format.json { render :json => @instrument.errors, :status => 406}
+      respond_with do |format|
+        format.html { redirect_to "errors/401" }
+        format.json { render :json => { errors: ["Permission denied"] }}
       end
     end
   end

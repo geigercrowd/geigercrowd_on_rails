@@ -73,24 +73,23 @@ table.form tr td:first-child {
   outline: 1px solid red;
 }
 
-#flash, #error_explanation {
+.flash, #error_explanation {
   position: relative;
   padding: 5px;
   width: 790px;
-  left: -10px;
-  margin-top: 5px;
 }
 
-#flash.notice {
+#flash_notice {
   background-color: #ffffd3;
-  border-top: 1px solid #FFD786;
-  border-bottom: 1px solid #FFD786;
+  outline-top: 1px solid #FFD786
+  outline-bottom: 1px solid #FFD786;
 }
 
-#flash.error, #error_explanation {
+#flash_error, #flash_alert, #error_explanation {
   background-color: #FFD6C7;
-  border-top: 1px solid #FF0000;
-  border-bottom: 1px solid #FF0000;
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
+  font-size: 1.1em;
 }
 
 #flash h2 {

@@ -68,6 +68,10 @@ hope you enjoy it and find it usefull :)
             <li style="width: 100%;"></li>
           </ul>
         </div>
+        <div class="clear">
+        <%= content_tag(:div, flash[:error], class: "flash", id: "flash_error") if flash[:error] %>
+        <%= content_tag(:div, flash[:notice], class: "flash", id: "flash_notice") if flash[:notice] %>
+        <%= content_tag(:div, flash[:alert], class: "flash", id: "flash_alert") if flash[:alert] %>
         <div id="content_inside_main">
           <% if breadcrumbs.present? %>
             <div id="breadcrumbs" class="gray">

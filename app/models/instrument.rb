@@ -9,6 +9,8 @@ class Instrument < ActiveRecord::Base
   before_validation :on_location_change
   attr_accessor :new_location
 
+  validates_presence_of :model
+
   scope :after,  lambda { |after|  { conditions: ["updated_at > ?", after] }}
   scope :before, lambda { |before| { conditions: ["updated_at < ?", before] }}
   scope :latest, { order: "updated_at desc" }
