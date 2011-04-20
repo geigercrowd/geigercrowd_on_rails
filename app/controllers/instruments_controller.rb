@@ -99,7 +99,7 @@ class InstrumentsController < ApplicationController
     if @instrument.user == current_user
       if @instrument.update_attributes params[:instrument]
         respond_to do |format|
-          format.html { redirect_to [current_user, @instrument], :notice => t('.success_message') }
+          format.html { redirect_to [current_user, @instrument], :notice => t('instruments.update.successful') }
           format.json { render :json =>@instrument }
         end
       else

@@ -59,11 +59,10 @@ class SamplesController < ApplicationController
       format.html do
         if @sample.valid?
           flash[:notice] = I18n.t('samples.new.success_message')
-          @sample = Sample.new
+          redirect_to new_user_instrument_sample_path(instrument.user, instrument)
         else
-          flash[:error] = @sample.errors
+          render :action => "new"
         end
-        redirect_to new_user_instrument_sample_path(instrument.user, instrument)
       end
     end
   end

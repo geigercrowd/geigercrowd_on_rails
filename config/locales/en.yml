@@ -67,6 +67,8 @@ en:
       title: Edit instrument
     create:
       successful: Instrument was successfully created.
+    update:
+      successful: Instrument was successfully updated.
     show:
       title: Data sheet
       no_location: No location

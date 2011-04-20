@@ -38,8 +38,8 @@ class Sample < ActiveRecord::Base
       #if location.latitude.blank? && location.longitude.blank?
       #  location = nil
       #end
-      if instrument.location_id != location_id
-        errors.add(:location, 'cannot be set, because already set in instrument')
+      if instrument.location_id && instrument.location_id != location_id
+        self.errors.add(:location_id, :invalid)
       end
     else
       self.location ||= instrument.location rescue nil
