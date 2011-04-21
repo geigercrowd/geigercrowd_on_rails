@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'pg',                   '0.10.1'
-gem 'rails',                '3.0.6'
+gem 'pg',                   '0.11.0'
+gem 'rails',                '3.0.7'
 gem 'sqlite3',              '1.3.3'
-gem 'devise',               '1.2.1'
+gem 'devise',               '1.3.1'
 gem 'haml',                 '3.0.25'
 gem 'hpricot',              '0.8.4'
 gem 'ruby_parser',          '2.0.6'
@@ -15,7 +15,7 @@ group :development, :test do
   gem 'silent-postgres', '~> 0.0.7'
   gem 'apirunner'
 end
- 
+
 group :test do
   gem 'ruby-debug19',       '~> 0.11.6', require: 'ruby-debug'
   gem 'shoulda',            '~> 2.11.3'
