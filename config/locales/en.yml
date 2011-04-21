@@ -18,6 +18,7 @@ en:
   confirm_delete: Are you sure?
   actions: actions
   not_applicable: n/a
+  not_found: "%{resource} not found."
   optional: (optional)
   navigation:
     access_data: Access data

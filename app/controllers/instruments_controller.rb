@@ -19,12 +19,7 @@ class InstrumentsController < ApplicationController
   
   # GET /users/hulk/instruments
   def index
-    if is_owned?
-      @instruments = current_user.instruments
-    else
-      @instruments = @origin.instruments
-    end
-    
+    @instruments = @origin.instruments
     respond_with @instruments do |format|
       format.html do
         if is_owned? && @instruments.empty?
@@ -38,43 +33,61 @@ class InstrumentsController < ApplicationController
 
   # GET /users/hulk/instruments/1
   def show
-    @instrument = Instrument.find(params[:id])
-    respond_to do |format|
-      format.html { add_breadcrumb (@origin.is_a?(DataSource) ? @instrument.location.try(:name) : @instrument.model), polymorphic_path([@origin,@instrument]) } 
-      format.json { render :json =>@instrument }
+    @instrument = @origin.instruments.find(params[:id]) rescue nil
+    if @instrument
+      respond_with @instrument do |format|
+        format.html do
+          add_breadcrumb @origin.is_a?(DataSource) ?
+            @instrument.location.try(:name) : @instrument.model,
+            polymorphic_path([@origin,@instrument])
+        end
+        format.json { render json: @instrument }
+      end
+    else
+      respond_with do |format|
+        format.html do
+          flash[:error] = I18n.t('not_found', resource: Instrument)
+          redirect_to [ @origin, Instrument ]
+        end
+        format.json { render json: { errors: [ "Instrument not found" ]},
+                             status: :not_found }
+      end
     end
   end
 
   # GET /users/hulk/instruments/new
   def new
-    if current_user.instruments.size == 0
-      flash[:notice] = I18n.t('instruments.create_first')
-    end
+    @instrument = current_user.instruments.new location: Location.new
     @data_types = DataType.all
-    @instrument = Instrument.new
-    @instrument.location = Location.new
-    @locations = current_user.locations
-    add_breadcrumb I18n.t('new'), :new_user_instrument_path
+    respond_with @instrument do |format|
+      format.html do
+        add_breadcrumb I18n.t('new'), :new_user_instrument_path
+        flash[:notice] = I18n.t('instruments.create_first') if current_user.instruments.empty?
+      end
+    end
   end
 
   # GET /users/hulk/instruments/1/edit
   def edit
-    @instrument = Instrument.find params[:id]
+    @instrument = current_user.instruments.find params[:id] rescue nil
     if @instrument
-      if @instrument.user == current_user
-        @data_types = DataType.all
-        @instrument.location ||= Location.new
-        add_breadcrumb @instrument.model, :user_instrument_path
-        add_breadcrumb I18n.t('edit'), :edit_user_instrument_path
-        respond_with @instrument
-      else
-        respond_with do |format|
-          format.html { render :show, status: :unauthorized }
+      @data_types = DataType.all
+      @instrument.location ||= Location.new
+      respond_with @instrument do |format|
+        format.html do
+          add_breadcrumb @instrument.model, :user_instrument_path
+          add_breadcrumb I18n.t('edit'), :edit_user_instrument_path
         end
       end
     else
       respond_with do |format|
-        format.html { redirect_to user_instruments(@instrument.user) }
+        format.html do
+          flash[:error] = I18n.t('not_found', :resource => Instrument)
+          redirect_to [ @origin, Instrument ]
+        end
+        format.json do
+          render json: { errors: [ "Instrument not found" ]}, status: 404
+        end
       end
     end
   end

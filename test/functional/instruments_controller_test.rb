@@ -50,18 +50,6 @@ class InstrumentsControllerTest < ActionController::TestCase
         assert_equal @user, Instrument.last.user
       end
 
-      should "ignore wrong user_id on creation" do
-        instrument = Factory.build :instrument, location: nil
-        assert_nil instrument.location
-        assert instrument.user.to_param
-        assert_not_equal @user, instrument.user
-        assert_difference('Instrument.count') do
-          post :create, {instrument: instrument.attributes, user_id: @user.to_param}
-        end
-        assert_redirected_to user_instrument_path(@user, assigns(:instrument))
-        assert_equal @user, Instrument.last.user
-      end
-
       should "be shown" do
         get :show, :id => @our_instrument.to_param, user_id: @user.to_param
         assert_response :success
@@ -69,7 +57,7 @@ class InstrumentsControllerTest < ActionController::TestCase
       end
 
       should "be editable" do
-        get :edit, :id => @our_instrument.to_param, user_id: @user.to_param
+        get :edit, :id => @our_instrument.id, user_id: @user.to_param
         assert_response :success
         assert_equal @our_instrument, assigns(:instrument)
       end
@@ -139,8 +127,7 @@ class InstrumentsControllerTest < ActionController::TestCase
     should "not be editable" do
       sign_in @user
       get :edit, :id => @other_instrument.to_param, user_id: @user.to_param
-      assert_response :unauthorized
-      assert_equal @other_instrument, assigns(:instrument)
+      assert_redirected_to [ @user, Instrument ]
     end
     
     should "not destroy instrument" do
