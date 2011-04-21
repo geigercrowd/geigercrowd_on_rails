@@ -83,7 +83,6 @@ class InstrumentsController < ApplicationController
   def create
     if is_owned?
       @instrument = current_user.instruments.create params[:instrument]
-      flash[:notice] = I18n.t('instruments.create.successful') if @instrument.valid?
       respond_with current_user, @instrument
     else
       respond_with do |format|

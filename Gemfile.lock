@@ -92,6 +92,7 @@ GEM
     redis (2.2.0)
     redis-namespace (0.10.0)
       redis (< 3.0.0)
+    responders (0.6.2)
     resque (1.15.0)
       json (~> 1.4.6)
       redis-namespace (>= 0.10.0)
@@ -152,6 +153,7 @@ DEPENDENCIES
   mocha (~> 0.9.12)
   pg (= 0.11.0)
   rails (= 3.0.7)
+  responders (= 0.6.2)
   resque (= 1.15.0)
   resque-scheduler (= 2.0.0.d)
   resque_unit
