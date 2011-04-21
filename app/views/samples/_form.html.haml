@@ -1,4 +1,5 @@
 = form_for [ current_user, @sample.instrument, @sample ] do |f|
+  = error_messages_for @sample
   %fieldset
     = f.label :value, t('samples.value')
     %br

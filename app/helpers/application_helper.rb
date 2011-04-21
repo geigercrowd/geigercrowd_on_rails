@@ -19,7 +19,9 @@ module ApplicationHelper
     current_user ? current_user.screen_name : '<YOUR USER ID>'
   end
 
-  def messages_for object
-    render partial: "layouts/flash_message", locals: { object: object } if object.present?
+  def error_messages_for resource
+    if resource.present?
+      render partial: "layouts/flash_message", locals: { resource: resource } 
+    end
   end
 end

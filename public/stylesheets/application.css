@@ -79,6 +79,10 @@ table.form tr td:first-child {
   width: 790px;
 }
 
+#error_explanation {
+  left: -10px;
+}
+
 #flash_notice {
   background-color: #ffffd3;
   outline-top: 1px solid #FFD786

@@ -1,4 +1,5 @@
 = form_for(@user) do |f|
+  = error_messages_for @user
   %fieldset
     .label= f.label :email, t('.email')
     = f.text_field :email

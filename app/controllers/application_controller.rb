@@ -3,7 +3,6 @@ require "application_responder"
 class ApplicationController < ActionController::Base
   include BreadcrumbsOnRails::ControllerMixin
   self.responder = ApplicationResponder
-  respond_to :html
 
   protect_from_forgery
   before_filter :timezone_from_user

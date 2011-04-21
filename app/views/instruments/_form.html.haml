@@ -1,4 +1,5 @@
 = form_for([current_user, @instrument]) do |f|
+  = error_messages_for @instrument
   %fieldset
     = f.label :model, t('.model')
     %br

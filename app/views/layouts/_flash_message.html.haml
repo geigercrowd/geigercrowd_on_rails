@@ -1,8 +1,6 @@
-- if object.errors.any?
-  #flash.error
-    %h4= "#{pluralize(object.errors.count, 'error')} prohibited this #{object.class.to_s.downcase} from being saved:"
+- if resource.errors.any?
+  #error_explanation
+    %h4= "#{pluralize(resource.errors.count, 'error')} prohibited this #{resource.class.to_s.downcase} from being saved:"
     %ul
-      - object.errors.full_messages.each do |msg|
+      - resource.errors.full_messages.each do |msg|
         %li= msg
-- elsif flash[:notice]
-  #flash.notice= flash[:notice]
