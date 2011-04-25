@@ -77,10 +77,18 @@ table.form tr td:first-child {
   position: relative;
   padding: 5px;
   width: 790px;
+  padding-left: 10px;
 }
 
 #error_explanation {
   left: -10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#error_explanation h2 {
+  margin: 0;
+  font-size: 1.1em;
 }
 
 #flash_notice {

@@ -103,11 +103,12 @@ class SamplesController < ApplicationController
     options = params[:options] || []
     options = options.split(",") if options.is_a?(String)
     @samples = Sample
+    @samples = @samples.nearby(params[:location]) if params[:location].present?
     @samples = @samples.page(params[:page])
     @samples = @samples.latest if options.include?("latest")
     @samples = @samples.after(params[:after].presence || 1.week.ago)
     @samples = @samples.before(params[:before]) if params[:before].present?
-    respond_with @samples.all include: [ :data_type, :instrument ]
+    respond_with @samples.all include: [ :data_type, :instrument, :location ]
   end
   
   private

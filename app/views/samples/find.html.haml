@@ -1,12 +1,16 @@
-- @samples.each do |sample|
-  %table.data
-    %thead
+%table.data
+  %thead
+    %tr
       %th value
       %th SI unit
+      %th time
       %th device
-      %th source
+      %th location
     %tbody
-      %td= sample.value
-      %td= sample.data_type.si_unit
-      %td= link_to sample.instrument.model, [ sample.user, sample.instrument, sample ]
-      %td source?
+      - @samples.each do |sample|
+        %tr
+          %td= sample.value
+          %td= sample.data_type.si_unit
+          %td= sample.timestamp.in_time_zone
+          %td= link_to sample.instrument.model, [ sample.user, sample.instrument, sample ]
+          %td= "#{sample.location.city}, #{sample.location.province}, #{sample.location.country}"

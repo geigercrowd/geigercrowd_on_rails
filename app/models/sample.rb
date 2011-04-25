@@ -23,6 +23,13 @@ class Sample < ActiveRecord::Base
     page = 0 if page < 0
     { limit: ROWS_PER_PAGE, offset: page * ROWS_PER_PAGE }
   }
+  scope :nearby, lambda { |place|
+    place = place.downcase
+    { joins:      :location,
+      conditions: "lower(locations.country) like '#{place}' or " +
+                  "lower(locations.city) like '#{place}' or " +
+                  "lower(locations.province) like '#{place}'" }
+  }
 
   def to_json *args
     # TODO: merge-in the args
