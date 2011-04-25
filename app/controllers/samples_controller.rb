@@ -3,7 +3,7 @@ class SamplesController < ApplicationController
   respond_to :html
   respond_to :json, except: [ :edit, :new ]
   
-  skip_before_filter :authenticate_user!, only: [ :search, :find ]
+  skip_before_filter :authenticate_user!, only: [ :search, :find, :index, :show ]
   before_filter :instrument, except: [ :search, :find ]
   before_filter :rewrite_api_parameters, :only => [:create, :update]
   before_filter :breadcrumb_path, except: [ :search, :find ]

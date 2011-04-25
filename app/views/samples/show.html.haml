@@ -1,9 +1,25 @@
-%h2= t '.title'
+%h2= t('.title')
 %p
-  = link_to t('back'),  polymorphic_path([@origin, @sample.instrument, Sample])
+  = link_to t('samples.all_data'),  polymorphic_path([@origin, @sample.instrument, Sample])
   - if is_owned?
+    &nbsp;
     = link_to t('edit'), edit_user_instrument_sample_path(current_user, @sample.instrument, @sample)
 
-%dl
-  %dt= Sample.human_attribute_name :value
-  %dd= @sample.value
+%ul
+  %li
+    .label= t('samples.value')
+    = @sample.value
+  %li
+    .label= t('samples.si_unit')
+    = @sample.data_type.si_unit
+  %li
+    .label= t('samples.timestamp')
+    = @sample.timestamp.in_time_zone
+  %li
+    .label= t('samples.instrument')
+    = link_to @sample.instrument.model, [ @sample.user, @sample.instrument ]
+  %li
+    .label= t('.location')
+    = format_location @sample.location
+  .clear
+  #google_map{ "data-latitude" => @sample.location.latitude, "data-longitude" => @sample.location.longitude }

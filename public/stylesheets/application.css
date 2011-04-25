@@ -230,8 +230,12 @@ span.pre {
   text-shadow: #888888 1px 1px;
 }
 
-div.label {
+li .label {
   width: 100px;
   float: left;
   font-weight: bold;
+}
+
+#google_map {
+  margin-top: 10px;
 }

@@ -15,7 +15,7 @@
     = f.time_zone_select :timezone, nil, default: timezone.name
   %fieldset
     %legend= t('locations.title')
-  - if @sample.location.id.nil?
+  - if @sample.instrument.location_id.nil?
     = render partial: "locations/form_locator", locals: { form: f }
   - else
     = t('.location_from_instrument')
