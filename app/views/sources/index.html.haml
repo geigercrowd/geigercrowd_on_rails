@@ -1,11 +1,11 @@
 %h2= t('.title')
 
-%table
+%table.data
   %thead
     %tr
-      %th= DataSource.human_attribute_name :short_name
-      %th= DataSource.human_attribute_name :name
-      %th= DataSource.human_attribute_name :url
+      %th= t('.name')
+      %th= t('.info')
+      %th= t('.url')
   
   %tbody
     - for source in @sources
