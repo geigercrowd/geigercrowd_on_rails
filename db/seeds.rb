@@ -7,6 +7,14 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
+
+units = [ { si_unit: "Gy/h", name: "gray per hour" },
+          { si_unit: "Sv/h", name: "Sievert per hour" } ]
+
+DataType.delete_all
+DataType.create(units)
+
+
 sources = [
 {
   :id => 1,
