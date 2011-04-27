@@ -72,6 +72,11 @@ class SampleTest < ActiveSupport::TestCase
         assert_equal [ samples.first ],
           Sample.latest.all(conditions: { instrument_id: @sample.instrument.id })
       end
+
+      should "return samples by location" do
+        @sample.location.update_attribute :city, "San Francisco"
+        assert_equal [ @sample ], Sample.nearby("cisco").all
+      end
     end
   end
 end

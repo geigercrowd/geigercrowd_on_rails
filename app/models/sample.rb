@@ -26,10 +26,11 @@ class Sample < ActiveRecord::Base
   scope :nearby, lambda { |place|
     place = place.downcase
     { joins:      :location,
-      conditions: "lower(locations.country) like '#{place}' or " +
-                  "lower(locations.city) like '#{place}' or " +
-                  "lower(locations.province) like '#{place}'" }
+      conditions: "lower(locations.country) like '%#{place}%' or " +
+                  "lower(locations.city) like '%#{place}%' or " +
+                  "lower(locations.province) like '%#{place}%'" }
   }
+  scope :all, order: "timestamp desc"
 
   def to_json *args
     # TODO: merge-in the args
