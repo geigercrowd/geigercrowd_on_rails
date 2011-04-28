@@ -27,7 +27,7 @@ end
 
 Factory.define :data_type do |d|
   d.name "foo per second"
-  d.si_unit "foo/s"
+  d.sequence(:si_unit) { |i| "foo/#{i}" }
 end
 
 Factory.define :location do |l|

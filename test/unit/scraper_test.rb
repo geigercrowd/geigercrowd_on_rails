@@ -21,7 +21,7 @@ class ScraperTest < ActiveSupport::TestCase
     should "parse a complete row correctly" do
       complete = @scraped.select { |x| x.location_name == 'Imamura Genkai Town'}.first
       assert_equal 'Imamura Genkai Town', complete.location_name
-      assert_equal 27.0, complete.value
+      assert_equal 2.7e-8, complete.value
       assert_equal 'S', complete.wind_direction
       assert_equal 0.8, complete.wind_velocity
       assert_equal 0.0, complete.precipitation
@@ -31,11 +31,10 @@ class ScraperTest < ActiveSupport::TestCase
     should "parse a incomplete row correctly" do 
       complete = @scraped.select { |x| x.location_name == 'Hokawaduura Genkai Town'}.first
       assert_equal 'Hokawaduura Genkai Town', complete.location_name
-      assert_equal 33.0, complete.value
+      assert_equal 3.3e-8, complete.value.round(22)
       assert_equal 'calm', complete.wind_direction
       assert_equal 0.3, complete.wind_velocity
       assert_equal nil, complete.precipitation
-      
     end
   end
 end

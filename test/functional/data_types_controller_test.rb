@@ -40,7 +40,7 @@ class DataTypesControllerTest < ActionController::TestCase
 
       should "be able to create" do
         assert_difference('DataType.count') do
-          post :create, :data_type => @data_type.attributes
+          post :create, data_type: { si_unit: "foo/bar" }
         end
 
         assert_redirected_to data_type_path(assigns(:data_type))

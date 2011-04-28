@@ -87,7 +87,7 @@ module Scraper
     def initialize(url)
       super(url)
       @si_unit = "Gy/h"
-      @dimension = 10e-9
+      @dimension = 1e-9
       @value_type = "nGy/h"
       @wind_velocity_unit = "m/s"
       @precipitation_unit = "mm"
