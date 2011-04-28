@@ -6,7 +6,7 @@
 module Scraper
   # To hold the generated data
   class Data
-    attr_accessor :location_name, :location_admin_1, :value, :value_type, :wind_direction, :wind_velocity,
+    attr_accessor :location_name, :location_admin_1, :value, :value_type, :si_unit, :wind_direction, :wind_velocity,
                   :wind_velocity_unit, :precipitation, :precipitation_unit, :date_time
     def initialize(attributes=nil)
       if !attributes.nil?
@@ -31,6 +31,8 @@ module Scraper
     
     def initialize(url)
       self.data = []
+      @si_unit = nil
+      @dimension = 1
       @value_type = nil
       @wind_velocity_unit = nil
       @precipitation_unit = nil
@@ -58,7 +60,9 @@ module Scraper
       
       self.doc.search(@rows_xpath).each do |row|
         columns = row.search(@column_xpath)
-        self.data << Scraper::Data.new(:location_name => columns[1].inner_text.strip, :value => self.handle_undefined(columns[2].inner_text), 
+        value = self.handle_undefined(columns[2].inner_text)
+        value *= @dimension if value
+        self.data << Scraper::Data.new(:location_name => columns[1].inner_text.strip, :value => value, :si_unit => @si_unit,
                                        :precipitation => self.handle_undefined(columns[5].inner_text), :wind_direction => self.handle_wind_direction(columns[3].inner_text), 
                                        :wind_velocity => self.handle_undefined(columns[4].inner_text), :value_type => @value_type, :wind_velocity_unit => @wind_velocity_unit,
                                        :precipitation_unit => @precipitation_unit, :date_time => self.doc_date)
@@ -82,6 +86,8 @@ module Scraper
     # * Options ( :time_xpath => <XPath to the html element holding the time of the messurement>, :)
     def initialize(url)
       super(url)
+      @si_unit = "Gy/h"
+      @dimension = 10e-9
       @value_type = "nGy/h"
       @wind_velocity_unit = "m/s"
       @precipitation_unit = "mm"
