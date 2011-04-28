@@ -16,8 +16,9 @@
         %td= sample.value
         %td= sample.instrument.data_type.si_unit 
         %td= l sample.timestamp.localtime, format: :short_with_zone
-        %td= link_to sample.instrument.model, user_instrument_path(sample.user, sample.instrument)
+        %td= link_to sample.instrument.model, polymorphic_path([ sample.instrument.origin, sample.instrument ])
         %td
+          = link_to t('show'), polymorphic_path([ sample.instrument.origin, sample.instrument, sample ])
           - if is_owned?
             = link_to t('edit'), edit_user_instrument_sample_path(current_user, sample.instrument, sample)
             = link_to t('destroy'), [ current_user, sample.instrument, sample ], :confirm => t('confirm_delete'), :method => :delete

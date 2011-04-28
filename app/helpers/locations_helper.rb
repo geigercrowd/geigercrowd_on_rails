@@ -6,6 +6,7 @@ module LocationsHelper
   end
 
   def format_location location
+    return t('not_applicable') if location.nil?
     string = ""
     string += "#{location.city}, #{location.province}, #{location.country} (" if location.city
     string += "#{location.latitude} #{location.longitude}"

@@ -9,11 +9,13 @@ function showGoogleMaps() {
   var element = $('#google_map');
   var latitude = element.attr('data-latitude');
   var longitude = element.attr('data-longitude');
+  if(latitude == undefined || longitude == undefined)
+    return false;
   element.width(780);
   element.height(400);
   var myLatlng = new google.maps.LatLng(latitude, longitude);
   var myOptions = {
-    zoom: 12,
+    zoom: 8,
     center: myLatlng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }

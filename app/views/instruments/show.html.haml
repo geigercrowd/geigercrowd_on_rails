@@ -9,23 +9,21 @@
   &nbsp;
   = link_to t('instruments.add_samples'), new_user_instrument_sample_path(current_user, @instrument)
   .clear
-  .label= "#{t('instruments.si_unit')}:"
-  = @instrument.data_type.si_unit
-  .clear
-  .label= "#{t('instruments.deadtime')}:"
-  = @instrument.deadtime || t('not_applicable')
-  .clear
-  .label= "#{t('instruments.error')}:"
-  = @instrument.error || t('not_applicable')
-  .clear
-  .label= "#{t('locations.title')}:"
-  - if @instrument.location.present?
-    = @instrument.location.name
-    = "(#{@instrument.location.latitude}"
-    = "#{@instrument.location.longitude})"
-  - else
-    = t('not_applicable')
-  .clear
-  .label= t('instruments.notes')
-  .clear
-  = simple_format @instrument.notes
+%ul
+  %li
+    .label= "#{t('instruments.si_unit')}:"
+    = @instrument.data_type.si_unit
+  %li
+    .label= "#{t('instruments.deadtime')}:"
+    = @instrument.deadtime || t('not_applicable')
+  %li
+    .label= "#{t('instruments.error')}:"
+    = @instrument.error || t('not_applicable')
+  %li
+    .label= "#{t('locations.title')}:"
+    = format_location @instrument.location
+  %li
+    .label= t('instruments.notes')
+    = simple_format @instrument.notes
+.clear
+#google_map{ "data-latitude" => @instrument.location.latitude, "data-longitude" => @instrument.location.longitude }
