@@ -49,8 +49,8 @@ hope you enjoy it and find it usefull :)
         <div id="content_inside_sidebar">
           <ul>
             <li><%= link_to t('navigation.access_data'), samples_path %></li>
-            <% if current_user || @origin %>
-              <li><%= link_to t('navigation.submit_data'), user_instruments_path(current_user || @origin) %></li>
+            <% if current_user %>
+              <li><%= link_to t('navigation.submit_data'), user_instruments_path(current_user) %></li>
             <% end %>
             <% if admin? %>
               <li><%= link_to t('data_types.index.title'), data_types_path %></li>
