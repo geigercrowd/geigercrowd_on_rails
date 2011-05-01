@@ -77,7 +77,6 @@ table.form tr td:first-child {
   position: relative;
   padding: 5px;
   width: 790px;
-  padding-left: 10px;
 }
 
 #error_explanation {
