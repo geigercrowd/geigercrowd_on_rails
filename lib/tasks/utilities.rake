@@ -1,3 +1,4 @@
+require 'csv'
 namespace :utilities do
   desc "Imports the locations for the data imported from bousai.jp.ne"
   task :import_bousai_locations => :environment do
