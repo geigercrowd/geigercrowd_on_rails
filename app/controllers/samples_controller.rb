@@ -108,7 +108,8 @@ class SamplesController < ApplicationController
     @samples = @samples.latest if options.include?("latest")
     @samples = @samples.after(params[:after].presence || 1.week.ago)
     @samples = @samples.before(params[:before]) if params[:before].present?
-    respond_with @samples.all include: [ :data_type, :instrument, :location ]
+    @samples = @samples.all include: [ :data_type, :instrument, :location ]
+    respond_with @samples
   end
   
   private

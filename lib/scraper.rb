@@ -54,10 +54,15 @@ module Scraper
       end
       self.doc_date = Time.new(time[:year], time[:month], time[:day], time[:hour], time[:minute], time[:second], @time[:offset])
     end
+
+    def sanity_check
+      raise "Overwrite the sanity_check method in the scraper to validate that the page still delivers what we expect"
+    end
     
     def parse
+      sanity_check
+
       self.parse_time
-      
       self.doc.search(@rows_xpath).each do |row|
         columns = row.search(@column_xpath)
         value = self.handle_undefined(columns[2].inner_text)
@@ -103,6 +108,7 @@ module Scraper
     def handle_wind_direction(value)
       value.strip
     end
+
   end
 =begin
   class MapParser
