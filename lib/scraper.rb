@@ -56,7 +56,7 @@ module Scraper
     end
 
     def sanity_check
-      raise "Overwrite the sanity_check method in the scraper to validate that the page still delivers what we expect"
+      #raise "Overwrite the sanity_check method in the scraper to validate that the page still delivers what we expect"
     end
     
     def parse
