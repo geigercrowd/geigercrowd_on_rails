@@ -1,0 +1,170 @@
+@import "compass/reset";
+@import "compass/utilities/lists";
+@import "compass/utilities/general/float";
+@import "compass/utilities/general/clearfix";
+@import "compass/utilities/general/min";
+@import "compass/css3";
+
+// Sizes
+$window-size: 860px;
+
+// Colors
+$bg-color: #E2E2E2;
+$document-color: #E9E9E9;
+
+$font-one: #202020;
+$font-three: #303030;
+
+$font-two: #5B5B5B;
+
+$hs-font: 'Francois One', arial, serif;
+
+// Styles
+body {
+  background-color: $bg-color;
+  font-family: Arial,'Helvetica Neue',Helvetica,sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #2D6000;
+}
+
+::selection {
+  background: #FDD800;
+  color: #000;
+}
+
+::-moz-selection {
+  background: #FDD800;
+  color: #000;
+}
+
+::-webkit-selection {
+  background: #FDD800;
+  color: #000;
+}
+
+header {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#container {
+  text-align: center;
+  width: $window-size;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 50px 40px 100px 40px;
+  background: $document-color url('/images/radioactive_sign.png') no-repeat 50% 20px;
+  @include border-radius(6px);
+
+  #content {
+    text-align: left;
+    font-size: 14px;
+    color: $font-two;
+    text-shadow: 0px -1px 0px #ffffff;
+
+    p {
+      line-height: 18px;
+    }
+
+    .title {
+      color: $font-one;
+      font-weight: bold;
+      font-size: 25px;
+      font-family: $hs-font;
+      text-transform: uppercase;
+      text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+      word-spacing: 8px;
+      margin-bottom: 50px;
+      text-align: center;
+      border: none;
+      margin: 10px 0 80px 0;
+    }
+
+    h1 {
+      color: $font-one;
+      font-weight: bold;
+      font-size: 20px;
+      font-family: $hs-font;
+      text-transform: uppercase;
+      text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+      word-spacing: 8px;
+      border-bottom: 1px solid #ccc;
+      margin: 40px 0 20px 0;
+      padding-bottom: 5px;
+    }
+
+    h2 {
+      color: $font-three;
+      font-size: 15px;
+      font-family: $hs-font;
+      text-transform: uppercase;
+      text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+      word-spacing: 8px;
+      margin: 20px 0 10px 0;
+
+      a {
+        color:  $font-three;
+      }
+    }
+
+    dl.api, dl.urls {
+      padding: 0px 20px;
+      margin-top: 20px;
+      @include clearfix;
+      dt {
+        font-family: Courier;
+        width: 100px;
+        clear: left;
+        float: left;
+
+      }
+      dd {
+        float: left;
+        margin-bottom: 20px;
+        width: $window-size - 100px - 40px;
+      }
+    }
+    
+    dl.urls {
+      dt {
+        width: 200px;
+      }
+      dd {
+        width: $window-size - 200px - 40px;
+      }
+    }
+  }
+}
+
+footer {
+  text-align: center;
+  width: $window-size;
+  margin: 0 auto;
+  overflow: hidden;
+  margin-top: 50px;
+
+  ul.navigation {
+    list-style-type: none;
+    display: inline;
+
+    li {
+      display: inline;
+      margin: 0 10px;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-family: 'Geo', arial, serif;
+
+      a {
+        color: $font-one;
+        text-shadow: 0px -1px 0px rgba(255, 255, 255, 0.33);
+      }
+    }
+  }
+
+  #sublogo {
+    margin-top: 40px;
+  }
+}

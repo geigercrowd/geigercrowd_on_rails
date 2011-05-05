@@ -1,0 +1,228 @@
+/* line 17, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 20, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body {
+  line-height: 1;
+}
+
+/* line 22, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 24, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 26, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 28, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 101, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 30, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 115, ../../../../.rvm/gems/ruby-1.9.2-p180@geigercrowd/gems/compass-0.11.1/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* line 23, ../../app/stylesheets/geiger.scss */
+body {
+  background-color: #e2e2e2;
+  font-family: Arial,'Helvetica Neue',Helvetica,sans-serif;
+}
+
+/* line 28, ../../app/stylesheets/geiger.scss */
+a {
+  text-decoration: none;
+  color: #2D6000;
+}
+
+/* line 33, ../../app/stylesheets/geiger.scss */
+::selection {
+  background: #FDD800;
+  color: #000;
+}
+
+/* line 38, ../../app/stylesheets/geiger.scss */
+::-moz-selection {
+  background: #FDD800;
+  color: #000;
+}
+
+/* line 43, ../../app/stylesheets/geiger.scss */
+::-webkit-selection {
+  background: #FDD800;
+  color: #000;
+}
+
+/* line 48, ../../app/stylesheets/geiger.scss */
+header {
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* line 53, ../../app/stylesheets/geiger.scss */
+#container {
+  text-align: center;
+  width: 860px;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 50px 40px 100px 40px;
+  background: #e9e9e9 url("/images/radioactive_sign.png") no-repeat 50% 20px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -o-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
+}
+/* line 62, ../../app/stylesheets/geiger.scss */
+#container #content {
+  text-align: left;
+  font-size: 14px;
+  color: #5b5b5b;
+  text-shadow: 0px -1px 0px white;
+}
+/* line 68, ../../app/stylesheets/geiger.scss */
+#container #content p {
+  line-height: 18px;
+}
+/* line 72, ../../app/stylesheets/geiger.scss */
+#container #content .title {
+  color: #202020;
+  font-weight: bold;
+  font-size: 25px;
+  font-family: "Francois One", arial, serif;
+  text-transform: uppercase;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+  word-spacing: 8px;
+  margin-bottom: 50px;
+  text-align: center;
+  border: none;
+  margin: 10px 0 80px 0;
+}
+/* line 86, ../../app/stylesheets/geiger.scss */
+#container #content h1 {
+  color: #202020;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: "Francois One", arial, serif;
+  text-transform: uppercase;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+  word-spacing: 8px;
+  border-bottom: 1px solid #ccc;
+  margin: 40px 0 20px 0;
+  padding-bottom: 5px;
+}
+/* line 99, ../../app/stylesheets/geiger.scss */
+#container #content h2 {
+  color: #303030;
+  font-size: 15px;
+  font-family: "Francois One", arial, serif;
+  text-transform: uppercase;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+  word-spacing: 8px;
+  margin: 20px 0 10px 0;
+}
+/* line 108, ../../app/stylesheets/geiger.scss */
+#container #content h2 a {
+  color: #303030;
+}
+/* line 113, ../../app/stylesheets/geiger.scss */
+#container #content dl.api, #container #content dl.urls {
+  padding: 0px 20px;
+  margin-top: 20px;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 117, ../../app/stylesheets/geiger.scss */
+#container #content dl.api dt, #container #content dl.urls dt {
+  font-family: Courier;
+  width: 100px;
+  clear: left;
+  float: left;
+}
+/* line 124, ../../app/stylesheets/geiger.scss */
+#container #content dl.api dd, #container #content dl.urls dd {
+  float: left;
+  margin-bottom: 20px;
+  width: 720px;
+}
+/* line 132, ../../app/stylesheets/geiger.scss */
+#container #content dl.urls dt {
+  width: 200px;
+}
+/* line 135, ../../app/stylesheets/geiger.scss */
+#container #content dl.urls dd {
+  width: 620px;
+}
+
+/* line 142, ../../app/stylesheets/geiger.scss */
+footer {
+  text-align: center;
+  width: 860px;
+  margin: 0 auto;
+  overflow: hidden;
+  margin-top: 50px;
+}
+/* line 149, ../../app/stylesheets/geiger.scss */
+footer ul.navigation {
+  list-style-type: none;
+  display: inline;
+}
+/* line 153, ../../app/stylesheets/geiger.scss */
+footer ul.navigation li {
+  display: inline;
+  margin: 0 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: 'Geo', arial, serif;
+}
+/* line 160, ../../app/stylesheets/geiger.scss */
+footer ul.navigation li a {
+  color: #202020;
+  text-shadow: 0px -1px 0px rgba(255, 255, 255, 0.33);
+}
+/* line 167, ../../app/stylesheets/geiger.scss */
+footer #sublogo {
+  margin-top: 40px;
+}
