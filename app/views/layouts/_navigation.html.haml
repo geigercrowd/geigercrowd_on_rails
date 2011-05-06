@@ -1,0 +1,8 @@
+%nav
+  %ul
+    %li= link_to 'Home', root_url, :title => 'Home'
+    %li= link_to 'Search Data', samples_path, :title => 'Access Data'
+    %li= link_to 'Data Sources', root_url, :title => 'Data Sources'
+    %li= link_to 'Developers', '/api', :title => 'Developers'
+    %li= link_to 'Blog', 'http://geigercrowd.net', :title => 'Blog'
+    %li= current_user ? link_to('Logout', destroy_user_session_path, :title => 'Logout') : link_to('Login', new_user_session_path, :title => 'Login')

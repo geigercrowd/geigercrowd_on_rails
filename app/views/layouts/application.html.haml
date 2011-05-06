@@ -4,11 +4,12 @@
   %body
     %header
       #logo= image_tag('geigercrowd.png')
-    %nav
+      = render :partial => 'layouts/navigation'
 
     #container
       #content
         = yield
 
     = render :partial => 'layouts/footer'
-    
+
+    =# render :partial => 'layouts/javascripts'
