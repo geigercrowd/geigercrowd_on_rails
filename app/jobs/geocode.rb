@@ -12,7 +12,6 @@ module Geocode
     url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{location.latitude}&lng=#{location.longitude}&username=#{Geocode.user}"
     response = Net::HTTP.get(URI.parse(url))
     data = JSON.parse(response)
-    puts data if Rails.env == "development"
     if data['status']
       # requeue the job
       if data['status']['value'] == 19
@@ -20,7 +19,7 @@ module Geocode
         return true
       end
       raise "Invalid username" if data['status']['value'] == 10
-      raise "Unknown error"
+      raise "Invlid response: #{data.inspect}"
     end
     raise "Unknown json response" if !data['geonames'] && data['geonames'].length == 0
     location.country = data['geonames'][0]["countryName"]
