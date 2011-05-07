@@ -53,6 +53,12 @@ header, nav {
   margin-top: 30px;
 }
 
+header {
+  margin-top: 0;
+  #logo {
+  }
+}
+
 nav {
   margin: 40px auto 40px auto;
   ul {
