@@ -83,11 +83,11 @@ nav {
   width: $window-size;
   margin: 0 auto;
   overflow: hidden;
-  padding: 50px 40px 100px 40px;
-  background: $document-color url('/images/radioactive_sign.png') no-repeat 50% 20px;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$bg-color', endColorstr='$document-color') url('/images/radioactive_sign.png') no-repeat 50% 20px; /* for IE */
-  background: -webkit-gradient(linear, left top, left bottom, from($bg-color), to($document-color)) url('/images/radioactive_sign.png') no-repeat 50% 20px; /* for webkit browsers */
-  background: -moz-linear-gradient(bottom, $bg-color, $document-color) url('/images/radioactive_sign.png') no-repeat 50% 20px; /* for firefox 3.6+ */
+  padding: 20px 40px 100px 40px;
+  background: $document-color; // url('/images/radioactive_sign.png') no-repeat 50% 20px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$bg-color', endColorstr='$document-color'); /* for IE */
+  background: -webkit-gradient(linear, left top, left bottom, from($bg-color), to($document-color)); /* for webkit browsers */
+  background: -moz-linear-gradient(bottom, $bg-color, $document-color) ; /* for firefox 3.6+ */
 
   @include border-radius(6px);
 
@@ -112,7 +112,7 @@ nav {
       margin-bottom: 50px;
       text-align: center;
       border: none;
-      margin: 10px 0 80px 0;
+      margin: 20px 0 40px 0;
     }
 
     h1 {
@@ -168,7 +168,96 @@ nav {
         width: $window-size - 200px - 40px;
       }
     }
+
+    form {
+      text-align: center;
+
+      .textfield {
+        background-color: #fff;
+        padding: 10px;
+        -moz-border-radius: 5px;
+         -webkit-border-radius: 5px;
+         border-radius: 5px;
+         border: none;
+         width: 320px;
+         margin: 10px auto 10px auto;
+         @include clearfix;
+      }
+    
+      p {
+        margin: 10px 0;
+      }
+      
+      label {
+        color: #000;
+        text-transform: uppercase;
+        font-family: $hs-font;
+        text-align: right;
+        display: block;
+        float: left;
+        width: 75px;
+        border-right: 1px solid #000;
+        padding-right: 10px;
+      }
+    
+      input[type='text'], input[type='password'] {
+        float: left;
+        -moz-border-radius: 5px;
+         -webkit-border-radius: 5px;
+         border-radius: 5px;
+         border: none;
+         margin-left: 10px;
+
+      }
+    
+      input[type='submit'] {
+        background: #eee;
+        background: -moz-linear-gradient(top, #eee 0%, #ccc 100%);
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
+        border: 1px solid #ccc;
+        border-bottom: 1px solid #bbb;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        color: #333;
+        font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+        font-size: 11px;
+        font-weight: bold;
+        line-height: 1;
+        padding: 10px 7px;
+        text-align: center;
+        text-shadow: 0 1px 0 #eee;
+        margin-top: 20px;
+      }
+      
+      input[type='submit']:hover {
+        background: #ddd;
+        background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddd), to(#bbb));
+        border: 1px solid #bbb;
+        border-bottom: 1px solid #999;
+        cursor: pointer;
+        text-shadow: 0 1px 0 #ddd;
+      }
+
+      input[type='submit']:active {
+        border: 1px solid #aaa;
+        border-bottom: 1px solid #888;
+        -moz-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+        -webkit-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+        box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
+      }
+    
+    }
   }
+}
+
+#subfooter {
+  text-align: center;
+  width: $window-size;
+  margin: 0 auto;
+  overflow: hidden;
+  margin: 0px auto 20px auto;
 }
 
 footer {

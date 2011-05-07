@@ -7,8 +7,12 @@
       = render :partial => 'layouts/navigation'
 
     #container
+      = image_tag('radioactive_sign.png')
       #content
         = yield
+
+    #subfooter
+      = yield :subfooter
 
     = render :partial => 'layouts/footer'
 

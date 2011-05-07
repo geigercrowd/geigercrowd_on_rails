@@ -1,9 +1,14 @@
-%h2 Resend confirmation instructions
+%h1.title Confirmation Instructions
+
 = form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f|
+
   = devise_error_messages!
-  %p
+
+  .textfield
     = f.label :email
-    %br/
     = f.text_field :email
-  %p= f.submit "Resend confirmation instructions"
-= render :partial => "devise/shared/links"
+  
+  = f.submit "Resend"
+
+- content_for :subfooter do
+  = render :partial => "devise/shared/links"
