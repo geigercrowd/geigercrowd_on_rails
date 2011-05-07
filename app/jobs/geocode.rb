@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Geocode
   @queue = :geocode
   
@@ -8,7 +10,7 @@ module Geocode
   def self.perform(location_id)
     location = Location.find(location_id)
     url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=#{location.latitude}&lng=#{location.longitude}&username=#{Geocode.user}"
-    response = ::Net::HTTP.get(URI.parse(url))
+    response = Net::HTTP.get(URI.parse(url))
     data = JSON.parse(response)
     puts data if Rails.env == "development"
     if data['status']
@@ -29,3 +31,4 @@ module Geocode
   end
 end
   
+

@@ -9,7 +9,7 @@ namespace :utilities do
       l.save
     end
   end
-  
+
   desc "Scrapes data from every DataSource"
   task :scrape => :environment do
     DataSource.all.each do |ds|
