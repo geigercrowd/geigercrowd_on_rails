@@ -19,7 +19,7 @@ module Geocode
         return true
       end
       raise "Invalid username" if data['status']['value'] == 10
-      raise "Invlid response: #{data.inspect}"
+      raise "Invalid response: #{data.inspect}"
     end
     raise "Unknown json response" if !data['geonames'] && data['geonames'].length == 0
     location.country = data['geonames'][0]["countryName"]
