@@ -14,6 +14,9 @@
   %meta{:name => 'revisit-after', :content => '7 days' }/
   %meta{:name => 'viewport', :content => 'width=device-width; initial-scale=1.0'}/
 
+  %link{:rel => 'shortcut icon', :href => '/favicon.ico'}
+  %link{:rel => 'apple-touch-icon', :href => '/apple-touch-icon.png'}
+
   = stylesheet_link_tag 'geiger.css', :media => 'screen, projection'
   = stylesheet_link_tag 'print.css', :media => 'print'
   /[if IE]
@@ -21,6 +24,6 @@
 
   %link{:href => 'http://fonts.googleapis.com/css?family=Francois+One', :rel => 'stylesheet', :type => 'text/css'}
 
-  =# javascript_include_tag 'modernizr-1.5.min'
+  = javascript_include_tag 'modernizr-1.7.min'
 
   = csrf_meta_tag

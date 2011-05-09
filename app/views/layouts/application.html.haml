@@ -3,7 +3,7 @@
   = render :partial => 'layouts/head'
   %body
     %header
-      #logo= image_tag('geigercrowd.png')
+      #logo= link_to image_tag('geigercrowd.png'), root_url
       = render :partial => 'layouts/navigation'
 
     #container
@@ -16,4 +16,4 @@
 
     = render :partial => 'layouts/footer'
 
-    =# render :partial => 'layouts/javascripts'
+    = render :partial => 'layouts/javascripts'

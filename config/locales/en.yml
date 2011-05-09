@@ -21,9 +21,13 @@ en:
   not_found: "%{resource} not found."
   optional: (optional)
   navigation:
-    access_data: Access data
+    home: Home
+    developers: Developers
+    blog: Blog
+    access_data: Search data
     submit_data: Submit data
-    my_account: my account
+    my_account: Profile
+    data_sources: Data Sources
   locations:
     title: Location
     geolocate_me: try to locate me
