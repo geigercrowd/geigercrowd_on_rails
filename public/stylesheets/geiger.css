@@ -192,6 +192,11 @@ nav ul li a:hover {
   border-radius: 6px;
 }
 /* line 135, ../../app/stylesheets/geiger.scss */
+#container #content.errors {
+  text-align: center !important;
+  margin-top: 50px;
+}
+/* line 140, ../../app/stylesheets/geiger.scss */
 #container #content {
   text-align: left;
   font-size: 13px;
@@ -199,11 +204,11 @@ nav ul li a:hover {
   text-shadow: 0 -1px 0 white;
   margin: 20px;
 }
-/* line 142, ../../app/stylesheets/geiger.scss */
+/* line 147, ../../app/stylesheets/geiger.scss */
 #container #content p {
   line-height: 18px;
 }
-/* line 147, ../../app/stylesheets/geiger.scss */
+/* line 152, ../../app/stylesheets/geiger.scss */
 #container #content .title {
   color: #202020;
   font-weight: bold;
@@ -217,7 +222,7 @@ nav ul li a:hover {
   border: none;
   margin: 20px 0 40px 0;
 }
-/* line 161, ../../app/stylesheets/geiger.scss */
+/* line 166, ../../app/stylesheets/geiger.scss */
 #container #content h1 {
   color: #202020;
   font-weight: bold;
@@ -230,7 +235,7 @@ nav ul li a:hover {
   margin: 40px 0 20px 0;
   padding-bottom: 5px;
 }
-/* line 174, ../../app/stylesheets/geiger.scss */
+/* line 179, ../../app/stylesheets/geiger.scss */
 #container #content h2 {
   color: #303030;
   font-size: 15px;
@@ -240,43 +245,43 @@ nav ul li a:hover {
   word-spacing: 8px;
   margin: 20px 0 10px 0;
 }
-/* line 183, ../../app/stylesheets/geiger.scss */
+/* line 188, ../../app/stylesheets/geiger.scss */
 #container #content h2 a {
   color: #303030;
 }
-/* line 188, ../../app/stylesheets/geiger.scss */
+/* line 193, ../../app/stylesheets/geiger.scss */
 #container #content dl.api, #container #content dl.urls {
   padding: 0 20px;
   margin-top: 20px;
   overflow: hidden;
   *zoom: 1;
 }
-/* line 192, ../../app/stylesheets/geiger.scss */
+/* line 197, ../../app/stylesheets/geiger.scss */
 #container #content dl.api dt, #container #content dl.urls dt {
   font-family: Courier;
   width: 100px;
   clear: left;
   float: left;
 }
-/* line 199, ../../app/stylesheets/geiger.scss */
+/* line 204, ../../app/stylesheets/geiger.scss */
 #container #content dl.api dd, #container #content dl.urls dd {
   float: left;
   margin-bottom: 20px;
   width: 620px;
 }
-/* line 207, ../../app/stylesheets/geiger.scss */
+/* line 212, ../../app/stylesheets/geiger.scss */
 #container #content dl.urls dt {
   width: 200px;
 }
-/* line 210, ../../app/stylesheets/geiger.scss */
+/* line 215, ../../app/stylesheets/geiger.scss */
 #container #content dl.urls dd {
   width: 520px;
 }
-/* line 215, ../../app/stylesheets/geiger.scss */
+/* line 220, ../../app/stylesheets/geiger.scss */
 #container #content form {
   text-align: center;
 }
-/* line 218, ../../app/stylesheets/geiger.scss */
+/* line 223, ../../app/stylesheets/geiger.scss */
 #container #content form .textfield {
   background-color: #fff;
   padding: 8px;
@@ -289,32 +294,32 @@ nav ul li a:hover {
   overflow: hidden;
   *zoom: 1;
 }
-/* line 230, ../../app/stylesheets/geiger.scss */
+/* line 235, ../../app/stylesheets/geiger.scss */
 #container #content form p {
   margin: 10px 0;
 }
-/* line 234, ../../app/stylesheets/geiger.scss */
+/* line 239, ../../app/stylesheets/geiger.scss */
 #container #content form .instructions {
   margin-top: 20px;
   font-family: "Francois One", arial, serif;
   color: #202020;
 }
-/* line 240, ../../app/stylesheets/geiger.scss */
+/* line 245, ../../app/stylesheets/geiger.scss */
 #container #content form fieldset {
   text-align: center;
 }
-/* line 243, ../../app/stylesheets/geiger.scss */
+/* line 248, ../../app/stylesheets/geiger.scss */
 #container #content form fieldset legend {
   font-family: "Francois One", arial, serif;
   color: #202020;
   text-transform: uppercase;
   text-align: center;
 }
-/* line 250, ../../app/stylesheets/geiger.scss */
+/* line 255, ../../app/stylesheets/geiger.scss */
 #container #content form fieldset h2 {
   color: #5b5b5b;
 }
-/* line 255, ../../app/stylesheets/geiger.scss */
+/* line 260, ../../app/stylesheets/geiger.scss */
 #container #content form textarea {
   border: none;
   -moz-border-radius: 5px;
@@ -322,26 +327,26 @@ nav ul li a:hover {
   border-radius: 5px;
   padding: 10px;
 }
-/* line 263, ../../app/stylesheets/geiger.scss */
+/* line 268, ../../app/stylesheets/geiger.scss */
 #container #content form .formcontainer {
   margin: 30px 0 10px 0;
 }
-/* line 266, ../../app/stylesheets/geiger.scss */
+/* line 271, ../../app/stylesheets/geiger.scss */
 #container #content form .formcontainer ul.location_change {
   width: 450px;
   text-align: center;
   margin: 0 auto;
 }
-/* line 271, ../../app/stylesheets/geiger.scss */
+/* line 276, ../../app/stylesheets/geiger.scss */
 #container #content form .formcontainer ul.location_change li {
   margin-bottom: 10px;
   text-align: center;
 }
-/* line 275, ../../app/stylesheets/geiger.scss */
+/* line 280, ../../app/stylesheets/geiger.scss */
 #container #content form .formcontainer ul.location_change li input[type='radio'] {
   margin-bottom: 10px;
 }
-/* line 282, ../../app/stylesheets/geiger.scss */
+/* line 287, ../../app/stylesheets/geiger.scss */
 #container #content form label {
   color: #000;
   text-transform: uppercase;
@@ -353,11 +358,11 @@ nav ul li a:hover {
   border-right: 1px solid #000;
   padding-right: 10px;
 }
-/* line 294, ../../app/stylesheets/geiger.scss */
+/* line 299, ../../app/stylesheets/geiger.scss */
 #container #content form label.loooong {
   font-size: 10px;
 }
-/* line 298, ../../app/stylesheets/geiger.scss */
+/* line 303, ../../app/stylesheets/geiger.scss */
 #container #content form input[type='text'], #container #content form input[type='password'] {
   float: left;
   -moz-border-radius: 5px;
@@ -370,14 +375,14 @@ nav ul li a:hover {
   font-size: 10px;
   width: 220px;
 }
-/* line 311, ../../app/stylesheets/geiger.scss */
+/* line 316, ../../app/stylesheets/geiger.scss */
 #container #content form input[type='text'].search {
   color: #ff0000;
   text-transform: uppercase;
   font-size: 12px;
   width: 150px;
 }
-/* line 318, ../../app/stylesheets/geiger.scss */
+/* line 323, ../../app/stylesheets/geiger.scss */
 #container #content form select {
   float: left;
   border: none;
@@ -387,7 +392,7 @@ nav ul li a:hover {
   font-size: 10px;
   width: 220px;
 }
-/* line 328, ../../app/stylesheets/geiger.scss */
+/* line 333, ../../app/stylesheets/geiger.scss */
 #container #content form input[type='submit'], #container #content form input[type='button'] {
   background: #eee;
   background: -moz-linear-gradient(top, #eeeeee 0%, #cccccc 100%);
@@ -406,15 +411,15 @@ nav ul li a:hover {
   text-align: center;
   text-shadow: 0 1px 0 #eee;
 }
-/* line 348, ../../app/stylesheets/geiger.scss */
+/* line 353, ../../app/stylesheets/geiger.scss */
 #container #content form input[type='submit'] {
   margin-top: 20px;
 }
-/* line 352, ../../app/stylesheets/geiger.scss */
+/* line 357, ../../app/stylesheets/geiger.scss */
 #container #content form input[type='button'] {
   padding: 2px;
 }
-/* line 356, ../../app/stylesheets/geiger.scss */
+/* line 361, ../../app/stylesheets/geiger.scss */
 #container #content form input[type='submit']:hover, #container #content form input[type='button']:hover {
   background: #ddd;
   background: -moz-linear-gradient(top, #dddddd 0%, #bbbbbb 100%);
@@ -424,7 +429,7 @@ nav ul li a:hover {
   cursor: pointer;
   text-shadow: 0 1px 0 #ddd;
 }
-/* line 366, ../../app/stylesheets/geiger.scss */
+/* line 371, ../../app/stylesheets/geiger.scss */
 #container #content form input[type='submit']:active, #container #content form input[type='button']:active {
   border: 1px solid #aaa;
   border-bottom: 1px solid #888;
@@ -432,7 +437,7 @@ nav ul li a:hover {
   -webkit-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
   box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
 }
-/* line 375, ../../app/stylesheets/geiger.scss */
+/* line 380, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata {
   background-color: #D1D1D1;
   text-align: center !important;
@@ -442,61 +447,61 @@ nav ul li a:hover {
   overflow: hidden;
   *zoom: 1;
 }
-/* line 383, ../../app/stylesheets/geiger.scss */
+/* line 388, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata form {
   text-align: center;
   margin: 0 auto;
 }
-/* line 388, ../../app/stylesheets/geiger.scss */
+/* line 393, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata label {
   width: 50px;
   padding-right: 5px;
 }
-/* line 393, ../../app/stylesheets/geiger.scss */
+/* line 398, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata .textfield {
   width: 200px;
   float: left;
   margin: 0 4px;
 }
-/* line 398, ../../app/stylesheets/geiger.scss */
+/* line 403, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata .textfield input[type='text'] {
   width: auto;
 }
-/* line 404, ../../app/stylesheets/geiger.scss */
+/* line 409, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata .location input {
   color: #ff0000;
   text-transform: uppercase;
 }
-/* line 410, ../../app/stylesheets/geiger.scss */
+/* line 415, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata .datetime {
   width: 160px;
 }
-/* line 413, ../../app/stylesheets/geiger.scss */
+/* line 418, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata .datetime label {
   width: 40px;
 }
-/* line 417, ../../app/stylesheets/geiger.scss */
+/* line 422, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata .datetime input {
   color: #135CDE;
 }
-/* line 422, ../../app/stylesheets/geiger.scss */
+/* line 427, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata .historical {
   width: 105px;
   float: left;
   padding: 8px 0 0 0;
   margin-left: -10px;
 }
-/* line 428, ../../app/stylesheets/geiger.scss */
+/* line 433, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata .historical label {
   border: none;
   float: none;
   display: inline;
 }
-/* line 438, ../../app/stylesheets/geiger.scss */
+/* line 443, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata input[type='text'], #container #content #searchdata input[type='password'] {
   margin-left: 5px;
 }
-/* line 442, ../../app/stylesheets/geiger.scss */
+/* line 447, ../../app/stylesheets/geiger.scss */
 #container #content #searchdata input[type='submit'] {
   margin: 0;
   text-transform: uppercase;
@@ -505,7 +510,7 @@ nav ul li a:hover {
   margin-top: 5px;
 }
 
-/* line 453, ../../app/stylesheets/geiger.scss */
+/* line 458, ../../app/stylesheets/geiger.scss */
 #subfooter {
   text-align: center;
   width: 760px;
@@ -513,11 +518,11 @@ nav ul li a:hover {
   overflow: hidden;
   margin: 0 auto 20px auto;
 }
-/* line 460, ../../app/stylesheets/geiger.scss */
+/* line 465, ../../app/stylesheets/geiger.scss */
 #subfooter ul.loginmenu {
   list-style-type: none;
 }
-/* line 463, ../../app/stylesheets/geiger.scss */
+/* line 468, ../../app/stylesheets/geiger.scss */
 #subfooter ul.loginmenu li {
   display: inline;
   margin: 0 10px;
@@ -525,17 +530,17 @@ nav ul li a:hover {
   font-family: "Francois One", arial, serif;
   font-size: 10px;
 }
-/* line 470, ../../app/stylesheets/geiger.scss */
+/* line 475, ../../app/stylesheets/geiger.scss */
 #subfooter ul.loginmenu li a {
   color: #202020;
   text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.33);
 }
-/* line 474, ../../app/stylesheets/geiger.scss */
+/* line 479, ../../app/stylesheets/geiger.scss */
 #subfooter ul.loginmenu li a:hover {
   color: #F09800;
 }
 
-/* line 482, ../../app/stylesheets/geiger.scss */
+/* line 487, ../../app/stylesheets/geiger.scss */
 footer {
   text-align: center;
   width: 760px;
@@ -543,12 +548,12 @@ footer {
   overflow: hidden;
   margin: 40px auto 100px auto;
 }
-/* line 489, ../../app/stylesheets/geiger.scss */
+/* line 494, ../../app/stylesheets/geiger.scss */
 footer ul.navigation {
   list-style-type: none;
   display: inline;
 }
-/* line 493, ../../app/stylesheets/geiger.scss */
+/* line 498, ../../app/stylesheets/geiger.scss */
 footer ul.navigation li {
   display: inline;
   margin: 0 10px;
@@ -556,16 +561,16 @@ footer ul.navigation li {
   font-family: "Francois One", arial, serif;
   font-size: 10px;
 }
-/* line 500, ../../app/stylesheets/geiger.scss */
+/* line 505, ../../app/stylesheets/geiger.scss */
 footer ul.navigation li a {
   color: #202020;
   text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.33);
 }
-/* line 504, ../../app/stylesheets/geiger.scss */
+/* line 509, ../../app/stylesheets/geiger.scss */
 footer ul.navigation li a:hover {
   color: #F09800;
 }
-/* line 511, ../../app/stylesheets/geiger.scss */
+/* line 516, ../../app/stylesheets/geiger.scss */
 footer #sublogo {
   margin-top: 40px;
 }

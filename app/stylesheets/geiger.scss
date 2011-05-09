@@ -132,6 +132,11 @@ nav {
 
   @include border-radius(6px);
 
+  #content.errors {
+    text-align: center !important;
+    margin-top: 50px;
+  }
+
   #content {
     text-align: left;
     font-size: 13px;

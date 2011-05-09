@@ -25,5 +25,5 @@ Geigercrowd::Application.routes.draw do
   match "api" => "welcome#api"
   match "api/public" => "welcome#api_public"
   match "api/private" => "welcome#api_private"
-
+  match '*a', :to => 'application#routing'
 end
