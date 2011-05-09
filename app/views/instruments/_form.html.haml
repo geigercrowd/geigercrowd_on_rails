@@ -4,7 +4,7 @@
   %fieldset
     .textfield
       = f.label :model, t('.model')
-      = f.text_field :model, :size => 50
+      = f.text_field :model
 
     .textfield
       = f.label :data_type_id, t('instruments.si_unit')
@@ -16,12 +16,12 @@
     .textfield
       = f.label :deadtime, t('instruments.deadtime')
       =# t('.deadtime_description').html_safe
-      = f.text_field :deadtime, size: 7;
+      = f.text_field :deadtime
 
     .textfield
-      = f.label :error, t('instruments.error')
+      = f.label :error, t('instruments.error'), :class => 'loooong'
       =# t('.deadtime_error_description')
-      = f.text_field :error, size: 7;
+      = f.text_field :error
 
 
   %fieldset

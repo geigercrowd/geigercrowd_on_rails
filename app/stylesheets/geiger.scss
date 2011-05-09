@@ -137,6 +137,7 @@ nav {
     font-size: 13px;
     color: $font-two;
     text-shadow: 0 -1px 0 #ffffff;
+    margin: 20px;
 
     p {
       line-height: 18px;
@@ -289,6 +290,10 @@ nav {
         border-right: 1px solid #000;
         padding-right: 10px;
       }
+      
+      label.loooong {
+        font-size: 10px;
+      }
 
       input[type='text'], input[type='password'] {
         float: left;
@@ -300,9 +305,27 @@ nav {
          font-family: $hs-font;
          margin-top: -2px;
          font-size: 10px;
+         width: 220px;
+      }
+      
+      input[type='text'].search {
+        color: #ff0000;
+        text-transform: uppercase;
+        font-size: 12px;
+        width: 150px;
+      }
+      
+      select {
+        float: left;
+        border: none;
+        margin-left: 10px;
+        font-family: $hs-font;
+        margin-top: -2px;
+        font-size: 10px;
+        width: 220px;
       }
 
-      input[type='submit'] {
+      input[type='submit'], input[type='button'] {
         background: #eee;
         background: -moz-linear-gradient(top, #eee 0%, #ccc 100%);
         background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
@@ -319,10 +342,18 @@ nav {
         padding: 10px 7px;
         text-align: center;
         text-shadow: 0 1px 0 #eee;
+        
+      }
+      
+      input[type='submit'] {
         margin-top: 20px;
       }
 
-      input[type='submit']:hover {
+      input[type='button'] {
+        padding: 2px;
+      }
+
+      input[type='submit']:hover, input[type='button']:hover  {
         background: #ddd;
         background: -moz-linear-gradient(top, #ddd 0%, #bbb 100%);
         background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddd), to(#bbb));
@@ -332,7 +363,7 @@ nav {
         text-shadow: 0 1px 0 #ddd;
       }
 
-      input[type='submit']:active {
+      input[type='submit']:active, input[type='button']:active  {
         border: 1px solid #aaa;
         border-bottom: 1px solid #888;
         -moz-box-shadow: inset 0 0 5px 2px #aaa, 0 1px 0 0 #eee;
@@ -344,8 +375,9 @@ nav {
     #searchdata {
       background-color: #D1D1D1;
       text-align: center !important;
-      margin: -20px -40px 10px -40px;
-      padding: 15px 10px 10px 10px;
+      margin: -20px -20px 20px -20px; /* FIXME */
+      padding: 10px;
+
       @include clearfix;
 
       form {
@@ -362,6 +394,10 @@ nav {
         width: 200px;
         float: left;
         margin: 0 4px;
+        
+       input[type='text'] {
+         width: auto;
+       }
       }
       
       .location {
@@ -384,7 +420,7 @@ nav {
       }
       
       .historical {
-        width: 120px;
+        width: 105px;
         float: left;
         padding: 8px 0 0 0;
         margin-left: -10px;
@@ -407,6 +443,8 @@ nav {
         margin: 0;
         text-transform: uppercase;
         float: left;
+        padding: 3px;
+        margin-top: 5px;
       }
     }
   }
