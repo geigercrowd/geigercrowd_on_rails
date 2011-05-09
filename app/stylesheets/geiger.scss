@@ -51,7 +51,7 @@ header, nav {
   width: $window-size;
   margin: 0 auto;
   overflow: hidden;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 header {
@@ -64,7 +64,7 @@ header {
 }
 
 nav {
-  margin: 30px auto 40px auto;
+  margin: 30px auto 30px auto;
   ul {
     list-style-type: none;
     display: inline;
@@ -78,22 +78,53 @@ nav {
 
       a {
         color: $font-one;
-        text-shadow: 0px -1px 0px rgba(255, 255, 255, 0.33);
+        text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.33);
+        padding: 2px;
         
         &:hover {
-          color: #F09800;
+          color: #000;
+          background-color: #FEE100;
         }
       }
     }
   }
 }
 
-#container {
-  text-align: center;
+#flash {
+
   width: $window-size;
   margin: 0 auto;
   overflow: hidden;
-  padding: 20px 40px 100px 40px;
+
+  .alert, .notice {
+    background-color: #fff;
+    padding: 10px;
+    -moz-border-radius: 5px;
+     -webkit-border-radius: 5px;
+     border-radius: 5px;
+     text-align: center;
+     color: $font-one;
+     text-shadow: none;
+     font-family: $hs-font;
+  }
+  
+  .alert {
+    background-color: #FEE100;
+  }
+  
+  .notice {
+    background-color: #689E00;
+    color: #fff;
+  }
+}
+
+
+#container {
+  text-align: center;
+  width: $window-size;
+  margin: 0 auto 0 auto;
+  overflow: hidden;
+  padding: 20px 0 100px 0;
   background: $document-color; // url('/images/radioactive_sign.png') no-repeat 50% 20px;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$bg-color', endColorstr='$document-color'); /* for IE */
   background: -webkit-gradient(linear, left top, left bottom, from($bg-color), to($document-color)); /* for webkit browsers */
@@ -105,11 +136,12 @@ nav {
     text-align: left;
     font-size: 13px;
     color: $font-two;
-    text-shadow: 0px -1px 0px #ffffff;
+    text-shadow: 0 -1px 0 #ffffff;
 
     p {
       line-height: 18px;
     }
+
 
     .title {
       color: $font-one;
@@ -117,7 +149,7 @@ nav {
       font-size: 25px;
       font-family: $hs-font;
       text-transform: uppercase;
-      text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33);
       word-spacing: 8px;
       margin-bottom: 50px;
       text-align: center;
@@ -131,7 +163,7 @@ nav {
       font-size: 20px;
       font-family: $hs-font;
       text-transform: uppercase;
-      text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33);
       word-spacing: 8px;
       border-bottom: 1px solid #ccc;
       margin: 40px 0 20px 0;
@@ -143,7 +175,7 @@ nav {
       font-size: 15px;
       font-family: $hs-font;
       text-transform: uppercase;
-      text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.33);
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33);
       word-spacing: 8px;
       margin: 20px 0 10px 0;
 
@@ -153,7 +185,7 @@ nav {
     }
 
     dl.api, dl.urls {
-      padding: 0px 20px;
+      padding: 0 20px;
       margin-top: 20px;
       @include clearfix;
       dt {
@@ -196,6 +228,54 @@ nav {
 
       p {
         margin: 10px 0;
+      }
+      
+      .instructions {
+        margin-top: 20px;
+        font-family: $hs-font;
+        color: $font-one;
+      }
+      
+      fieldset {
+        text-align: center;
+        
+        legend {
+          font-family: $hs-font;
+          color: $font-one;
+          text-transform: uppercase;
+          text-align: center;
+        }
+        
+        h2 {
+          color: $font-two;
+        }
+      }
+      
+      textarea {
+        border: none;
+        -moz-border-radius: 5px;
+         -webkit-border-radius: 5px;
+         border-radius: 5px;
+         padding: 10px;
+      }
+
+      .formcontainer {
+        margin: 30px 0 10px 0;
+
+        ul.location_change {
+          width: 450px;
+          text-align: center;
+          margin: 0 auto;
+
+          li {
+            margin-bottom: 10px;
+            text-align: center;
+
+            input[type='radio'] {
+              margin-bottom: 10px;
+            }
+          }
+        }
       }
 
       label {
@@ -281,7 +361,7 @@ nav {
       .textfield {
         width: 200px;
         float: left;
-        margin: 0px 4px;
+        margin: 0 4px;
       }
       
       .location {
@@ -337,7 +417,7 @@ nav {
   width: $window-size;
   margin: 0 auto;
   overflow: hidden;
-  margin: 0px auto 20px auto;
+  margin: 0 auto 20px auto;
 
   ul.loginmenu {
     list-style-type: none;
@@ -351,7 +431,7 @@ nav {
       
       a {
         color: $font-one;
-        text-shadow: 0px -1px 0px rgba(255, 255, 255, 0.33);
+        text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.33);
         
         &:hover {
           color: #F09800;
@@ -381,7 +461,7 @@ footer {
 
       a {
         color: $font-one;
-        text-shadow: 0px -1px 0px rgba(255, 255, 255, 0.33);
+        text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.33);
         
         &:hover {
           color: #F09800;

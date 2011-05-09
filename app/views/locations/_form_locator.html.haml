@@ -1,13 +1,18 @@
 = form.fields_for :location do |l|
-  %p
+
+  .textfield
     = l.label :name, t('.name')
-    %br
     = l.text_field :name
-    %span.field_description= t('.name_desription')
-  %p
-    latitude:
+    =# t('.name_desription')
+
+  .textfield
+    = l.label :latitude
     = l.text_field :latitude, size: 16, id: "location_latitude"
-    longitude:
+
+  .textfield
+    = l.label :longitude
     = l.text_field :longitude, size: 16, id: "location_longitude"
-    %br
+
+  .textfield
+    = l.label 'Seach...'
     = text_field_tag nil, t('.locator_text_field'), id: "location_search", class: "onfocus_clear"
