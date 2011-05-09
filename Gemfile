@@ -18,7 +18,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'ruby-debug19',       '~> 0.11.6', require: 'ruby-debug'
+  gem 'ruby-debug19',       '~> 0.11.6'
   gem 'shoulda',            '~> 2.11.3'
   gem 'mocha',              '~> 0.9.12'
   gem 'factory_girl_rails', '~> 1.0.1'

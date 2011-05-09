@@ -39,6 +39,7 @@ module Scraper
       @rows_xpath = nil
       @column_xpath = nil
       @time = nil
+      @url = url
 
       f = open(url)
       f.rewind
@@ -52,7 +53,8 @@ module Scraper
       match.names.each do |name|
         time[name.to_sym] = match[name]
       end
-      self.doc_date = Time.new(time[:year], time[:month], time[:day], time[:hour], time[:minute], time[:second], @time[:offset])
+      self.doc_date = Time.new(time[:year], time[:month], time[:day],
+        time[:hour], time[:minute], time[:second], @time[:offset])
     end
 
     def sanity_check
@@ -60,20 +62,28 @@ module Scraper
     end
     
     def parse
+      Rails.logger.info "#{DateTime.now.strftime("%c")}: #{self.class} parsing #{@url}"
       sanity_check
       self.parse_time
       self.doc.search(@rows_xpath).each do |row|
         columns = row.search(@column_xpath)
         value = self.handle_undefined(columns[2].inner_text)
         if value.nil? || value == 0.0
-          logger.info "#{DateTime.now.strftime("%c")}: #{self.class.to_s}: Skipping row because value is #{value}"
+          Rails.logger.info "#{DateTime.now.strftime("%c")}: #{self.class.to_s}: Skipping row because value is #{value}"
           next
         end
         value *= @dimension
-        self.data << Scraper::Data.new(:location_name => columns[1].inner_text.strip, :value => value, :si_unit => @si_unit,
-                                       :precipitation => self.handle_undefined(columns[5].inner_text), :wind_direction => self.handle_wind_direction(columns[3].inner_text), 
-                                       :wind_velocity => self.handle_undefined(columns[4].inner_text), :value_type => @value_type, :wind_velocity_unit => @wind_velocity_unit,
-                                       :precipitation_unit => @precipitation_unit, :date_time => self.doc_date)
+        self.data << Scraper::Data.new(
+          :location_name      => columns[1].inner_text.strip,
+          :value              => value,
+          :si_unit            => @si_unit,
+          :precipitation      => self.handle_undefined(columns[5].inner_text),
+          :wind_direction     => self.handle_wind_direction(columns[3].inner_text), 
+          :wind_velocity      => self.handle_undefined(columns[4].inner_text),
+          :value_type         => @value_type,
+          :wind_velocity_unit => @wind_velocity_unit,
+          :precipitation_unit => @precipitation_unit,
+          :date_time          => self.doc_date)
       end
       self.data
     end
