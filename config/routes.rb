@@ -22,8 +22,13 @@ Geigercrowd::Application.routes.draw do
   match "instruments" => "instruments#list", as: :instruments
   match "samples" => "samples#search", as: :samples, via: :get
   match "samples/find" => "samples#find", as: :find_samples, via: :post
+
+  match "about" => "welcome#about"
+
   match "api" => "welcome#api"
   match "api/public" => "welcome#api_public"
   match "api/private" => "welcome#api_private"
+
+  # catch every page and render 404
   match '*a', :to => 'application#routing'
 end
