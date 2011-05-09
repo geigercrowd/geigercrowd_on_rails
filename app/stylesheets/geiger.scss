@@ -126,9 +126,11 @@ nav {
   overflow: hidden;
   padding: 20px 0 100px 0;
   background: $document-color; // url('/images/radioactive_sign.png') no-repeat 50% 20px;
+
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$bg-color', endColorstr='$document-color'); /* for IE */
-  background: -webkit-gradient(linear, left top, left bottom, from($bg-color), to($document-color)); /* for webkit browsers */
+  background: -webkit-gradient(linear, left top, left bottom, from($document-color), to($bg-color)); /* for webkit browsers */
   background: -moz-linear-gradient(bottom, $bg-color, $document-color) ; /* for firefox 3.6+ */
+
 
   @include border-radius(6px);
 
@@ -328,6 +330,7 @@ nav {
         margin-top: -2px;
         font-size: 10px;
         width: 220px;
+        background-color: #fff;
       }
 
       input[type='submit'], input[type='button'] {
@@ -448,8 +451,8 @@ nav {
         margin: 0;
         text-transform: uppercase;
         float: left;
-        padding: 3px;
-        margin-top: 5px;
+        padding: 8px;
+        margin-top: 0;
       }
     }
   }
