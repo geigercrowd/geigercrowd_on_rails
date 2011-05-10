@@ -144,7 +144,7 @@ nav {
     font-size: 13px;
     color: $font-two;
     text-shadow: 0 -1px 0 #ffffff;
-    margin: 20px;
+    margin: 40px;
 
     p {
       line-height: 18px;
@@ -382,7 +382,7 @@ nav {
     #searchdata {
       background-color: #D1D1D1;
       text-align: center !important;
-      margin: -20px -20px 20px -20px; /* FIXME */
+      margin: -20px -40px 20px -40px; /* FIXME */
       padding: 10px;
 
       @include clearfix;
@@ -465,7 +465,7 @@ nav {
         .member {
           float: left;
 
-          width: 355px;
+          width: 335px;
           margin-bottom: 30px;
           
           .picture {
@@ -478,7 +478,7 @@ nav {
           
           .metadata {
             float: left;
-            width: 250px;
+            width: 220px;
 
             span {
               display: block;

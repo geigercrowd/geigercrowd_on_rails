@@ -202,7 +202,7 @@ nav ul li a:hover {
   font-size: 13px;
   color: #5b5b5b;
   text-shadow: 0 -1px 0 white;
-  margin: 20px;
+  margin: 40px;
 }
 /* line 149, ../../app/stylesheets/geiger.scss */
 #container #content p {
@@ -442,7 +442,7 @@ nav ul li a:hover {
 #container #content #searchdata {
   background-color: #D1D1D1;
   text-align: center !important;
-  margin: -20px -20px 20px -20px;
+  margin: -20px -40px 20px -40px;
   /* FIXME */
   padding: 10px;
   overflow: hidden;
@@ -524,7 +524,7 @@ nav ul li a:hover {
 /* line 465, ../../app/stylesheets/geiger.scss */
 #container #content .team .members .member {
   float: left;
-  width: 355px;
+  width: 335px;
   margin-bottom: 30px;
 }
 /* line 471, ../../app/stylesheets/geiger.scss */
@@ -538,7 +538,7 @@ nav ul li a:hover {
 /* line 479, ../../app/stylesheets/geiger.scss */
 #container #content .team .members .member .metadata {
   float: left;
-  width: 250px;
+  width: 220px;
 }
 /* line 483, ../../app/stylesheets/geiger.scss */
 #container #content .team .members .member .metadata span {
