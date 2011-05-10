@@ -31,6 +31,10 @@ a {
   color: #2D6000;
 }
 
+b, strong {
+  font-weight: bold;
+}
+
 ::selection {
   background: #FDD800;
   color: #000;
@@ -148,8 +152,8 @@ nav {
 
     p {
       line-height: 18px;
+      margin-bottom: 20px;
     }
-
 
     .title {
       color: $font-one;
