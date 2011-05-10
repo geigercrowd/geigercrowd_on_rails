@@ -455,6 +455,39 @@ nav {
       }
     }
 
+    #datasources {
+      .datasource {
+        @include clearfix;
+        border-bottom: 1px solid #ccc;
+        padding: 30px 0;
+
+        .name {
+          width: 160px;
+          float: left;
+          font-weight: bold;
+          font-family: $hs-font;
+          font-size: 15px;
+          text-align: left;
+          a {
+            color: $font-three;
+          }
+        }
+      
+        .description {
+          float: left;
+          width: 500px;
+          margin-left: 20px;
+
+          a.source_url {
+            display: block;
+            margin-bottom: 10px;
+            text-shadow: none;
+            color: #2D6000;
+          }
+        }
+      }
+    }
+
     .team {
       margin-top: 40px;
       padding-top: 20px;
