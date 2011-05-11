@@ -12,6 +12,7 @@ namespace :utilities do
 
   desc "Scrapes data from every DataSource"
   task :scrape => :environment do
+    Rails.logger = Logger.new("#{Rails.root}/log/scrape.log")
     DataSource.all.each do |ds|
       ds.fetch
     end
