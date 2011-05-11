@@ -73,6 +73,14 @@ class SampleTest < ActiveSupport::TestCase
           Sample.latest.all(conditions: { instrument_id: @sample.instrument.id })
       end
 
+      should "return all samples sorted descending by timestamp" do
+        samples = [ @sample ]
+        samples << Factory(:sample, timestamp: 1.hour.ago)
+        samples << Factory(:sample, timestamp: 20.minutes.ago)
+        samples = samples.sort_by { |s| s.timestamp }.reverse
+        assert_equal samples, Sample.all
+      end
+
       should "return samples by location" do
         @sample.location.update_attribute :city, "San Francisco"
         assert_equal [ @sample ], Sample.nearby("cisco").all
