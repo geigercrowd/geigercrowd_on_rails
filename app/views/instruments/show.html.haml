@@ -26,4 +26,5 @@
     .label= t('instruments.notes')
     = simple_format @instrument.notes
 .clear
-#google_map{ "data-latitude" => @instrument.location.latitude, "data-longitude" => @instrument.location.longitude }
+- if @instrument.location
+  #google_map{ "data-latitude" => @instrument.location.latitude, "data-longitude" => @instrument.location.longitude }
