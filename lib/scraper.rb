@@ -61,12 +61,15 @@ module Scraper
     
     def parse
       sanity_check
-
       self.parse_time
       self.doc.search(@rows_xpath).each do |row|
         columns = row.search(@column_xpath)
         value = self.handle_undefined(columns[2].inner_text)
-        value *= @dimension if value
+        if value.nil? || value == 0.0
+          logger.info "#{DateTime.now.strftime("%c")}: #{self.class.to_s}: Skipping row because value is #{value}"
+          next
+        end
+        value *= @dimension
         self.data << Scraper::Data.new(:location_name => columns[1].inner_text.strip, :value => value, :si_unit => @si_unit,
                                        :precipitation => self.handle_undefined(columns[5].inner_text), :wind_direction => self.handle_wind_direction(columns[3].inner_text), 
                                        :wind_velocity => self.handle_undefined(columns[4].inner_text), :value_type => @value_type, :wind_velocity_unit => @wind_velocity_unit,
