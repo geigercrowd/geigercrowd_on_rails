@@ -111,7 +111,7 @@ module Scraper
       @precipitation_unit = "mm"
       @rows_xpath = '//tr[@bgcolor=#DAEDE9]'
       @column_xpath = '/td'
-      @time = { :regexp => "(?<year>[0-9]{4})/(?<month>[0-9]{2})/(?<day>[0-9]{2}) (?<hour>[0-9]{2}):(?<minute>[0-9]{2})", :offset => '-06:00' }
+      @time = { :regexp => "(?<year>[0-9]{4})/(?<month>[0-9]{2})/(?<day>[0-9]{2}) (?<hour>[0-9]{2}):(?<minute>[0-9]{2})", :offset => '+09:00' }
     end
     
     def handle_undefined(value)
