@@ -17,12 +17,6 @@ class Sample < ActiveRecord::Base
   scope :after,  lambda { |after|  { conditions: ["timestamp > ?", after] }}
   scope :before, lambda { |before| { conditions: ["timestamp < ?", before] }}
   scope :latest, { select: "distinct on (instrument_id) *", order: "instrument_id, timestamp desc" }
-  scope :page, lambda { |page|
-    page = page.to_i
-    page -= 1
-    page = 0 if page < 0
-    { limit: ROWS_PER_PAGE, offset: page * ROWS_PER_PAGE }
-  }
   scope :nearby, lambda { |place|
     place = place.downcase
     { joins:      :location,
@@ -30,7 +24,7 @@ class Sample < ActiveRecord::Base
                   "lower(locations.city) like '%#{place}%' or " +
                   "lower(locations.province) like '%#{place}%'" }
   }
-  scope :all, order: "timestamp desc"
+  #scope :all, order: "timestamp desc"
 
   def to_json *args
     # TODO: merge-in the args

@@ -12,6 +12,8 @@ gem 'breadcrumbs_on_rails', '1.0.1'
 gem 'resque',               '1.15.0'
 gem 'resque-scheduler',     '2.0.0.d'
 gem 'responders',           '0.6.2'
+gem "will_paginate",        '~> 3.0.pre2'
+
 group :development, :test do
   gem 'silent-postgres', '~> 0.0.7'
   gem 'apirunner'
