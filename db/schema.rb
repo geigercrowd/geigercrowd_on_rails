@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524054118) do
+ActiveRecord::Schema.define(:version => 20110531082041) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "name"
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(:version => 20110524054118) do
     t.integer  "location_id"
     t.float    "distance"
   end
+
+  add_index "samples", ["timestamp"], :name => "index_samples_on_timestamp"
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "",    :null => false

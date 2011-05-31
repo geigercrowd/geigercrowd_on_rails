@@ -103,9 +103,9 @@ class SamplesController < ApplicationController
     options = params[:options] || []
     options = options.split(",") if options.is_a?(String)
     @samples = Sample
-    @samples = @samples.select('distinct instrument_id, *') unless options.include?("history")
     @samples = @samples.after(params[:after].presence || 1.week.ago)
     @samples = @samples.before(params[:before]) if params[:before].present?
+    @samples = @samples.select('distinct instrument_id, *') unless options.include?("history")
     @samples = @samples.includes([ :data_type, :instrument, :location ])
     if params[:location].present?
       @samples = @samples.geo_scope(origin: params[:location])
