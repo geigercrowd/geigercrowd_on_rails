@@ -43,12 +43,13 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       end
     end
        
+    # TODO: adapt to will_paginate
     context "pagination" do
       setup do
-        Sample::ROWS_PER_PAGE.times do |i|
+        Sample.per_page.times do |i|
           @samples << Factory(:sample, timestamp: DateTime.now)
         end
-        assert_equal Sample::ROWS_PER_PAGE+10, Sample.count
+        assert_equal Sample.per_page + 10, Sample.count
       end
 
       should "return samples for page=2" do

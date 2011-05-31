@@ -12,11 +12,11 @@ The
 and 
 %span.pre /samples.json 
 call both return just a list of 
-= Sample::ROWS_PER_PAGE
+= Sample.per_page
 entries per call. To import every data you need to increment the 
 %span.pre page 
 parameter. Once you get a result which contains less then
-= Sample::ROWS_PER_PAGE
+= Sample.per_page
 entries, you are done for your initial import.
 
 %h1 How to keep your data up to date
@@ -25,7 +25,7 @@ Use the
 and 
 %span.pre /samples/last_changed.json 
 to get the 
-= Sample::ROWS_PER_PAGE
+= Sample.per_page
 last changed entries. Update your database accordingly, once it contains every returned 
 %span.pre id
 and the 
@@ -58,7 +58,7 @@ parameter to get older data.
   %h2#instruments_get_all="GET /instruments.json"
   .nested
     Returns a json formatted array of the 
-    =Sample::ROWS_PER_PAGE
+    = Sample.per_page
     first instruments.
     %h3 Required parameters
     None
@@ -69,14 +69,14 @@ parameter to get older data.
       %tr
         %td.param page
         %td.type integer 
-        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample::ROWS_PER_PAGE} instruments"
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.per_page} instruments"
         
     %h3 Returns
 
   %h2#instruments_last_changed="GET /instruments/last_changed.json"
   .nested
     Returns a json formatted array of the 
-    =Sample::ROWS_PER_PAGE
+    = Sample.per_page
     last changed instruments.
     %h3 Required parameters
     None
@@ -87,14 +87,14 @@ parameter to get older data.
       %tr
         %td.param page
         %td.type integer 
-        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample::ROWS_PER_PAGE} instruments"
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.per_page} instruments"
         
     %h3 Returns
 
   %h2#instruments_get_all="GET /samples.json"
   .nested
     Returns a json formatted array of the 
-    =Sample::ROWS_PER_PAGE
+    =Sample.per_page
     first samples.
     %h3 Required parameters
     None
@@ -105,14 +105,14 @@ parameter to get older data.
       %tr
         %td.param page
         %td.type integer 
-        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample::ROWS_PER_PAGE} samples"
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.per_page} samples"
         
     %h3 Returns
 
   %h2#instruments_last_changed="GET /samples/last_changed.json"
   .nested
     Returns a json formatted array of the 
-    =Sample::ROWS_PER_PAGE
+    =Sample.per_page
     last changed samples.
     %h3 Required parameters
     None
@@ -123,7 +123,7 @@ parameter to get older data.
       %tr
         %td.param page
         %td.type integer 
-        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample::ROWS_PER_PAGE} samples"
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.per_page} samples"
         
     %h3 Returns
 
@@ -139,7 +139,7 @@ parameter to get older data.
       %tr
         %td.param page
         %td.type integer 
-        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample::ROWS_PER_PAGE} samples"
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.per_page} samples"
     
     %h3 Returns
 
@@ -166,7 +166,7 @@ parameter to get older data.
       %tr
         %td.param page
         %td.type integer 
-        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample::ROWS_PER_PAGE} samples"
+        %td.desc!="return the <span class=\"pre\">page</span>th group of #{Sample.per_page} samples"
     
     %h3 Returns
 

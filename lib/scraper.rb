@@ -67,15 +67,16 @@ module Scraper
       self.parse_time
       self.doc.search(@rows_xpath).each do |row|
         columns = row.search(@column_xpath)
-        value = self.handle_undefined(columns[2].inner_text)
-        if value.nil? || value == 0.0
-          Rails.logger.info "#{DateTime.now.strftime("%c")}: #{self.class.to_s}: Skipping row because value is #{value}"
-          next
+        value = columns[2].inner_text
+        unless value.to_f > 0.0
+          Rails.logger.info "#{DateTime.now.strftime("%c")}: " <<
+            "#{self.class.to_s}: invalid value: #{value}"
         end
+        value = value.to_f
         value *= @dimension
         self.data << Scraper::Data.new(
           :location_name      => columns[1].inner_text.strip,
-          :value              => value,
+          :value              => self.handle_undefined(value),
           :si_unit            => @si_unit,
           :precipitation      => self.handle_undefined(columns[5].inner_text),
           :wind_direction     => self.handle_wind_direction(columns[3].inner_text), 

@@ -25,7 +25,7 @@ class ScraperTest < ActiveSupport::TestCase
       assert_equal 'S', complete.wind_direction
       assert_equal 0.8, complete.wind_velocity
       assert_equal 0.0, complete.precipitation
-      assert_equal Time.new(2011,04,01,06,50,0,'-06:00'), complete.date_time
+      assert_equal Time.new(2011,04,01,06,50,0,'+09:00'), complete.date_time
     end
     
     should "parse a incomplete row correctly" do 

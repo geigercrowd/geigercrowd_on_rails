@@ -7,21 +7,18 @@ class Instrument < ActiveRecord::Base
   has_many :samples
   accepts_nested_attributes_for :location
   before_validation :on_location_change
+
+  cattr_accessor :per_page
+  @@per_page = 30
+
   attr_accessor :new_location
 
   validates_presence_of :model
 
-  scope :after,  lambda { |after|  { conditions: ["updated_at > ?", after] }}
-  scope :before, lambda { |before| { conditions: ["updated_at < ?", before] }}
-  scope :latest, { order: "updated_at desc" }
-  scope :page, lambda { |page|
-    page = page.to_i
-    page -= 1
-    page = nil if page < 0
-    { limit: ROWS_PER_PAGE, offset: (page.presence || 0) * ROWS_PER_PAGE }
-  }
-
-  ROWS_PER_PAGE = 50
+  scope :after,  lambda { |after|  { conditions: ["updated_at >= ?",
+    after.is_a?(String) ? DateTime.parse(after) : after] }}
+  scope :before,  lambda { |before|  { conditions: ["updated_at <= ?",
+    before.is_a?(String) ? DateTime.parse(before) : before] }}
 
   def to_json *args
     # TODO: merge-in the args

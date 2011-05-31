@@ -24,7 +24,7 @@ class DataSource < ActiveRecord::Base
           end
           
           # Skip if no value was parsed
-          next if d.value.nil?
+          next if d.value.nil? || d.value <= 0.0
           
           # Skip if we already have a sample for this location, instrument and time
           last_sample = Sample.where(:location_id => location.id).last

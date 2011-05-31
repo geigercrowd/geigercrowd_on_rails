@@ -1,7 +1,7 @@
 require_relative '../test_helper'
 
 class DataSourceTest < ActiveSupport::TestCase
-  context "A DataType" do
+  context "A DataSource" do
     setup do
       @ds = Factory :data_source
     end
@@ -33,7 +33,8 @@ class DataSourceTest < ActiveSupport::TestCase
       end
       
       should "not create a sample if the value is nil" do
-        location = Location.where(:name => 'Kyoudomarisaki Karatsu City', :data_source_id => @ds.id).first
+        location = Location.where(:name => 'Kyoudomarisaki Karatsu City',
+                                  :data_source_id => @ds.id).first
         assert_equal 0, location.samples.count
       end
       

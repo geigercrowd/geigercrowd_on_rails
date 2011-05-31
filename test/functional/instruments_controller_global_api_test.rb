@@ -7,22 +7,19 @@ class InstrumentsControllerGlobalApiTest < ActionController::TestCase
     setup do
       @user = Factory.create :user
       @user.confirm!
+      @original_per_page = Instrument.per_page
+      Instrument.per_page = 2
       @instruments = []
-      10.times do |i|
+      (Instrument.per_page * 5).times do |i|
         @instruments <<  Factory(:instrument, updated_at: i.days.ago)
       end
-      @old_constant = Instrument::ROWS_PER_PAGE
-      Instrument.__send__(:remove_const,'ROWS_PER_PAGE') 
-      Instrument.const_set('ROWS_PER_PAGE', 2) 
-      assert_equal 2, Instrument::ROWS_PER_PAGE
     end
     
     teardown do
-      Instrument.__send__(:remove_const,'ROWS_PER_PAGE')
-      Instrument.const_set('ROWS_PER_PAGE', @old_constant)
+      Instrument.per_page = @original_per_page
     end
     
-    should "return the #{Instrument::ROWS_PER_PAGE} last updated instruments" do
+    should "return the most recently updated instruments" do
       get :list, format: 'json', api_key: @user.authentication_token
       assert_response :success
 
@@ -33,7 +30,7 @@ class InstrumentsControllerGlobalApiTest < ActionController::TestCase
       assert_equal @instruments[1].id, data[1]['id']
     end
     
-    should "return the next #{Instrument::ROWS_PER_PAGE} last updated instrument page=2" do
+    should "return page 2" do
       get :list, format: 'json', api_key: @user.authentication_token, page: 2
       assert_response :success
 

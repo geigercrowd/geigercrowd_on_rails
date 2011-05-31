@@ -100,22 +100,21 @@ class SamplesController < ApplicationController
   
   # GET /samples/find
   def find
-    @search_params = params
-    @search_params[:page] || 1
     options = params[:options] || []
     options = options.split(",") if options.is_a?(String)
-    if params[:order]
-      order = params[:order].sub(/_desc$/, ' DESC') 
-      order << ","
-    end
     @samples = Sample
-    @samples = @samples.order("#{order.presence} timestamp DESC")
-    @samples = @samples.nearby(params[:location]) if params[:location].present?
-    @samples = @samples.select('distinct instrument_id') if options.include?("history")
+    @samples = @samples.select('distinct instrument_id, *') unless options.include?("history")
     @samples = @samples.after(params[:after].presence || 1.week.ago)
     @samples = @samples.before(params[:before]) if params[:before].present?
     @samples = @samples.includes([ :data_type, :instrument, :location ])
-    @samples = @samples.paginate :page => @search_params[:page]
+    if params[:location].present?
+      @samples = @samples.geo_scope(origin: params[:location])
+      @samples = @samples.order("distance asc")
+    else
+      @samples = @samples.order \
+        options.include?("history") ? "timestamp" : "instrument_id, timestamp"
+    end
+    @samples = @samples.paginate :page => params[:page]
     respond_with @samples
   end
   

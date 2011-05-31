@@ -147,10 +147,13 @@ class InstrumentsController < ApplicationController
   
   # GET /instruments
   def list
-    @instruments = Instrument.page(params[:page]).latest
+    @instruments = Instrument
     @instruments = @instruments.after(params[:after].presence || 1.week.ago)
-    @instruments = @instruments.before(params[:before]) if params[:before]
-    respond_with @instruments.all
+    @instruments = @instruments.before(params[:before]) if params[:before].present?
+    @instruments = @instruments.paginate page:  params[:page],
+                                         order: "updated_at desc",
+                                         per_page: Instrument.per_page
+    respond_with @instruments
   end
   
   private

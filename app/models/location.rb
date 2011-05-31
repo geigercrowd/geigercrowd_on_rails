@@ -8,6 +8,10 @@ class Location < ActiveRecord::Base
   before_update :geocode
   after_create { Resque.enqueue(Geocode, self.id) }
   
+  acts_as_mappable default_units: :kms,
+                   lng_column_name: :longitude,
+                   lat_column_name: :latitude
+
   def geocode
     if longitude_changed? or latitude_changed? && longitude != nil && latitude != nil
       Resque.enqueue(Geocode, self.id)

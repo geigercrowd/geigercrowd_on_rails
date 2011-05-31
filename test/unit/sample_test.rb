@@ -41,11 +41,6 @@ class SampleTest < ActiveSupport::TestCase
       assert_equal false, new_sample.save
     end
     
-    should "not accept a location when belonging to an instrument with location" do
-      new_sample = @instrument.samples.new value: 12.34, timestamp: DateTime.now, location: @other_location
-      assert_equal false, new_sample.save
-    end
-
     context "scopes" do
       should "return samples after some point in time" do
         sample = Factory :sample, timestamp: 1.week.ago
@@ -62,29 +57,23 @@ class SampleTest < ActiveSupport::TestCase
           assert Sample.before((1.week + 1.day).ago).find(sample.id)
         end
       end
+    end
+  end
 
-      should "return only the latest sample per instrument" do
-        samples = []
-        2.times do |i|
-          samples << Factory(:sample, timestamp: i.hours.ago,
-                             instrument: @sample.instrument)
-        end
-        assert_equal [ samples.first ],
-          Sample.latest.all(conditions: { instrument_id: @sample.instrument.id })
-      end
+  context "Samples with location" do
+    setup do
+      @sample_ny = Factory :sample, location_attributes:
+        { latitude: 40.7143528, longitude: -74.0059731 }
+      @sample_sf = Factory :sample, location_attributes:
+        { latitude: 37.7749295, longitude: -122.4194155 }
+      @origin = "Berlin, Germany"
+    end
 
-      should "return all samples sorted descending by timestamp" do
-        samples = [ @sample ]
-        samples << Factory(:sample, timestamp: 1.hour.ago)
-        samples << Factory(:sample, timestamp: 20.minutes.ago)
-        samples = samples.sort_by { |s| s.timestamp }.reverse
-        assert_equal samples, Sample.all
-      end
-
-      should "return samples by location" do
-        @sample.location.update_attribute :city, "San Francisco"
-        assert_equal [ @sample ], Sample.nearby("cisco").all
-      end
+    should "be sortable by distance" do
+      assert_equal [ @sample_ny, @sample_sf ],
+        Sample.geo_scope(origin: @origin).order("distance asc")
+      assert_equal [ @sample_sf, @sample_ny ],
+        Sample.geo_scope(origin: @origin).order("distance desc")
     end
   end
 end

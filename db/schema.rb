@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110413154035) do
+ActiveRecord::Schema.define(:version => 20110524054118) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "name"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20110413154035) do
     t.string   "country"
     t.string   "city"
     t.string   "province"
+    t.string   "timezone"
   end
 
   add_index "locations", ["data_source_id"], :name => "index_locations_on_data_source_id"
@@ -72,11 +73,13 @@ ActiveRecord::Schema.define(:version => 20110413154035) do
     t.datetime "updated_at"
     t.datetime "timestamp"
     t.integer  "location_id"
+    t.float    "distance"
   end
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "",    :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
+    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"

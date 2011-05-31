@@ -1,29 +1,32 @@
 source 'http://rubygems.org'
 
-gem 'pg',                   '0.11.0'
-gem 'rails',                '3.0.7'
-gem 'sqlite3',              '1.3.3'
-gem 'devise',               '1.3.1'
-gem 'haml',                 '3.0.25'
-gem 'hpricot',              '0.8.4'
-gem 'ruby_parser',          '2.0.6'
-gem 'jquery-rails',         '0.2.7'
-gem 'breadcrumbs_on_rails', '1.0.1'
-gem 'resque',               '1.15.0'
-gem 'resque-scheduler',     '2.0.0.d'
-gem 'responders',           '0.6.2'
-gem "will_paginate",        '~> 3.0.pre2'
+gem 'rake', '~> 0.8.7' # TODO; remove this line after getting rake 0.9.x to work
+gem 'pg'
+gem 'rails'
+gem 'sqlite3'
+gem 'devise'
+gem 'haml'
+gem 'hpricot'
+gem 'ruby_parser'
+gem 'jquery-rails'
+gem 'breadcrumbs_on_rails'
+gem 'resque'
+gem 'resque-scheduler'
+gem 'responders'
+gem 'will_paginate'
+gem 'geokit-rails3',        git: "git://github.com/mcmire/geokit-rails3.git",
+                            branch: "fix_find_through"
 
 group :development, :test do
-  gem 'silent-postgres', '~> 0.0.7'
+  gem 'silent-postgres'
   gem 'apirunner'
 end
 
 group :test do
-  gem 'ruby-debug19',       '~> 0.11.6'
-  gem 'shoulda',            '~> 2.11.3'
-  gem 'mocha',              '~> 0.9.12'
-  gem 'factory_girl_rails', '~> 1.0.1'
+  gem 'ruby-debug19'
+  gem 'shoulda'
+  gem 'mocha'
+  gem 'factory_girl_rails'
   gem 'simplecov', '~> 0.4.1', :require => false
   gem 'fakeweb'
   gem 'resque_unit'
