@@ -14,11 +14,11 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
     end
 
     context "defaults" do
-      should "return samples not older than 1 week" do
+      should "return samples not older than 1 day" do
         get :find, format: 'json', api_key: @user.authentication_token
         assert_response :success
         data = JSON.parse(response.body)
-        assert_equal 7, data.length
+        assert_equal 1, data.length
       end
       
       should "respect the after parameter" do
@@ -29,7 +29,8 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       end
       
       should "respect the before parameter" do
-        get :find, format: 'json', api_key: @user.authentication_token, before: 5.days.ago
+        get :find, format: 'json', api_key: @user.authentication_token,
+          before: 5.days.ago.to_date.to_s, after: 1.week.ago.to_date.to_s
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal 2, data.length
@@ -53,10 +54,10 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       end
 
       should "return samples for page=2" do
-        get :find, format: 'json', api_key: @user.authentication_token, page: 2
+        get :find, format: 'json', api_key: @user.authentication_token, page: 2, after: 1.week.ago.to_date.to_s
         assert_response :success
         data = JSON.parse(response.body)
-        assert_equal 7, data.length
+        assert_equal 8, data.length
       end
     end
     
@@ -67,6 +68,18 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       assert_equal 0, data.length
     end
     
+    should "return only the latest samples" do
+      sample = @samples.first
+      assert sample.timestamp > 1.week.ago
+      Factory :sample, instrument: sample.instrument, timestamp: DateTime.now
+      get :find, format: 'json', api_key: @user.authentication_token
+      assert_response :success
+
+      data = JSON.parse(response.body)
+      assert_equal 1,
+        data.select { |s| s["instrument_id"] == sample.instrument_id }.size
+    end
+
     should "return not only the latest samples" do
       sample = @samples.first
       assert sample.timestamp > 1.week.ago

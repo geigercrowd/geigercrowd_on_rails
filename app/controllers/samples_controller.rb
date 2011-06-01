@@ -105,11 +105,10 @@ class SamplesController < ApplicationController
     @samples = Sample
     @samples = @samples.after(params[:after].presence || 1.day.ago)
     @samples = @samples.before(params[:before]) if params[:before].present?
-    @samples = @samples.select('distinct instrument_id, *') unless options.include?("history")
-    @samples = @samples.includes([ :data_type, :instrument, :location ])
+    @samples = @samples.select('distinct on (instrument_id) *') unless options.include?("history")
     if params[:location].present?
       @samples = @samples.geo_scope(origin: params[:location])
-      @samples = @samples.order("distance asc")
+      @samples = @samples.order("distance asc, timestamp desc")
     else
       @samples = @samples.order \
         options.include?("history") ? "timestamp" : "instrument_id, timestamp"
