@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110531095234) do
+ActiveRecord::Schema.define(:version => 20110601085953) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "name"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(:version => 20110531095234) do
     t.string   "country"
     t.string   "city"
     t.string   "province"
-    t.string   "timezone"
   end
 
   add_index "locations", ["data_source_id"], :name => "index_locations_on_data_source_id"
@@ -77,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20110531095234) do
     t.float    "distance"
   end
 
+  add_index "samples", ["timestamp", "instrument_id"], :name => "index_samples_on_timestamp_and_instrument_id"
   add_index "samples", ["timestamp"], :name => "index_samples_on_timestamp"
 
   create_table "users", :force => true do |t|
