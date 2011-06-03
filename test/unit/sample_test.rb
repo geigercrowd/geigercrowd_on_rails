@@ -59,21 +59,4 @@ class SampleTest < ActiveSupport::TestCase
       end
     end
   end
-
-  context "Samples with location" do
-    setup do
-      @sample_ny = Factory :sample, location_attributes:
-        { latitude: 40.7143528, longitude: -74.0059731 }
-      @sample_sf = Factory :sample, location_attributes:
-        { latitude: 37.7749295, longitude: -122.4194155 }
-      @origin = "Berlin, Germany"
-    end
-
-    should "be sortable by distance" do
-      assert_equal [ @sample_ny, @sample_sf ],
-        Sample.geo_scope(origin: @origin).order("distance asc")
-      assert_equal [ @sample_sf, @sample_ny ],
-        Sample.geo_scope(origin: @origin).order("distance desc")
-    end
-  end
 end

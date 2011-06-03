@@ -14,8 +14,7 @@ gem 'resque'
 gem 'resque-scheduler'
 gem 'responders'
 gem 'will_paginate'
-gem 'geokit-rails3',        git: "git://github.com/mcmire/geokit-rails3.git",
-                            branch: "fix_find_through"
+gem 'geokit-rails3'
 
 group :development, :test do
   gem 'silent-postgres'

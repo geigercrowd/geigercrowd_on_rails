@@ -375,4 +375,21 @@ class SamplesControllerTest < ActionController::TestCase
       end
     end
   end
+
+  context "location" do
+    setup do
+      @sample_sf = Factory :sample, location_attributes:
+        { latitude: 37.7749295, longitude: -122.4194155 }
+      @sample_paris = Factory :sample, location_attributes:
+        { latitude: 48.856614, longitude: 2.352222 }
+      @sample_ny = Factory :sample, location_attributes:
+        { latitude: 40.7143528, longitude: -74.0059731 }
+      @origin = "Berlin, Germany"
+    end
+   
+    should "be sorted by distance" do
+      post :find, location: @origin
+      assert_equal [ @sample_paris, @sample_ny, @sample_sf ], assigns(:samples)
+    end
+  end
 end

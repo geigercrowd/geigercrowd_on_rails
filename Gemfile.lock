@@ -1,12 +1,3 @@
-GIT
-  remote: git://github.com/mcmire/geokit-rails3.git
-  revision: 1e8cc1c54e2974f81cfa474368e6fac93f20675b
-  branch: fix_find_through
-  specs:
-    geokit-rails3 (0.1.2)
-      geokit (~> 1.5.0)
-      rails (~> 3.0.0)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -58,6 +49,9 @@ GEM
       railties (>= 3.0.0)
     fakeweb (1.3.0)
     geokit (1.5.0)
+    geokit-rails3 (0.1.3)
+      geokit (~> 1.5.0)
+      rails (~> 3.0.4)
     haml (3.1.1)
     hpricot (0.8.4)
     i18n (0.5.0)
@@ -156,7 +150,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   fakeweb
-  geokit-rails3!
+  geokit-rails3
   haml
   hpricot
   jquery-rails

@@ -5,8 +5,6 @@ class Sample < ActiveRecord::Base
   has_one :user, through: :instrument
   has_one :data_type, through: :instrument
 
-  acts_as_mappable through: :location
-
   attr_accessor :timezone
   accepts_nested_attributes_for :location
   validates_presence_of :timestamp

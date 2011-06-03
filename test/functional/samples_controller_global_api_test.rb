@@ -14,15 +14,17 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
     end
 
     context "defaults" do
-      should "return samples not older than 1 day" do
-        get :find, format: 'json', api_key: @user.authentication_token
+      should "return samples not older than 1 week" do
+        get :find, format: 'json', api_key: @user.authentication_token,
+          location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal 1, data.length
       end
       
       should "respect the after parameter" do
-        get :find, format: 'json', api_key: @user.authentication_token, after: 100.days.ago
+        get :find, format: 'json', api_key: @user.authentication_token,
+          after: 100.days.ago, location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal 10, data.length
@@ -30,14 +32,15 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       
       should "respect the before parameter" do
         get :find, format: 'json', api_key: @user.authentication_token,
-          before: 5.days.ago.to_date.to_s, after: 1.week.ago.to_date.to_s
+          before: 5.days.ago, location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal 2, data.length
       end
       
       should "respect both the before and after parameter" do
-        get :find, format: 'json', api_key: @user.authentication_token, before: 5.days.ago, after: 100.days.ago
+        get :find, format: 'json', api_key: @user.authentication_token,
+          before: 5.days.ago, after: 100.days.ago, location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal 5, data.length
@@ -54,7 +57,8 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       end
 
       should "return samples for page=2" do
-        get :find, format: 'json', api_key: @user.authentication_token, page: 2, after: 1.week.ago.to_date.to_s
+        get :find, format: 'json', api_key: @user.authentication_token,
+          page: 2, location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal 8, data.length
@@ -62,7 +66,8 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
     end
     
     should "return an empty list for page=5" do
-      get :find, format: 'json', api_key: @user.authentication_token, page: 5
+      get :find, format: 'json', api_key: @user.authentication_token,
+        page: 5, location: "Berlin, Germany"
       assert_response :success
       data = JSON.parse(response.body)
       assert_equal 0, data.length
@@ -84,7 +89,8 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       sample = @samples.first
       assert sample.timestamp > 1.week.ago
       Factory :sample, instrument: sample.instrument, timestamp: DateTime.now
-      get :find, format: 'json', api_key: @user.authentication_token, options: [ "history" ]
+      get :find, format: 'json', api_key: @user.authentication_token,
+        options: [ "history" ], location: "Berlin, Germany"
       assert_response :success
 
       data = JSON.parse(response.body)

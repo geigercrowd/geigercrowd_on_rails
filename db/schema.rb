@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(:version => 20110601085953) do
     t.datetime "updated_at"
     t.datetime "timestamp"
     t.integer  "location_id"
-    t.float    "distance"
   end
 
   add_index "samples", ["timestamp", "instrument_id"], :name => "index_samples_on_timestamp_and_instrument_id"
@@ -82,7 +81,6 @@ ActiveRecord::Schema.define(:version => 20110601085953) do
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "",    :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
-    t.string   "password_salt",                       :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
