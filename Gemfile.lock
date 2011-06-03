@@ -74,10 +74,13 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.16)
     mocha (0.9.12)
+    nofxx-georuby (1.9.2)
     nokogiri (1.4.3.1)
     orm_adapter (0.0.5)
     pg (0.11.0)
     polyglot (0.3.1)
+    postgis_adapter (0.8.1)
+      nofxx-georuby
     rack (1.2.3)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
@@ -162,6 +165,7 @@ DEPENDENCIES
   jquery-rails
   mocha
   pg
+  postgis_adapter
   rails
   rake (~> 0.8.7)
   responders
