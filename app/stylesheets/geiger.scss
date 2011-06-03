@@ -148,7 +148,7 @@ nav {
     font-size: 13px;
     color: $font-two;
     text-shadow: 0 -1px 0 #ffffff;
-    margin: 40px;
+    margin: 20px 40px 40px 40px;
 
     p {
       line-height: 18px;
@@ -166,7 +166,7 @@ nav {
       margin-bottom: 50px;
       text-align: center;
       border: none;
-      margin: 20px 0 40px 0;
+      margin: 10px 0 40px 0;
     }
 
     h1 {
@@ -222,6 +222,97 @@ nav {
         width: $window-size - 200px - 40px;
       }
     }
+
+    table {
+      width: 100%;
+      margin: 0 0 10px 0;
+      thead {
+        border: 1px solid #E3E3E3;
+        tr {
+          th {
+            padding: 10px;
+            color: #333;
+            font-size: 10px;
+            font-weight: bold;
+            text-shadow: 0 1px 0 #eee;
+            background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
+            @include linear-gradient(color-stops(#eeeeee, #cccccc));
+            border-bottom: none;
+          }
+
+          th.c {
+            text-align: center;
+          }
+          
+          th.r {
+            text-align: right;
+          }
+          
+          th.actions {
+            width: 80px;
+            text-align: center;
+          }
+
+          
+        }
+      } // thead
+      
+      tbody {
+        tr.odd {
+          background-color: #F5F5F5;
+        }
+
+        tr.even {
+          background-color: #ffffff;
+        }
+
+        tr {
+          border-bottom: 1px solid #DCDCDC;
+
+          &:hover {
+            background-color: #E5E5E5;
+          }
+
+          td {
+            padding: 10px;
+            color: #333;
+            font-size: 10px;
+            font-weight: bold;
+            text-shadow: 0 1px 0 #eee;
+            
+            a {
+              text-decoration: none;
+              color: #1B66C5;
+            }
+          }
+          
+          td.c {
+            text-align: center;
+          }
+          
+          td.r {
+            text-align: right;
+          }
+          
+          td.action {
+            width: 20px;
+            text-align: center;
+          }
+          
+          td.actions {
+            width: 80px;
+            text-align: center;
+            
+            a {
+              margin: 0 4px;
+            }
+          }
+        }
+
+      }
+    } // table
+    
+
 
     form {
       text-align: center;

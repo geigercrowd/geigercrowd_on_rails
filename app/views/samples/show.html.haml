@@ -1,3 +1,7 @@
+- if breadcrumbs.present?
+  #breadcrumbs= render_breadcrumbs.html_safe
+
+
 %h2= t('.title')
 %p
   = link_to t('samples.all_data'),  polymorphic_path([@origin, @sample.instrument, Sample])

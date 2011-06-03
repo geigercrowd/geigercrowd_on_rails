@@ -6,7 +6,7 @@ class Location < ActiveRecord::Base
   validates_presence_of :longitude
   
   before_update :geocode
-  after_create { Resque.enqueue(Geocode, self.id) }
+  # after_create { Resque.enqueue(Geocode, self.id) }
   
   def geocode
     if longitude_changed? or latitude_changed? && longitude != nil && latitude != nil

@@ -1,24 +1,5 @@
 %h1.title Search Data
 
-#searchdata
-  = form_tag find_samples_path do
-
-    .textfield.location
-      = label_tag :location, t('locations.title')
-      = text_field_tag 'location', nil, :size => 22
-
-    .textfield.datetime
-      = label_tag :after
-      = text_field_tag :after, 'YYYY/MM/DD HH:MM', :size => 18
-
-    .textfield.datetime
-      = label_tag :before
-      = text_field_tag :before, 'YYYY/MM/DD HH:MM', :size => 18
-  
-    .historical
-      = check_box_tag :history, "latest", false, name: "options[]"
-      = label_tag :history, 'Historical'
-    
-    = submit_tag "Go"
+= render :partial => 'samples/search'
 
 %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec diam enim, sit amet condimentum mi. Praesent interdum dapibus turpis a condimentum. Duis pulvinar, odio varius tempor rutrum, turpis magna tempor lectus, in dapibus orci eros a mi. Fusce ullamcorper ipsum et tortor dignissim condimentum. Cras eros dui, interdum non semper sed, volutpat sed nunc. Nullam ultricies mauris vel lectus ornare pulvinar. Nullam dictum magna et neque gravida id tempor dui tempus. Nullam interdum dolor accumsan tellus dapibus semper.

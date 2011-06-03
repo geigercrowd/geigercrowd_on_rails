@@ -1,18 +1,22 @@
+%h1.title Search Data
+
+= render :partial => 'samples/search'
+
 %table.data
   %thead
     %tr
-      %th value
-      %th SI unit
-      %th time
-      %th device
-      %th location
-      %th
+      %th.r Value
+      %th.c SI unit
+      %th.c Date
+      %th.c Device
+      %th Location
+      %th Action
     %tbody
       - @samples.each do |sample|
-        %tr
-          %td= sample.value
-          %td= sample.data_type.si_unit
-          %td= sample.timestamp.in_time_zone
-          %td= link_to sample.instrument.model, polymorphic_path([sample.instrument.origin, sample.instrument, sample])
-          %td= format_location sample.location
-          %td= link_to t('show'), polymorphic_path([ sample.instrument.origin, sample.instrument, sample ])
+        %tr{:class => "#{cycle('odd', 'even')}"}
+          %td.r= sample.value
+          %td.c= sample.data_type.si_unit
+          %td.c= sample.timestamp.in_time_zone
+          %td.c= link_to sample.instrument.model, polymorphic_path([sample.instrument.origin, sample.instrument, sample])
+          %td= format_location(sample.location).html_safe
+          %td.action= link_to image_tag('icons/show.png'), polymorphic_path([ sample.instrument.origin, sample.instrument, sample ]), :title => t('show')
