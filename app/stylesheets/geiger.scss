@@ -103,19 +103,17 @@ nav {
   .alert, .notice {
     background-color: #fff;
     padding: 10px;
-    -moz-border-radius: 5px;
-     -webkit-border-radius: 5px;
-     border-radius: 5px;
-     text-align: center;
-     color: $font-one;
-     text-shadow: none;
-     font-family: $hs-font;
+    @include border-radius(5px);
+    text-align: center;
+    color: $font-one;
+    text-shadow: none;
+    font-family: $hs-font;
   }
-  
+
   .alert {
     background-color: #FEE100;
   }
-  
+
   .notice {
     background-color: #689E00;
     color: #fff;
@@ -134,7 +132,6 @@ nav {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$bg-color', endColorstr='$document-color'); /* for IE */
   background: -webkit-gradient(linear, left top, left bottom, from($document-color), to($bg-color)); /* for webkit browsers */
   background: -moz-linear-gradient(bottom, $bg-color, $document-color) ; /* for firefox 3.6+ */
-
 
   @include border-radius(6px);
 
@@ -196,6 +193,26 @@ nav {
       }
     }
 
+    #breadcrumbs {
+      color: #2D6000;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      margin: 20px 0 20px 0;
+      padding-bottom: 15px;
+
+      a {
+        font-weight: normal;
+        color: $font-three;
+        font-size: 15px;
+        font-family: $hs-font;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.33);
+      
+        margin: 20px 0 10px 0;
+      }
+    }
+
     dl.api, dl.urls {
       padding: 0 20px;
       margin-top: 20px;
@@ -243,17 +260,16 @@ nav {
           th.c {
             text-align: center;
           }
-          
+
           th.r {
             text-align: right;
           }
-          
+
           th.actions {
             width: 80px;
             text-align: center;
           }
 
-          
         }
       } // thead
       
@@ -279,40 +295,71 @@ nav {
             font-size: 10px;
             font-weight: bold;
             text-shadow: 0 1px 0 #eee;
-            
+
             a {
               text-decoration: none;
               color: #1B66C5;
             }
           }
-          
+
           td.c {
             text-align: center;
           }
-          
+
           td.r {
             text-align: right;
           }
-          
+
           td.action {
             width: 20px;
             text-align: center;
           }
-          
+
           td.actions {
             width: 80px;
             text-align: center;
-            
+
             a {
               margin: 0 4px;
             }
           }
         }
-
       }
     } // table
-    
 
+    dl {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      
+      dt {
+        display: inline;
+        margin-bottom: 2px;
+        padding-left: 2px;
+        color: #312824;
+        font-weight: bold;
+      }
+      
+      dd {
+        font-size: 14px;
+        margin-top: 5px;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        padding-left: 2px;
+        color: #2D6000;
+        
+        a {
+          text-decoration: none;
+          color: #E5E5E5;
+        }
+      }
+    } // dl
+
+    #google_map {
+      border: 4px solid #CFCFCF;
+      @include border-radius(4px);
+      margin: 20px 0;
+    }
 
     form {
       text-align: center;
@@ -320,13 +367,11 @@ nav {
       .textfield {
         background-color: #fff;
         padding: 8px;
-        -moz-border-radius: 5px;
-         -webkit-border-radius: 5px;
-         border-radius: 5px;
-         border: none;
-         width: 320px;
-         margin: 10px auto 8px auto;
-         @include clearfix;
+        border: none;
+        width: 320px;
+        @include border-radius(5px);
+        margin: 10px auto 8px auto;
+        @include clearfix;
       }
 
       p {
@@ -356,10 +401,8 @@ nav {
       
       textarea {
         border: none;
-        -moz-border-radius: 5px;
-         -webkit-border-radius: 5px;
-         border-radius: 5px;
-         padding: 10px;
+        @include border-radius(5px);
+        padding: 10px;
       }
 
       .formcontainer {
@@ -399,24 +442,22 @@ nav {
 
       input[type='text'], input[type='password'] {
         float: left;
-        -moz-border-radius: 5px;
-         -webkit-border-radius: 5px;
-         border-radius: 5px;
-         border: none;
-         margin-left: 10px;
-         font-family: $hs-font;
-         margin-top: -2px;
-         font-size: 10px;
-         width: 220px;
+        @include border-radius(5px);
+        border: none;
+        margin-left: 10px;
+        font-family: $hs-font;
+        margin-top: -2px;
+        font-size: 10px;
+        width: 220px;
       }
-      
+
       input[type='text'].search {
         color: #ff0000;
         text-transform: uppercase;
         font-size: 12px;
         width: 150px;
       }
-      
+
       select {
         float: left;
         border: none;
@@ -434,9 +475,7 @@ nav {
         background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
         border: 1px solid #ccc;
         border-bottom: 1px solid #bbb;
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
+        @include border-radius(5px);
         color: #333;
         font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
         font-size: 11px;
@@ -563,8 +602,13 @@ nav {
           font-family: $hs-font;
           font-size: 15px;
           text-align: left;
-          a {
+          a.instruments {
             color: $font-three;
+            font-size: 10px;
+            
+            &:hover {
+              color: #2D6000;
+            }
           }
         }
       
@@ -599,7 +643,7 @@ nav {
           .picture {
             float: left;
             width: 70px;
-            border-radius: 4px;
+            @include border-radius(4px);
             margin-right: 20px;
             text-align: center;
           }
@@ -634,9 +678,7 @@ nav {
                 background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eee), to(#ccc));
                 border: 1px solid #ccc;
                 border-bottom: 1px solid #bbb;
-                -moz-border-radius: 5px;
-                -webkit-border-radius: 5px;
-                border-radius: 5px;
+                @include border-radius(5px);
                 color: #333;
                 font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
                 font-size: 9px;

@@ -1,18 +1,26 @@
+%h1.title= "#{@origin.short_name} instruments"
+
+
+%table.data
+  %thead
+    %tr
+      %th Name
+      %th.c Device
+      %th.actions Action
+  %tbody
+    - for instrument in @instruments
+      %tr{ :class => cycle(:odd, :even) }
+        - if @origin.is_a?(DataSource) # is a datasource
+          %td= link_to instrument.location.try(:name), polymorphic_path([instrument.origin, instrument])
+          %td= instrument.model
+        - else
+          %td= link_to instrument.model, polymorphic_path([instrument.origin, instrument])
+          %td= instrument.location.try(:name)
+        %td.actions
+          = link_to image_tag('icons/show.png'), polymorphic_path([instrument.origin, instrument, Sample]), :title => t('instruments.view_samples')
+          - if is_owned?
+            = link_to t('instruments.add_samples'), polymorphic_path([instrument.origin, instrument, Sample], :action => :new)
+
+
 - if is_owned?
   %p= link_to t('.new_instrument'), new_user_instrument_path(current_user)
-#instruments
-  - data_source = @origin.is_a?(DataSource) ? true : false
-  - for instrument in @instruments
-    .instrument
-      - if data_source
-        .model= link_to instrument.location.try(:name), polymorphic_path([instrument.origin, instrument])
-        .location.gray= instrument.model
-      - else
-        .model= link_to instrument.model, polymorphic_path([instrument.origin, instrument])
-        .location.gray= instrument.location.try(:name)
-      .data_links
-        = link_to t('instruments.view_samples'), polymorphic_path([instrument.origin, instrument, Sample])
-        - if is_owned?
-          &nbsp;
-          = link_to t('instruments.add_samples'), polymorphic_path([instrument.origin, instrument, Sample], :action => :new)
-      %br.clear

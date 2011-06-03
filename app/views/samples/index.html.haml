@@ -1,25 +1,27 @@
+- if breadcrumbs.present?
+  #breadcrumbs= render_breadcrumbs.html_safe
+
 - if is_owned?
   %p= link_to t('.new_sample'), new_user_instrument_sample_path
 
 %table.data
   %thead
     %tr
-      %th= t('samples.value')
-      %th= t('instruments.si_unit')
-      %th= t('samples.timestamp')
-      %th= t('samples.instrument')
-      %th
-  
+      %th.r= t('samples.value')
+      %th.c= t('instruments.si_unit')
+      %th.c= t('samples.timestamp')
+      %th.c= t('samples.instrument')
+      %th.c Action
   %tbody
     - for sample in @samples
       %tr{ :class => cycle(:odd, :even) }
-        %td= sample.value
-        %td= sample.instrument.data_type.si_unit 
-        %td= l sample.timestamp.localtime, format: :short_with_zone
-        %td= link_to sample.instrument.model, polymorphic_path([ sample.instrument.origin, sample.instrument ])
-        %td
-          = link_to t('show'), polymorphic_path([ sample.instrument.origin, sample.instrument, sample ])
+        %td.r= sample.value
+        %td.c= sample.instrument.data_type.si_unit 
+        %td.c= l sample.timestamp.localtime, format: :short_with_zone
+        %td.c= link_to sample.instrument.model, polymorphic_path([ sample.instrument.origin, sample.instrument ])
+        %td.c
+          = link_to image_tag('icons/show.png'), polymorphic_path([ sample.instrument.origin, sample.instrument, sample ]), :title => t('show')
           - if is_owned?
-            = link_to t('edit'), edit_user_instrument_sample_path(current_user, sample.instrument, sample)
-            = link_to t('destroy'), [ current_user, sample.instrument, sample ], :confirm => t('confirm_delete'), :method => :delete
+            = link_to image_tag('icons/edit.png'), edit_user_instrument_sample_path(current_user, sample.instrument, sample), :title => t('edit')
+            = link_to image_tag('icons/delete.png'), [ current_user, sample.instrument, sample ], :title => t('destroy'), :confirm => t('confirm_delete'), :method => :delete
 
