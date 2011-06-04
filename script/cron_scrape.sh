@@ -1,4 +1,4 @@
 #!/bin/bash
 cd /srv/www/geigercrowd/current
-RAILS_ENV=production /usr/local/rvm/bin/geigercrowd_rake utilities:scrape 2>&1 >> log/scraper.log
+RAILS_ENV=production /usr/local/rvm/bin/geigercrowd_rake utilities:scrape
 
