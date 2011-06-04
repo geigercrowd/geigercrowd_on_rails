@@ -1,0 +1,26 @@
+#searchdata
+  = form_tag find_samples_path do
+
+    .textfield.location
+      = label_tag :location, t('locations.title')
+      = text_field_tag 'location', nil, :size => 22
+
+    .textfield.datetime
+      = label_tag :after
+      = text_field_tag :after, 'YYYY/MM/DD HH:MM', :size => 18, :class => 'clearme'
+
+    .textfield.datetime
+      = label_tag :before
+      = text_field_tag :before, 'YYYY/MM/DD HH:MM', :size => 18, :class => 'clearme'
+
+    .historical
+      = check_box_tag :history, "latest", false, name: "options[]"
+      = label_tag :history, 'Historical'
+    
+    = submit_tag "Go"
+
+= content_for :javascripts do
+  :javascript
+    $('.clearme').focus( function() {
+      $(this).val('');
+    });

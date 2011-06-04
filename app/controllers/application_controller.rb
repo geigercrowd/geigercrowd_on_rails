@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   before_filter :set_origin
 
+  def routing
+   render 'errors/404', :status => 404, :layout => 'errors'
+  end
+
   private
 
   def admin_only

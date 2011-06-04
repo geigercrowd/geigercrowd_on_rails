@@ -1,0 +1,19 @@
+%nav
+  %ul
+    %li= link_to t('navigation.home'), root_url, :title => t('navigation.home')
+    %li= link_to t('navigation.access_data'), samples_path, :title => t('navigation.access_data')
+
+    - if current_user
+      %li= link_to t('navigation.submit_data'), user_instruments_path(current_user), :title => t('navigation.submit_data')
+
+    - if admin?
+      %li= link_to t('data_types.index.title'), data_types_path, :title => t('data_types.index.title')
+
+    %li= link_to t('navigation.data_sources'), data_sources_path, :title => t('navigation.data_sources')
+    %li= link_to t('navigation.developers'), '/api', :title => t('navigation.developers')
+    %li= link_to t('navigation.blog'), 'http://geigercrowd.net', :title => t('navigation.blog')
+
+    - if current_user
+      %li= link_to t('navigation.my_account'), edit_user_path(current_user), :title => t('navigation.my_account')
+
+    %li= current_user ? link_to(t('users.sign_out'), destroy_user_session_path, :title => t('users.sign_out')) : link_to(t('users.sign_in'), new_user_session_path, :title => t('users.sign_in'))

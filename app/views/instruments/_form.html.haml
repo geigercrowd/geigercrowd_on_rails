@@ -1,38 +1,51 @@
 = form_for([current_user, @instrument]) do |f|
   = error_messages_for @instrument
+  
   %fieldset
-    = f.label :model, t('.model')
-    %br
-    = f.text_field :model, size: 50;
+    .textfield
+      = f.label :model, t('.model')
+      = f.text_field :model
+
+    .textfield
+      = f.label :data_type_id, t('instruments.si_unit')
+      = f.select :data_type_id, data_type_options(@data_types)
+
   %fieldset
-    = f.label :data_type_id, t('instruments.si_unit')
-    %br
-    = f.select :data_type_id, data_type_options(@data_types)
-    %br
+    %h2= t('.model_parameters')
+
+    .textfield
+      = f.label :deadtime, t('instruments.deadtime')
+      =# t('.deadtime_description').html_safe
+      = f.text_field :deadtime
+
+    .textfield
+      = f.label :error, t('instruments.error'), :class => 'loooong'
+      =# t('.deadtime_error_description')
+      = f.text_field :error
+
+
   %fieldset
-    %legend= t('.model_parameters')
-    = f.label :deadtime, t('instruments.deadtime')
-    .field_description= t('.deadtime_description').html_safe
-    = f.text_field :deadtime, size: 7;
-    %br
-    = f.label :error, t('instruments.error')
-    .field_description= t('.deadtime_error_description')
-    = f.text_field :error, size: 7;
-  %fieldset
-    %legend= t('locations.title')
+    %h2= t('locations.title')
     = render partial: "locations/form_locator", locals: { form: f }
+
     - unless @instrument.location.try(:id).nil?
-      %br
-      = t('.on_location_change')
-      %br
-      = f.radio_button:new_location, "true"
-      %div= t('.instrument_has_been_moved').html_safe
-      %br
-      = f.radio_button :new_location, "false"
-      %div= t('.instrument_location_correction').html_safe
+      .formcontainer
+        %h2= t('.on_location_change')
+        %ul.location_change
+          %li
+            = f.radio_button:new_location, "true"
+            %br/
+            = t('.instrument_has_been_moved').html_safe
+
+          %li
+            = f.radio_button :new_location, "false"
+            %br/
+            = t('.instrument_location_correction').html_safe
+
   %fieldset
-    %legend= t('instruments.notes')
-    .field_description= t('.notes_description')
+    %h2= t('instruments.notes')
+    %p= t('.notes_description')
+
     = f.text_area :notes, size: "70x20"
-  .actions
-    = f.submit
+
+  = f.submit

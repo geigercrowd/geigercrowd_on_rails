@@ -16,6 +16,12 @@ gem 'responders'
 gem 'will_paginate'
 gem 'geokit-rails3'
 
+gem 'haml',                 '3.1.1'
+gem 'jquery-rails',         '0.2.7'
+gem 'compass',              '>= 0.11.1'
+gem 'html5-boilerplate',    '~> 0.3.3'
+
+
 group :development, :test do
   gem 'silent-postgres'
   gem 'apirunner'
