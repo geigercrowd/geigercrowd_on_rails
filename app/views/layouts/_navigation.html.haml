@@ -1,7 +1,7 @@
 %nav
   %ul
     %li= link_to t('navigation.home'), root_url, :title => t('navigation.home')
-    %li= link_to t('navigation.access_data'), samples_path, :title => t('navigation.access_data')
+    %li= link_to t('navigation.access_data'), samples_search_path, :title => t('navigation.access_data')
 
     - if current_user
       %li= link_to t('navigation.submit_data'), user_instruments_path(current_user), :title => t('navigation.submit_data')
