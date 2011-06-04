@@ -4,6 +4,6 @@
 :javascript
   !window.jQuery && document.write('#{escape_javascript(javascript_include_tag "jquery-1.5.1.min")}')
 
-= javascript_include_tag 'rails', 'jquery.locationpicker.js', 'http://maps.google.com/maps/api/js?sensor=false', 'application', :cache => 'all_iframe'
+= javascript_include_tag 'rails', 'jquery.locationpicker.js', 'http://maps.google.com/maps/api/js?sensor=false', 'application'
 
 = yield :javascripts
