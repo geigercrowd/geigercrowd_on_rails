@@ -13,7 +13,7 @@
       %th.c= t('samples.instrument')
       %th.c Action
   %tbody
-    - for sample in @samples
+    - @samples.each do |sample|
       %tr{ :class => cycle(:odd, :even) }
         %td.r= sample.value
         %td.c= sample.instrument.data_type.si_unit 
