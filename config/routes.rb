@@ -19,8 +19,8 @@ Geigercrowd::Application.routes.draw do
 
   root :to => "welcome#index"
   match "instruments" => "instruments#list", as: :instruments
-  match "samples" => "samples#search", as: :samples, via: :get
-  match "samples" => "samples#find", as: :samples, via: :post
+  match "samples/search" => "samples#search", as: :samples_search
+  match "samples" => "samples#find", as: :samples
   match "api" => "welcome#api"
   match "api/public" => "welcome#api_public"
   match "api/private" => "welcome#api_private"

@@ -9,22 +9,22 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       @user = @instrument.user
       @samples = []
       10.times do |i|
-        @samples <<  Factory(:sample, timestamp: (i.days + 1.hour).ago)
+        @samples <<  Factory(:sample, timestamp: i.days.ago)
       end
     end
 
     context "defaults" do
-      should "return samples not older than 1 week" do
+      should "return samples from yesterday on" do
         get :find, format: 'json', api_key: @user.authentication_token,
           location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
-        assert_equal 1, data.length
+        assert_equal 2, data.length
       end
       
       should "respect the after parameter" do
         get :find, format: 'json', api_key: @user.authentication_token,
-          after: 100.days.ago, location: "Berlin, Germany"
+          after: formatted_date(100.days.ago), location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal 10, data.length
@@ -32,18 +32,19 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       
       should "respect the before parameter" do
         get :find, format: 'json', api_key: @user.authentication_token,
-          before: 5.days.ago, location: "Berlin, Germany"
+          after: formatted_date(1.year.ago),
+          before: formatted_date(5.days.ago), location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
-        assert_equal 2, data.length
+        assert_equal 4, data.length
       end
       
       should "respect both the before and after parameter" do
         get :find, format: 'json', api_key: @user.authentication_token,
-          before: 5.days.ago, after: 100.days.ago, location: "Berlin, Germany"
+          before: formatted_date(5.days.ago), after: formatted_date(100.days.ago), location: "Berlin, Germany"
         assert_response :success
         data = JSON.parse(response.body)
-        assert_equal 5, data.length
+        assert_equal 4, data.length
       end
     end
        
@@ -58,7 +59,8 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
 
       should "return samples for page=2" do
         get :find, format: 'json', api_key: @user.authentication_token,
-          page: 2, location: "Berlin, Germany"
+          page: 2, location: "Berlin, Germany",
+          after: formatted_date(1.week.ago)
         assert_response :success
         data = JSON.parse(response.body)
         assert_equal 8, data.length
@@ -75,14 +77,15 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
     
     should "return only the latest samples" do
       sample = @samples.first
-      assert sample.timestamp > 1.week.ago
+      assert sample.timestamp > 1.day.ago.midnight
       Factory :sample, instrument: sample.instrument, timestamp: DateTime.now
-      get :find, format: 'json', api_key: @user.authentication_token
+      get :find, format: 'json', api_key: @user.authentication_token,
+        location: "Berlin, Germany"
       assert_response :success
-
       data = JSON.parse(response.body)
       assert_equal 1,
-        data.select { |s| s["instrument_id"] == sample.instrument_id }.size
+        data.select { |s| s["instrument_id"] == sample.instrument_id }.size,
+        data.inspect
     end
 
     should "return not only the latest samples" do
@@ -97,5 +100,11 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
       assert_equal 2,
         data.select { |s| s["instrument_id"] == sample.instrument_id }.size
     end
+  end
+
+  private
+
+  def formatted_date date
+    date.to_date.strftime '%F'
   end
 end

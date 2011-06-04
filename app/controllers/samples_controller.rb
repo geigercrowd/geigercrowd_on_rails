@@ -98,7 +98,7 @@ class SamplesController < ApplicationController
     end
   end
   
-  # GET /samples/find
+  # GET /samples
   def find
     if params[:location].blank?
       respond_with [] do |format|
@@ -107,6 +107,10 @@ class SamplesController < ApplicationController
       end
       return
     end
+
+    @search_params = {}
+    [ :location, :after, :before ].
+      each { |p| @search_params[p] = params[p] if params[p].present? }
 
     options = params[:options] || []
     options = options.split(",") if options.is_a?(String)
@@ -122,7 +126,7 @@ class SamplesController < ApplicationController
     order << "end, timestamp desc, instrument_id"
 
     @samples = Sample
-    @samples = @samples.after(params[:after].presence || 1.week.ago)
+    @samples = @samples.after(params[:after].presence || 1.day.ago.midnight)
     @samples = @samples.before(params[:before]) if params[:before].present?
     @samples = @samples.select('distinct on (instrument_id) *') unless options.include?("history")
     @samples = Sample.from "(#{@samples.to_sql}) as s"

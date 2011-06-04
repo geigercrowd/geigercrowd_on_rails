@@ -26,4 +26,4 @@
               %td= link_to sample.instrument.model, polymorphic_path([sample.instrument.origin, sample.instrument, sample])
               %td= format_location sample.location
               %td= link_to t('show'), polymorphic_path([ sample.instrument.origin, sample.instrument, sample ])
-= will_paginate @samples
+= will_paginate @samples, params: @search_params
