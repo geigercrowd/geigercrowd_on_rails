@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'rake', '~> 0.8.7' # TODO; remove this line after getting rake 0.9.x to work
 gem 'pg'
 gem 'rails'
-gem 'sqlite3'
+
 gem 'devise'
 gem 'hpricot'
 gem 'ruby_parser'
