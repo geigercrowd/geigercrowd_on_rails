@@ -6,7 +6,7 @@ class Location < ActiveRecord::Base
   validates_presence_of :longitude
   
   before_update :geocode
-  after_create { Resque.enqueue(Geocode, self.id) }
+  # after_create { Resque.enqueue(Geocode, self.id) }
   
   acts_as_mappable default_units: :kms,
                    lng_column_name: :longitude,

@@ -1,3 +1,28 @@
+- if breadcrumbs.present?
+  #breadcrumbs= render_breadcrumbs.html_safe
+
+- if @instrument.location
+  #google_map{ "data-latitude" => @instrument.location.latitude, "data-longitude" => @instrument.location.longitude }
+
+%h2 Information
+
+%dl
+  %dt= t('instruments.si_unit')
+  %dd= @instrument.data_type.si_unit
+
+  %dt= t('instruments.deadtime')
+  %dd= @instrument.deadtime || t('not_applicable')
+
+  %dt= t('instruments.error')
+  %dd= @instrument.error || t('not_applicable')
+
+  %dt= t('locations.title')
+  %dd= format_location(@instrument.location).html_safe
+
+  %dt= t('instruments.notes')
+  %dd= simple_format @instrument.notes
+
+
 %h3= @instrument.model
 - if is_owned?
   = link_to t('edit'), edit_user_instrument_path(current_user, @instrument)
@@ -8,23 +33,3 @@
 - if is_owned?
   &nbsp;
   = link_to t('instruments.add_samples'), new_user_instrument_sample_path(current_user, @instrument)
-  .clear
-%ul
-  %li
-    .label= "#{t('instruments.si_unit')}:"
-    = @instrument.data_type.si_unit
-  %li
-    .label= "#{t('instruments.deadtime')}:"
-    = @instrument.deadtime || t('not_applicable')
-  %li
-    .label= "#{t('instruments.error')}:"
-    = @instrument.error || t('not_applicable')
-  %li
-    .label= "#{t('locations.title')}:"
-    = format_location @instrument.location
-  %li
-    .label= t('instruments.notes')
-    = simple_format @instrument.notes
-.clear
-- if @instrument.location
-  #google_map{ "data-latitude" => @instrument.location.latitude, "data-longitude" => @instrument.location.longitude }

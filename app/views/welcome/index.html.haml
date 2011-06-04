@@ -1,10 +1,17 @@
-- if user_signed_in?
-  %h3= t('welcome.first_steps.headline')
-  %h4= t('welcome.first_steps.access_data_headline')
-  = t('welcome.first_steps.access_data').html_safe
-  %h4= t('welcome.first_steps.submit_data_headline')
-  = t('welcome.first_steps.submit_data', user: current_user.to_param).html_safe
-- else
-  %p.intro= t('welcome.message')
-  .button.sign_up= link_to t('welcome.sign_up'), new_user_registration_path
-  .button.sign_in= link_to t('welcome.sign_in'), new_user_session_path
+%h1.title Radioactive Data for the masses
+
+%p
+  %strong GEIGER·CROWD 
+  is an approach to fill in an information gap. Radiation measurements should be open data and provided by the government in an easy to access and uncensored manner; the current situation in Japan shows a different picture. Websites providing up-to-date meassurements are either down or don't show valid values and this is where we want to fill in.
+  
+%p
+  We crowdsource the meassuring to people in Japan who operate and own automated or handheld geiger counters or other equipment that delivers data on radiation levels. This way we all together can try to fill the currently white map on this page with up-to-date radiation measurements that help people all over Japan to assess the current risk situation. 
+
+%p
+  %strong GEIGER·CROWD 
+  is backed by a capable content delivery network to hopefully handle more load than the other available resources that currently provide this data on the web.
+  
+%h1 How it works
+
+%p
+  TODO: Graphic explaining how it works

@@ -1,0 +1,20 @@
+!!!
+%html
+  = render :partial => 'layouts/head'
+  %body
+    %header
+      #logo= link_to image_tag('geigercrowd.png'), root_url
+      = render :partial => 'layouts/navigation'
+
+    = render :partial => 'layouts/flashes'
+    #container
+      = image_tag('radioactive_sign.png')
+      #content
+        = yield
+
+    #subfooter
+      = yield :subfooter
+
+    = render :partial => 'layouts/footer'
+
+    = render :partial => 'layouts/javascripts'

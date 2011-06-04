@@ -5,16 +5,20 @@ gem 'pg'
 gem 'rails'
 gem 'sqlite3'
 gem 'devise'
-gem 'haml'
 gem 'hpricot'
 gem 'ruby_parser'
-gem 'jquery-rails'
 gem 'breadcrumbs_on_rails'
 gem 'resque'
 gem 'resque-scheduler'
 gem 'responders'
 gem 'will_paginate'
 gem 'geokit-rails3'
+
+# UI
+gem 'haml',                 '3.1.1'
+gem 'jquery-rails',         '0.2.7'
+gem 'compass',              '>= 0.11.1'
+gem 'html5-boilerplate',    '~> 0.3.3'
 
 group :development, :test do
   gem 'silent-postgres'

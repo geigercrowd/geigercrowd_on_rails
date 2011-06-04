@@ -1,15 +1,11 @@
-%h2= t('.title')
+%h1.title= t('.title')
 
-%table.data
-  %thead
-    %tr
-      %th= t('.name')
-      %th= t('.info')
-      %th= t('.url')
-  
-  %tbody
-    - for source in @sources
-      %tr{ :class => cycle(:odd, :even) }
-        %td= link_to source.short_name, data_source_instruments_path(source)
-        %td= source.name
-        %td= link_to source.url, source.url, :location => '_blank'
+#datasources
+  - @sources.each do |source|
+    .datasource
+      .name
+        .dsname= source.short_name
+        = link_to 'instruments', data_source_instruments_path(source), :class => 'instruments'
+      .description
+        = link_to source.url, source.url, :location => '_blank', :class => 'source_url'
+        = source.name

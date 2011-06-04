@@ -21,9 +21,13 @@ en:
   not_found: "%{resource} not found."
   optional: (optional)
   navigation:
-    access_data: Access data
+    home: Home
+    developers: Developers
+    blog: Blog
+    access_data: Search data
     submit_data: Submit data
-    my_account: my account
+    my_account: Profile
+    data_sources: Data Sources
   locations:
     title: Location
     geolocate_me: try to locate me
@@ -50,13 +54,13 @@ en:
     view_samples: view data
     create_first: Before you can submit data, please tell as about your equipment.
     form:
-      model: model or type of device
+      model: model/device
       model_parameters: model parameters
       notes_description: Add a description or any further details of your device.
       deadtime_description: "The deadtime of your device in microseconds. See your device's manual and read <a href=\"http://en.wikipedia.org/wiki/Dead_time\">this</a>."
       deadtime_error_description: "The average error-rate of your device's dead-time in microseconds"
       location: the default-location of your instrument
-      on_location_change: "On location change:"
+      on_location_change: "On location change"
       instrument_has_been_moved: The instrument has been moved to another location.
       instrument_location_correction: The instrument has <b>not</b> been moved, the coordinates are only corrected. Please note, that this also changes the location for all Samples associated with this instrument and location.
     index:
@@ -128,7 +132,7 @@ en:
     form:
       email: email
       password: password
-      password_confirmation: confirm password
+      password_confirmation: Re-Password
     update:
       success: Your information has been updated.
   welcome:

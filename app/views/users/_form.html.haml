@@ -1,15 +1,21 @@
 = form_for(@user) do |f|
   = error_messages_for @user
-  %fieldset
-    .label= f.label :email, t('.email')
+  .textfield
+    = f.label :email, t('.email')
     = f.text_field :email
-  %fieldset
-    .label= f.label :password, t('.password')
-    .float_left= f.password_field :password
-    .gray= t('optional')
-    .clear
-    .label= f.label :password_confirmation, t('.password_confirmation')
+
+  %p.instructions
+    optional
+    %br
+    ⬇
+  
+  .textfield
+    = f.label :password, t('.password')
+    = f.password_field :password
+
+  .textfield
+    = f.label :password_confirmation, t('.password_confirmation')
     = f.password_field :password_confirmation
 
-    .actions
-      = f.submit
+  = f.submit
+

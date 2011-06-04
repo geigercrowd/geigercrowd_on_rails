@@ -1,0 +1,9 @@
+= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"
+
+-# fallback for jQuery
+:javascript
+  !window.jQuery && document.write('#{escape_javascript(javascript_include_tag "jquery-1.5.1.min")}')
+
+= javascript_include_tag 'rails', 'jquery.locationpicker.js', 'http://maps.google.com/maps/api/js?sensor=false', 'application', :cache => 'all_iframe'
+
+= yield :javascripts

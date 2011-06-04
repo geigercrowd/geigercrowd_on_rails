@@ -1,29 +1,23 @@
-= form_tag samples_path do
-  = label_tag :location, t('locations.title')
-  = text_field_tag 'location', nil, size: 10
-  = label_tag :after
-  = text_field_tag :after, nil, size: 10
-  = label_tag :before
-  = text_field_tag :before, nil, size: 10
-  = check_box_tag :history, "history", false, name: "options[]"
-  = label_tag :history, 'historical data'
-  = submit_tag "Submit"
+%h1.title Search Data
+
+= render :partial => 'samples/search'
+
 %table.data
   %thead
     %tr
-      %th value
-      %th SI unit
-      %th timestamp
-      %th device
-      %th location
-      %th
-        %tbody
-          - @samples.each do |sample|
-            %tr
-              %td= sample.value
-              %td= sample.data_type.si_unit
-              %td= sample.timestamp.in_time_zone
-              %td= link_to sample.instrument.model, polymorphic_path([sample.instrument.origin, sample.instrument, sample])
-              %td= format_location sample.location
-              %td= link_to t('show'), polymorphic_path([ sample.instrument.origin, sample.instrument, sample ])
+      %th.r Value
+      %th.c SI unit
+      %th.c Date
+      %th.c Device
+      %th Location
+      %th Action
+    %tbody
+      - @samples.each do |sample|
+        %tr{:class => "#{cycle('odd', 'even')}"}
+          %td.r= sample.value
+          %td.c= sample.data_type.si_unit
+          %td.c= sample.timestamp.in_time_zone
+          %td.c= link_to sample.instrument.model, polymorphic_path([sample.instrument.origin, sample.instrument, sample])
+          %td= format_location(sample.location).html_safe
+          %td.action= link_to image_tag('icons/show.png'), polymorphic_path([ sample.instrument.origin, sample.instrument, sample ]), :title => t('show')
 = will_paginate @samples, params: @search_params

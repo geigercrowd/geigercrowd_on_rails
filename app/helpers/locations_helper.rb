@@ -9,7 +9,7 @@ module LocationsHelper
     return t('not_applicable') if location.nil?
     string = ""
     string += "#{location.city}, #{location.province}, #{location.country} (" if location.city
-    string += "#{location.latitude} #{location.longitude}"
+    string += "LAT: #{location.latitude} <br/> LNG: #{location.longitude}"
     string += ")" if location.city
     string
   end
