@@ -14,13 +14,30 @@
       = text_field_tag :before, 'YYYY/MM/DD HH:MM', :size => 18, :class => 'clearme'
   
     .historical
-      = check_box_tag :history, "latest", false, name: "options[]"
+      = check_box_tag :history, "history", false, name: "options[]"
       = label_tag :history, 'Historical'
     
     = submit_tag "Go"
 
 = content_for :javascripts do
   :javascript
-    $('.clearme').focus( function() {
-      $(this).val('');
+    $(function() {
+      $('.clearme').focus( function() {
+        $(this).val('');
+      });
+
+      function check_checkbox(checkbox) {
+        var input_field = $('#searchdata input#after');
+        if(checkbox.attr('checked')) {
+          input_field.attr('disabled', false);
+        } else {
+          input_field.attr('disabled', true);
+        }
+      }
+     
+      var history_checkbox = $('#searchdata input#history');
+      check_checkbox(history_checkbox);
+      history_checkbox.click(function() {
+        check_checkbox(history_checkbox);
+      });
     });
