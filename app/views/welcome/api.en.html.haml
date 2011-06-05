@@ -28,7 +28,14 @@
     %h2 Required
     %dl.api
       %dt api_key
-      %dd= "Get #{link_to 'your API key', ''} for authentication and tracking".html_safe
+      - if current_user
+        %dd
+          = link_to "Create an account", new_registration_path(:user)
+          to obtain an API key
+      - else
+        %dd Find your API key
+        = link_to "here", current_user
+
 
     %h2 Optional
     %dl.api

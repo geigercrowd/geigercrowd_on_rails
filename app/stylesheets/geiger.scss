@@ -27,8 +27,15 @@ body {
 }
 
 a {
+  font-family: Arial,'Helvetica Neue',Helvetica,sans-serif;
+  color: $font-two;
   text-decoration: none;
-  color: #2D6000;
+  text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.33);
+  font-weight: bold;
+  &:hover {
+    color: #000;
+    background-color: #FEE100;
+  }
 }
 
 b, strong {
@@ -346,12 +353,7 @@ nav {
         margin-bottom: 15px;
         padding-bottom: 10px;
         padding-left: 2px;
-        color: #2D6000;
         
-        a {
-          text-decoration: none;
-          color: #E5E5E5;
-        }
       }
     } // dl
 
