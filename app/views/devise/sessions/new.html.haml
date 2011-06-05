@@ -1,4 +1,4 @@
-%h2.title Private Access
+%h2.title Sign in
 
 = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
   .textfield
@@ -14,7 +14,10 @@
       = f.check_box :remember_me
       = f.label :remember_me
 
-  %p= f.submit "Sign in"
+  %p
+    = f.submit "Sign in"
+    or
+    %b= link_to "create an account", new_registration_path(:user)
 
 - content_for :subfooter do
   = render :partial => "devise/shared/links"

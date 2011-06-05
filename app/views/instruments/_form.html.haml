@@ -26,6 +26,7 @@
 
   %fieldset
     %h2= t('locations.title')
+    = t('locations.form.description')
     = render partial: "locations/form_locator", locals: { form: f }
 
     - unless @instrument.location.try(:id).nil?

@@ -39,12 +39,14 @@ en:
     new:
       title: Create a new Location
       name: Name of Location (can be a personal Name, only Coordinates will be exported)
+    form:
+      description: If not specified here, it has to be provided with each of the submitted data points.
     form_locator:
       name: Name
       name_desription: (only visible to you)
       locator_text_field: search for location
   instruments:
-    title: Contribute data
+    title: Equipment
     si_unit: SI unit
     deadtime: dead time
     model: model

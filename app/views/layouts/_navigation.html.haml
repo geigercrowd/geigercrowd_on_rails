@@ -5,6 +5,8 @@
 
     - if current_user
       %li= link_to t('navigation.submit_data'), user_instruments_path(current_user), :title => t('navigation.submit_data')
+    - else
+      %li= link_to t('navigation.submit_data'), new_user_session_path, :title => t('users.sign_in')
 
     - if admin?
       %li= link_to t('data_types.index.title'), data_types_path, :title => t('data_types.index.title')
