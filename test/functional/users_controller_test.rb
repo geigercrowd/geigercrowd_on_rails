@@ -19,10 +19,12 @@ class UsersControllerTest < ActionController::TestCase
         assert_equal User.all, assigns(:users)
       end
 
+=begin
       should "be shown" do
         get :show, id: @user.to_param
         assert_response :success
       end
+=end
 
       should "be editable" do
         get :edit, id: @user.to_param
@@ -55,10 +57,13 @@ class UsersControllerTest < ActionController::TestCase
         assert_redirected_to "errors/401"
       end
 
+
+=begin
       should "not see their profiles" do
         get :show, id: @user.to_param
         assert_redirected_to "errors/401"
       end
+=end
 
       should "not edit them" do
         get :edit, id: @user.to_param

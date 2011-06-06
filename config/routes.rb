@@ -5,7 +5,7 @@ Geigercrowd::Application.routes.draw do
   resources :data_types
   resources :locations
 
-  resources :users do
+  resources :users, except: :show do
     resources :instruments do
       resources :samples
     end

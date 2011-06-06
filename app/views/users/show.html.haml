@@ -1,1 +1,7 @@
-%p=render "form"
+%h1.title= "#{@user.screen_name}'s profile"
+%dl.profile
+  %dt username
+  %dd= @user.screen_name
+  - if is_owned?
+    %dt Your API key
+    %dd= current_user.authentication_token

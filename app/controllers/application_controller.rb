@@ -25,7 +25,11 @@ class ApplicationController < ActionController::Base
   end
   
   def set_origin
-    if params[:user_id] && current_user && current_user.screen_name_matches?(params[:user_id])
+    if params[:user_id] && current_user &&
+      current_user.screen_name_matches?(params[:user_id]) ||
+      params[:controller] == "users" && params[:id] && current_user &&
+        current_user.screen_name_matches?(params[:id])
+
       @origin = current_user
     elsif params[:user_id]
       @origin = User.find_by_screen_name(params[:user_id])

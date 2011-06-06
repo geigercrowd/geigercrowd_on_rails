@@ -1,3 +1,10 @@
-%h1.title= "#{@user.screen_name} Profile"
-
+%h1.title
+  - if is_owned?
+    Your profile
+  - else
+    = "#{@user.screen_name}'s profile"
+- if is_owned?
+  %dl.profile
+    %dt API key
+    %dd= current_user.authentication_token
 = render 'form'
