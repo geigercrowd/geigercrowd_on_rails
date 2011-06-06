@@ -28,13 +28,13 @@
     %h2 Required
     %dl.api
       %dt api_key
-      - if current_user
-        %dd
+      %dd
+        - if current_user
+          Find your API key
+          = link_to "here", edit_user_path(current_user)
+        - else
           = link_to "Create an account", new_registration_path(:user)
           to obtain an API key
-      - else
-        %dd Find your API key
-        = link_to "here", current_user
 
 
     %h2 Optional
