@@ -2,13 +2,13 @@ class SamplesController < ApplicationController
 
   respond_to :html
   respond_to :json, except: [ :edit, :new ]
-  
+
   skip_before_filter :authenticate_user!, only: [ :search, :find, :index, :show ]
   before_filter :instrument, except: [ :search, :find ]
   before_filter :rewrite_api_parameters, :only => [:create, :update]
   before_filter :breadcrumb_path, except: [ :search, :find ]
-  
-  
+
+
   # GET /users/hulk/instruments/1/samples
   def index
     @samples = instrument.samples
@@ -97,52 +97,55 @@ class SamplesController < ApplicationController
       end
     end
   end
-  
+
   # GET /samples
   def find
-    if params[:location].blank?
-      respond_with [] do |format|
-        format.html { flash[:error] = "Location can't be blank." }
+    if params[:location].present?
+      @search_params = {}
+      [ :location, :after, :before ].
+        each { |p| @search_params[p] = params[p] if params[p].present? }
+
+      options = params[:options] || []
+      options = options.split(",") if options.is_a?(String)
+
+      locations = Location
+      locations = locations.select "id"
+      locations = locations.geo_scope origin: params[:location]
+      locations = locations.order :distance
+      locations = locations.map { |l| l.id }
+
+      order = "case "
+      locations.each_with_index { |l,i| order << "when s.location_id = #{l} then #{i} " }
+      order << "end, timestamp desc, instrument_id"
+
+      @samples = Sample
+      @samples = @samples.after(params[:after].presence || 1.day.ago.midnight)
+      @samples = @samples.before(params[:before]) if params[:before].present?
+      @samples = @samples.select('distinct on (instrument_id) *') unless options.include?("history")
+      @samples = Sample.from "(#{@samples.to_sql}) as s"
+      @samples = @samples.select "s.*"
+      @samples = @samples.includes [ :data_type, :instrument, :location ]
+      @samples = @samples.order order
+      @samples = @samples.paginate :page => params[:page]
+      respond_with @samples
+    else
+      respond_with do |format|
+        format.html do
+          flash[:alert] = "Location can't be blank."
+          redirect_to samples_search_path
+        end
         format.json { render json: { errors: ["Location can't be blank."] }}
       end
       return
     end
-
-    @search_params = {}
-    [ :location, :after, :before ].
-      each { |p| @search_params[p] = params[p] if params[p].present? }
-
-    options = params[:options] || []
-    options = options.split(",") if options.is_a?(String)
-
-    locations = Location
-    locations = locations.select "id"
-    locations = locations.geo_scope origin: params[:location]
-    locations = locations.order :distance
-    locations = locations.map { |l| l.id }
-
-    order = "case "
-    locations.each_with_index { |l,i| order << "when s.location_id = #{l} then #{i} " }
-    order << "end, timestamp desc, instrument_id"
-
-    @samples = Sample
-    @samples = @samples.after(params[:after].presence || 1.day.ago.midnight)
-    @samples = @samples.before(params[:before]) if params[:before].present?
-    @samples = @samples.select('distinct on (instrument_id) *') unless options.include?("history")
-    @samples = Sample.from "(#{@samples.to_sql}) as s"
-    @samples = @samples.select "s.*"
-    @samples = @samples.includes [ :data_type, :instrument, :location ]
-    @samples = @samples.order order
-    @samples = @samples.paginate :page => params[:page]
-    respond_with @samples
   end
-  
+
   private
 
   def breadcrumb_path
     return if request.format == 'application/json'
     if is_owned?
-      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), user_instruments_path(current_user) 
+      add_breadcrumb  I18n.t('breadcrumbs.own_instruments'), user_instruments_path(current_user)
     else
       add_breadcrumb  I18n.t('breadcrumbs.other_instruments', :user => @origin.to_param), polymorphic_path([@origin,Instrument])
     end

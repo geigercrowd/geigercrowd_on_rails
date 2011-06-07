@@ -386,10 +386,22 @@ class SamplesControllerTest < ActionController::TestCase
         { latitude: 40.7143528, longitude: -74.0059731 }
       @origin = "Berlin, Germany"
     end
-   
+
     should "be sorted by distance" do
       post :find, location: @origin
       assert_equal [ @sample_paris, @sample_ny, @sample_sf ], assigns(:samples)
+    end
+  end
+
+  context "search" do
+    should "validate location" do
+      post :find, location: "", after: "", before: ""
+      assert_redirected_to samples_search_path
+    end
+
+    should "complain about invalid date" do
+      post :find, location: "Berlin, Germany", after: "foo", before: "bar"
+      assert_redirected_to samples_search_path
     end
   end
 end
