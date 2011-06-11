@@ -3,41 +3,18 @@
 
     .textfield.location
       = label_tag :location, t('locations.title')
-      = text_field_tag 'location', nil, :size => 22
+      = text_field_tag 'location', @search_params[:location], :size => 22
 
     .textfield.datetime
       = label_tag :after
-      = text_field_tag :after, 'YYYY/MM/DD HH:MM', :size => 18, :class => 'clearme'
+      = text_field_tag :after, @search_params[:after], :size => 18, :class => 'clearme'
 
     .textfield.datetime
       = label_tag :before
-      = text_field_tag :before, 'YYYY/MM/DD HH:MM', :size => 18, :class => 'clearme'
+      = text_field_tag :before, @search_params[:before], :size => 18, :class => 'clearme'
   
     .historical
-      = check_box_tag :history, "history", false, name: "options[]"
+      = check_box_tag :history, "history", @search_params[:options].try(:include?, 'history'), name: "options[]"
       = label_tag :history, 'Historical'
     
     = submit_tag "Go"
-
-= content_for :javascripts do
-  :javascript
-    $(function() {
-      $('.clearme').focus( function() {
-        $(this).val('');
-      });
-
-      function check_checkbox(checkbox) {
-        var input_field = $('#searchdata input#after');
-        if(checkbox.attr('checked')) {
-          input_field.attr('disabled', false);
-        } else {
-          input_field.attr('disabled', true);
-        }
-      }
-     
-      var history_checkbox = $('#searchdata input#history');
-      check_checkbox(history_checkbox);
-      history_checkbox.click(function() {
-        check_checkbox(history_checkbox);
-      });
-    });

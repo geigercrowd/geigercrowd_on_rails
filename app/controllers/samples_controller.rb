@@ -98,12 +98,28 @@ class SamplesController < ApplicationController
     end
   end
 
+  # GET /samples/search
+  def search
+    @search_params = { after:    1.day.ago.midnight.strftime('%Y/%m/%d %H:%M'),
+                       before:   '',
+                       location: '' }
+  end
+
   # GET /samples
   def find
+
+    params[:after]  = (DateTime.parse params[:after]  rescue nil)
+    params[:before] = (DateTime.parse params[:before] rescue nil)
+
+    @search_params = {}
+    [ :location, :after, :before, :options ].
+      each { |p| @search_params[p] = params[p] if params[p].present? }
+
+    @search_params.update(@search_params) do |k,v|
+      v.respond_to?(:strftime) ? v.strftime('%Y/%m/%d %H:%M') : v
+    end
+
     if params[:location].present?
-      @search_params = {}
-      [ :location, :after, :before ].
-        each { |p| @search_params[p] = params[p] if params[p].present? }
 
       options = params[:options] || []
       options = options.split(",") if options.is_a?(String)
@@ -132,7 +148,7 @@ class SamplesController < ApplicationController
       respond_with do |format|
         format.html do
           flash[:alert] = "Location can't be blank."
-          redirect_to samples_search_path
+          render action: :search
         end
         format.json { render json: { errors: ["Location can't be blank."] }}
       end
