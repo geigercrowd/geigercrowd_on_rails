@@ -396,12 +396,12 @@ class SamplesControllerTest < ActionController::TestCase
   context "search" do
     should "validate location" do
       post :find, location: "", after: "", before: ""
-      assert_redirected_to samples_search_path
+      assert_template 'samples/search'
     end
 
-    should "complain about invalid date" do
+    should "not complain about invalid date" do
       post :find, location: "Berlin, Germany", after: "foo", before: "bar"
-      assert_redirected_to samples_search_path
+      assert_response :success
     end
   end
 end

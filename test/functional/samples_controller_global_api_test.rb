@@ -14,14 +14,6 @@ class SamplesControllerGlobalApiTest < ActionController::TestCase
     end
 
     context "defaults" do
-      should "return samples from yesterday on" do
-        get :find, format: 'json', api_key: @user.authentication_token,
-          location: "Berlin, Germany"
-        assert_response :success
-        data = JSON.parse(response.body)
-        assert_equal 2, data.length
-      end
-      
       should "respect the after parameter" do
         get :find, format: 'json', api_key: @user.authentication_token,
           after: formatted_date(100.days.ago), location: "Berlin, Germany"

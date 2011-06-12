@@ -120,28 +120,7 @@ class SamplesController < ApplicationController
     end
 
     if params[:location].present?
-
-      options = params[:options] || []
-      options = options.split(",") if options.is_a?(String)
-
-      locations = Location
-      locations = locations.select "id"
-      locations = locations.geo_scope origin: params[:location]
-      locations = locations.order :distance
-      locations = locations.map { |l| l.id }
-
-      order = "case "
-      locations.each_with_index { |l,i| order << "when s.location_id = #{l} then #{i} " }
-      order << "end, timestamp desc, instrument_id"
-
-      @samples = Sample
-      @samples = @samples.after(params[:after].presence || 1.day.ago.midnight)
-      @samples = @samples.before(params[:before]) if params[:before].present?
-      @samples = @samples.select('distinct on (instrument_id) *') unless options.include?("history")
-      @samples = Sample.from "(#{@samples.to_sql}) as s"
-      @samples = @samples.select "s.*"
-      @samples = @samples.includes [ :data_type, :instrument, :location ]
-      @samples = @samples.order order
+      @samples = Sample.search params
       @samples = @samples.paginate :page => params[:page]
       respond_with @samples
     else

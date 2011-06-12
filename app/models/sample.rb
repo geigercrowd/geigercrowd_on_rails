@@ -25,6 +25,37 @@ class Sample < ActiveRecord::Base
       include: { location: { only: [ :latitude, :longitude, :name, :id ] }}
   end
 
+  def self.search params
+    options = params[:options] || []
+    options = options.split(",") if options.is_a?(String)
+
+    locations = Location
+    locations = locations.select "id"
+    locations = locations.geo_scope origin: params[:location]
+
+    return [] if locations.empty?
+
+    locations = locations.order :distance
+    locations = locations.map { |l| l.id }
+
+    order = "case "
+    locations.each_with_index { |l,i| order << "when s.location_id = #{l} then #{i} " }
+    order << "end, timestamp desc, instrument_id"
+
+    @samples = Sample
+    @samples = @samples.after(params[:after]) if params[:after].present?
+    @samples = @samples.before(params[:before]) if params[:before].present?
+    @samples = @samples.select('distinct on (instrument_id) *') unless options.include?("history")
+    if @samples.respond_to? :to_sql
+      @samples = Sample.from "(#{@samples.to_sql}) as s"
+    else
+      @samples = @samples.from 'samples as s'
+    end
+    @samples = @samples.select "s.*"
+    @samples = @samples.includes [ :data_type, :instrument, :location ]
+    @samples = @samples.order order
+  end
+
   private
 
   def inherit_location
