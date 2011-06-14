@@ -20,6 +20,7 @@ class InstrumentsController < ApplicationController
   # GET /users/hulk/instruments
   def index
     @instruments = @origin.instruments
+    @instruments = @instruments.paginate page: params[:page]
     respond_with @instruments do |format|
       format.html do
         if is_owned? && @instruments.empty?

@@ -148,7 +148,7 @@ GEM
       rack (>= 1.0.0)
     warden (1.0.4)
       rack (>= 1.0)
-    will_paginate (2.3.15)
+    will_paginate (3.0.pre2)
 
 PLATFORMS
   ruby
@@ -179,4 +179,4 @@ DEPENDENCIES
   silent-postgres
   simplecov (~> 0.4.1)
   sqlite3
-  will_paginate
+  will_paginate (~> 3.0.pre2)

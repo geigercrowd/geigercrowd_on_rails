@@ -47,3 +47,8 @@ Factory.define :data_source do |ds|
   ds.update_interval 3600
   ds.short_name "MEXT"
 end
+
+Factory.define :geo_loc, class: Geokit::GeoLoc do |gl|
+  gl.lat 20.0
+  gl.lng 30.0
+end

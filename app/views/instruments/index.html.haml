@@ -20,7 +20,7 @@
           = link_to image_tag('icons/show.png'), polymorphic_path([instrument.origin, instrument, Sample]), :title => t('instruments.view_samples')
           - if is_owned?
             = link_to t('instruments.add_samples'), polymorphic_path([instrument.origin, instrument, Sample], :action => :new)
-
+= will_paginate @instruments
 
 - if is_owned?
   %p= link_to t('.new_instrument'), new_user_instrument_path(current_user)

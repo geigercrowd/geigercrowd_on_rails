@@ -21,3 +21,13 @@ def delete_dates(data)
   end
   data
 end
+
+Location.any_instance.stubs(:geocode)
+
+geo_loc = Factory.build :geo_loc
+geo_loc.lat = 52.52
+geo_loc.lng = 13.38
+geo_loc.success = true
+Geokit::Geocoders::MultiGeocoder.stubs(:geocode).with("Berlin, Germany").returns geo_loc
+
+

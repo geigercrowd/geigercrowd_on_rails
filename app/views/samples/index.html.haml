@@ -24,4 +24,4 @@
           - if is_owned?
             = link_to image_tag('icons/edit.png'), edit_user_instrument_sample_path(current_user, sample.instrument, sample), :title => t('edit')
             = link_to image_tag('icons/delete.png'), [ current_user, sample.instrument, sample ], :title => t('destroy'), :confirm => t('confirm_delete'), :method => :delete
-
+= will_paginate @samples

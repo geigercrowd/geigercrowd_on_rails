@@ -3,7 +3,7 @@ require_relative '../test_helper'
 class SampleTest < ActiveSupport::TestCase
   context "sample" do
     setup do
-      @sample = Factory :sample
+      @sample = Factory :sample, instrument: Factory(:instrument)
       @instrument = @sample.instrument
       @other_location = Factory :other_location
       @user = @sample.user
@@ -29,7 +29,8 @@ class SampleTest < ActiveSupport::TestCase
     end
 
     should "take its instrument's location if not specified" do
-      new_sample = @instrument.samples.create value: 12.34, timestamp: DateTime.now
+      new_sample = @instrument.samples.create value: 12.34,
+        timestamp: DateTime.now
       assert_valid new_sample
       assert_equal @instrument.location, @instrument.samples.last.location
     end
@@ -43,7 +44,8 @@ class SampleTest < ActiveSupport::TestCase
     
     context "scopes" do
       should "return samples after some point in time" do
-        sample = Factory :sample, timestamp: 1.week.ago
+        sample = Factory :sample, timestamp: 1.week.ago,
+          instrument: Factory(:instrument)
         assert Sample.after((1.week + 1.day).ago).find(sample.id)
         assert_raise ActiveRecord::RecordNotFound do
           assert Sample.after((1.week - 1.day).ago).find(sample.id)
@@ -51,7 +53,8 @@ class SampleTest < ActiveSupport::TestCase
       end
 
       should "return samples before some point in time" do
-        sample = Factory :sample, timestamp: 1.week.ago
+        sample = Factory :sample, timestamp: 1.week.ago,
+          instrument: Factory(:instrument)
         assert Sample.before((1.week - 1.day).ago).find(sample.id)
         assert_raise ActiveRecord::RecordNotFound do
           assert Sample.before((1.week + 1.day).ago).find(sample.id)

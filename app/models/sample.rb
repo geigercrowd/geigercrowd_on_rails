@@ -10,6 +10,7 @@ class Sample < ActiveRecord::Base
   validates_presence_of :timestamp
   validates_presence_of :location
   validates_presence_of :value
+  validates_presence_of :instrument
   before_validation :inherit_location 
   before_validation :set_timezone
 
@@ -39,19 +40,15 @@ class Sample < ActiveRecord::Base
     locations = locations.map { |l| l.id }
 
     order = "case "
-    locations.each_with_index { |l,i| order << "when s.location_id = #{l} then #{i} " }
+    locations.each_with_index { |l,i| order << "when location_id = #{l} then #{i} " }
     order << "end, timestamp desc, instrument_id"
 
     @samples = Sample
+    @samples = @samples.select('distinct on (instrument_id) *') unless options.include?("history")
+    @samples = @samples.where [ "location_id in (?)", locations ]
     @samples = @samples.after(params[:after]) if params[:after].present?
     @samples = @samples.before(params[:before]) if params[:before].present?
-    @samples = @samples.select('distinct on (instrument_id) *') unless options.include?("history")
-    if @samples.respond_to? :to_sql
-      @samples = Sample.from "(#{@samples.to_sql}) as s"
-    else
-      @samples = @samples.from 'samples as s'
-    end
-    @samples = @samples.select "s.*"
+    @samples = Sample.from "(#{@samples.to_sql}) as samples"
     @samples = @samples.includes [ :data_type, :instrument, :location ]
     @samples = @samples.order order
   end

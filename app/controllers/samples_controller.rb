@@ -12,6 +12,7 @@ class SamplesController < ApplicationController
   # GET /users/hulk/instruments/1/samples
   def index
     @samples = instrument.samples
+    @samples = @samples.paginate :page => params[:page]
     respond_with instrument.user, instrument, @samples
   end
 
