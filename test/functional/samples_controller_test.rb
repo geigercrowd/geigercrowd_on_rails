@@ -400,6 +400,7 @@ class SamplesControllerTest < ActionController::TestCase
     end
 
     should "not complain about invalid date" do
+      Factory :sample
       post :find, location: "Berlin, Germany", after: "foo", before: "bar"
       assert_response :success
     end
